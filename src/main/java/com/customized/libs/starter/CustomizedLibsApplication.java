@@ -1,6 +1,7 @@
 package com.customized.libs.starter;
 
 import lombok.extern.slf4j.Slf4j;
+import net.sf.cglib.core.DebuggingClassWriter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
@@ -32,6 +33,10 @@ public class CustomizedLibsApplication {
     // private static final Logger LOGGER = LogManager.getLogger(AnalyzeApplication.class);
 
     public static void main(String[] args) {
+
+        // System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
+        // System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "./libs/proxy-target");
+
 
         log.trace("log4j trace log");
         log.debug("log4j debug log");
