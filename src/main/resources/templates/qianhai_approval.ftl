@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Packet type="REQUEST" version="1.0">
+	<Head>
+		<UUID>${UUID}</UUID>
+		<CRequestType>170001</CRequestType>
+		<CBusiChnl>kayou</CBusiChnl>
+		<TAcctTm>${TAcctTm}</TAcctTm>
+		<#if CheckCode?exists>
+		<CheckCode>${CheckCode}</CheckCode>
+		</#if>
+	</Head>
+	<Body>
+		<Base>
+			<CProdNo>150007</CProdNo>
+			<TAppTm>${TAppTm}</TAppTm>
+			<TInsrncBgnTm>${TInsrncBgnTm}</TInsrncBgnTm>
+			<TInsrncEndTm>${TInsrncEndTm}</TInsrncEndTm>
+			<CTmSysCde>${CTmSysCde}</CTmSysCde>
+			<#if CUnfixSpc?exists>
+			<CUnfixSpc>${CUnfixSpc}</CUnfixSpc>
+			</#if>
+			<OrderNo>${OrderNo}</OrderNo>
+			<NAmt>${NAmt?c}</NAmt>
+			<NPrm>${NPrm?c}</NPrm>
+		</Base>
+		<Applicant>
+			<CAppNme>${CAppNme}</CAppNme>
+			<CClntMrk>${CClntMrk}</CClntMrk>
+			<CCertfCls>${CCertfCls}</CCertfCls>
+			<CCertfCde>${CCertfCde}</CCertfCde>
+			<CMobile>${CMobile}</CMobile>
+			<CRelCode>${CRelCode}</CRelCode>
+			<CTelPhone>${CTelPhone}</CTelPhone>
+			<CEmail>${CEmail}</CEmail>
+			<CClntAddr>${CClntAddr}</CClntAddr>
+			<CZipCde>${CZipCde}</CZipCde>
+		</Applicant>
+		<GrpMember>
+			<CNme>${CNme}</CNme>
+			<CClntMrk>${G_CClntMrk}</CClntMrk>
+			<CCertTyp>${CCertTyp}</CCertTyp>
+			<CCertNo>${CCertNo}</CCertNo>
+			<CSex>${CSex}</CSex>
+			<CMobile>${G_CMobile}</CMobile>
+			<CClntAddr>${G_CClntAddr}</CClntAddr>
+		</GrpMember>
+		<Tgt>
+			<CPayerName>${CPayerName}</CPayerName>
+			<CTranNo>${CTranNo}</CTranNo>
+			<CArrivalTime>${CArrivalTime}</CArrivalTime>
+			<NTranAmt>${NTranAmt?c}</NTranAmt>
+		</Tgt>
+	</Body>
+</Packet>

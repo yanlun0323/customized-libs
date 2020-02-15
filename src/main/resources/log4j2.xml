@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <!--<Loghub name="Loghub"
+                project="aliyun-log4j"
+                logStore="log4j"
+                endpoint="cn-zhangjiakou.log.aliyuncs.com"
+                accessKeyId="LTAI4Finyt6X3wGvdo5oTdED"
+                accessKeySecret="IqJIuU1v2fJPJoIiOPVYW5djjDXp1M"
+                totalSizeInBytes="104857600"
+                maxBlockMs="60000"
+                ioThreadCount="8"
+                batchSizeThresholdInBytes="524288"
+                batchCountThreshold="4096"
+                lingerMs="2000"
+                retries="10"
+                baseRetryBackoffMs="100"
+                maxRetryBackoffMs="100"
+                topic=""
+                source="local.yan"
+                timeFormat="yyyy-MM-dd'T'HH:mmZ"
+                timeZone="UTC"
+                ignoreExceptions="true">
+            <PatternLayout pattern="%d %-5level [%thread] %logger{0}: %msg"/>
+            <Filters>
+                &lt;!&ndash; Now deny warn, error and fatal messages &ndash;&gt;
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL"/>
+
+                &lt;!&ndash; This filter accepts info, warn, error, fatal and denies debug/trace &ndash;&gt;
+                <ThresholdFilter level="info" onMatch="DENY" onMismatch="DENY"/>
+                <ThresholdFilter level="debug" onMatch="DENY" onMismatch="DENY"/>
+            </Filters>
+        </Loghub>-->
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用-->
+        <File name="ALL" fileName="logs/customized-libs.log" append="false">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="ACCEPT"/>
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>
+        </File>
+
+        <CustomizedRollingFile name="CUSTOMIZED" fileName="logs/customized-libs-customized.log"
+                     filePattern="logs/$${date:yyyy-MM}/customized-libs-customized-%d{yyyy-MM-dd}-%i.log">
+            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+        </CustomizedRollingFile>
+
+        <!-- ${sys:user.home}/这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="INFO" fileName="logs/customized-libs-info.log"
+                     filePattern="logs/$${date:yyyy-MM}/customized-libs-info-%d{yyyy-MM-dd}-%i.log">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="WARN" fileName="logs/customized-libs-warn.log"
+                     filePattern="logs/$${date:yyyy-MM}/customized-libs-warn-%d{yyyy-MM-dd}-%i.log">
+            <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 -->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+        <RollingFile name="ERROR" fileName="logs/customized-libs-error.log"
+                     filePattern="logs/$${date:yyyy-MM}/customized-libs-error-%d{yyyy-MM-dd}-%i.log">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+    <Loggers>
+        <Root level="DEBUG">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="ALL"/>
+            <AppenderRef ref="INFO"/>
+            <AppenderRef ref="WARN"/>
+            <AppenderRef ref="ERROR"/>
+            <AppenderRef ref="CUSTOMIZED"/>
+        </Root>
+    </Loggers>
+</Configuration>

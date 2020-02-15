@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="CustomizedLibsProducer"
+          class="org.apache.rocketmq.client.producer.DefaultMQProducer"
+          init-method="start" destroy-method="shutdown" scope="singleton">
+        <property name="namesrvAddr" value="${rocketmq.namesrv.addr}"/>
+        <property name="producerGroup" value="PID_CUSTOMIZED_LIBS"/>
+        <property name="vipChannelEnabled" value="false" />
+        <property name="retryTimesWhenSendFailed" value="3" />
+        <property name="retryTimesWhenSendAsyncFailed" value="3" />
+    </bean>
+</beans>

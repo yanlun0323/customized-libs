@@ -1,0 +1,8 @@
+NUMBER=1
+LPARENT=2
+RPARENT=3
+STEING=4
+ID=5
+WS=6
+'('=2
+')'=3
