@@ -18,6 +18,12 @@ public class CustomizedBeanRegistryPostProcessor implements BeanDefinitionRegist
 
     private Class<? extends Annotation> annotationType;
 
+    /**
+     * 指定Spring扫描的类定义（配合spring-mvc的bean定义，自定义扫描）
+     *
+     * @param registry
+     * @throws BeansException
+     */
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         CustomizedClassPathMapperScanner scanner =
