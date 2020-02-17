@@ -12,7 +12,7 @@ import java.lang.annotation.Annotation;
 /**
  * @author yan
  */
-public class CustomizedBeanRegisgtryPostProcessor implements BeanDefinitionRegistryPostProcessor {
+public class CustomizedBeanRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor {
 
     private String basePackage;
 

@@ -16,7 +16,7 @@
         <property name="zookeeperAddress" value="${zookeeper.address}"/>
     </bean>
 
-    <bean class="com.customized.libs.mvc.factory.CustomizedBeanRegisgtryPostProcessor">
+    <bean class="com.customized.libs.mvc.factory.CustomizedBeanRegistryPostProcessor">
         <property name="basePackage" value="com.customized.libs.mvc"/>
         <property name="annotationType" value="com.customized.libs.mvc.annotations.MvcController"/>
     </bean>
