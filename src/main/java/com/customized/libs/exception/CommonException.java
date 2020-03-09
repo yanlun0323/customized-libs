@@ -13,6 +13,12 @@ public class CommonException extends Exception {
 
     private String errMsg;
 
+    public CommonException(CommonErrCode errCode, String desc) {
+        super(desc);
+        this.errCode = errCode.getCode();
+        this.errMsg = desc;
+    }
+
     public CommonException(String errCode, String desc) {
         super(desc);
         this.errCode = errCode;
