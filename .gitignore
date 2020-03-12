@@ -25,4 +25,5 @@
 /.nb-gradle/
 
 /logs/
+/log/
 /target-generate/*

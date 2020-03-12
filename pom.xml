@@ -12,6 +12,7 @@
         <module>dubbo-customer</module>
         <module>dubbo-provider</module>
         <module>core</module>
+        <module>dubbo-api</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -30,22 +31,36 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <sentinel.version>1.7.1</sentinel.version>
+        <dubbo.version>2.7.5</dubbo.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>4.1.43.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-spring-context</artifactId>
+                <version>0.3.6</version>
+            </dependency>
+
             <!-- Dubbo Nacos registry dependency -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>dubbo-registry-nacos</artifactId>
-                <version>2.7.5</version>
+                <version>2.6.7</version>
             </dependency>
+
 
             <!-- Keep latest Nacos client version -->
             <dependency>
                 <groupId>com.alibaba.nacos</groupId>
                 <artifactId>nacos-client</artifactId>
-                <version>[0.6.1,)</version>
+                <version>1.2.0</version>
             </dependency>
 
             <!-- Dubbo dependency -->
@@ -55,11 +70,17 @@
                 <version>2.6.5</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
             <!-- Alibaba Spring Context extension -->
             <dependency>
                 <groupId>com.alibaba.spring</groupId>
                 <artifactId>spring-context-support</artifactId>
-                <version>1.0.2</version>
+                <version>1.0.6</version>
             </dependency>
 
             <dependency>
@@ -108,6 +129,7 @@
                 <module>dubbo-provider</module>
                 <module>extension</module>
                 <module>core</module>
+                <module>dubbo-api</module>
             </modules>
         </profile>
         <profile>
