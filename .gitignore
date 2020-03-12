@@ -25,4 +25,4 @@
 /.nb-gradle/
 
 /logs/
-/libs/proxy-target/
+/target-generate/*
