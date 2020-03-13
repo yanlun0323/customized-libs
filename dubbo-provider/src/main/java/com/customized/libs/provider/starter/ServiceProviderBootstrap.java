@@ -16,12 +16,12 @@ import java.io.IOException;
 public class ServiceProviderBootstrap {
 
     public static void main(String[] args) throws IOException, NacosException {
+        DubboNacosConfig.init();
+
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.register(ServiceProviderBootstrap.class);
         context.register(DubboNacosConfig.class);
         context.refresh();
-
-        DubboNacosConfig.init();
 
         System.out.println("Service Provider Is Starting...");
 

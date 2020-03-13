@@ -27,11 +27,13 @@ import java.util.concurrent.Executor;
 /**
  * Config service example
  *
+ * 集群需要用VIP的方式才行，没有Zookeeper同样的集群地址配置方式
+ *
  * @author Nacos
  */
 @Configuration
 @EnableNacosConfig(globalProperties = @NacosProperties(
-        serverAddr = "172.19.80.13:8848", namespace = "dbb536bd-96a3-47e6-b8dd-5e6344602c86"
+        serverAddr = "172.19.80.13:8848", namespace = "dubbo-provider"
 ))
 @NacosPropertySource(dataId = "dubbo-provider", autoRefreshed = true)
 public class DubboNacosConfig {
@@ -55,7 +57,7 @@ public class DubboNacosConfig {
         Properties properties = new Properties();
         properties.put(PropertyKeyConst.SERVER_ADDR, serverAddr);
 
-        properties.put(PropertyKeyConst.NAMESPACE, "dbb536bd-96a3-47e6-b8dd-5e6344602c86");
+        properties.put(PropertyKeyConst.NAMESPACE, "dubbo-provider");
         ConfigService configService = NacosFactory.createConfigService(properties);
 
         String content = configService.getConfig(dataId, group, 5000);
