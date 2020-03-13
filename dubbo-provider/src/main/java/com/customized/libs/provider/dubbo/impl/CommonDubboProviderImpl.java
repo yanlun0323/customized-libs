@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author yan
  */
-@Service(interfaceClass = CommonDubboProvider.class, version = "1.0")
+@Service(interfaceClass = CommonDubboProvider.class, version = "${common.service.version}")
 public class CommonDubboProviderImpl implements CommonDubboProvider {
 
     private static Logger logger = LoggerFactory.getLogger(CommonDubboProviderImpl.class);

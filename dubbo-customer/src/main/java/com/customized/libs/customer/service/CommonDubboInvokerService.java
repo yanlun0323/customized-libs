@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommonDubboInvokerService {
 
-    @Reference(version = "1.0")
+    @Reference(version = "${common.service.version}")
     private CommonDubboProvider commonDubboProvider;
 
     public void invoke() {

@@ -7,6 +7,8 @@ import com.customized.libs.customer.service.CommonDubboInvokerService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.PropertySource;
 
+import java.io.IOException;
+
 /**
  * @author yan
  */
@@ -14,7 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource(value = "classpath:/consumer-config.properties")
 public class ServiceConsumerBootstrap {
 
-    public static void main(String[] args) throws NacosException {
+    public static void main(String[] args) throws NacosException, IOException {
         DubboNacosConfig.init();
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
@@ -27,5 +29,7 @@ public class ServiceConsumerBootstrap {
         CommonDubboInvokerService invokerService = context.getBean(CommonDubboInvokerService.class);
         invokerService.invoke();
         context.close();
+
+        System.in.read();
     }
 }
