@@ -1,4 +1,4 @@
-package com.customized.libs.extension.init;
+package com.customized.libs.extension.sentinel.init;
 
 import com.alibaba.csp.sentinel.cluster.flow.rule.ClusterFlowRuleManager;
 import com.alibaba.csp.sentinel.cluster.flow.rule.ClusterParamFlowRuleManager;
@@ -12,7 +12,7 @@ import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRule;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.nacos.api.PropertyKeyConst;
-import com.customized.libs.extension.ClusterConstants;
+import com.customized.libs.extension.sentinel.ClusterConstants;
 
 import java.util.List;
 import java.util.Properties;
@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * @author Eric Zhao
  */
-public class ClusterServerInitFunc implements InitFunc {
+public class SentinelClusterServerInitFunc implements InitFunc {
 
     private final String remoteAddress = "172.19.80.15";
     private final String groupId = "DUBBO_PROVIDER_SENTINEL_GROUP";

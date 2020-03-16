@@ -1,23 +1,23 @@
-package com.customized.libs.extension.starter;
+package com.customized.libs.extension.sentinel.starter;
 
 import com.alibaba.csp.sentinel.cluster.server.ClusterTokenServer;
 import com.alibaba.csp.sentinel.cluster.server.SentinelDefaultTokenServer;
 import com.alibaba.csp.sentinel.cluster.server.config.ClusterServerConfigManager;
 import com.alibaba.csp.sentinel.cluster.server.config.ServerTransportConfig;
-import com.customized.libs.extension.ClusterConstants;
-import com.customized.libs.extension.init.ClusterServerInitFunc;
+import com.customized.libs.extension.sentinel.ClusterConstants;
+import com.customized.libs.extension.sentinel.init.SentinelClusterServerInitFunc;
 
 import java.util.Collections;
 
 /**
  * <p>Cluster server demo (alone mode).</p>
  * <p>Here we init the cluster server dynamic data sources in
- * {@link com.customized.libs.extension.init.ClusterServerInitFunc}.</p>
+ * {@link SentinelClusterServerInitFunc}.</p>
  *
  * @author Eric Zhao
  * @since 1.4.0
  */
-public class ClusterServerStarter {
+public class SentinelClusterTokenServerStarter {
 
     public static void main(String[] args) throws Exception {
         // Not embedded mode by default (alone mode).
@@ -25,7 +25,7 @@ public class ClusterServerStarter {
 
         // A sample for manually load config for cluster server.
         // It's recommended to use dynamic data source to cluster manage config and rules.
-        // See the sample in ClusterServerInitFunc for detail.
+        // See the sample in SentinelClusterServerInitFunc for detail.
         ClusterServerConfigManager.loadGlobalTransportConfig(new ServerTransportConfig()
                 .setIdleSeconds(600)
                 .setPort(8718));

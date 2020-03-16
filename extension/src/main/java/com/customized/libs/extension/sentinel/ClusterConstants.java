@@ -1,4 +1,4 @@
-package com.customized.libs.extension;
+package com.customized.libs.extension.sentinel;
 
 /**
  * @author Eric Zhao
