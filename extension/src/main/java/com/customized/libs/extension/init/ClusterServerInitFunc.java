@@ -11,9 +11,11 @@ import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
 import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowRule;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.alibaba.nacos.api.PropertyKeyConst;
 import com.customized.libs.extension.ClusterConstants;
 
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -21,8 +23,9 @@ import java.util.Set;
  */
 public class ClusterServerInitFunc implements InitFunc {
 
-    private final String remoteAddress = "localhost";
-    private final String groupId = "SENTINEL_GROUP";
+    private final String remoteAddress = "172.19.80.15";
+    private final String groupId = "DUBBO_PROVIDER_SENTINEL_GROUP";
+    private final String nacosNamespace = "Dubbo-Provider-Sentinel-Rules";
     private final String namespaceSetDataId = "cluster-server-namespace-set";
     private final String serverTransportDataId = "cluster-server-transport-config";
 
@@ -46,15 +49,28 @@ public class ClusterServerInitFunc implements InitFunc {
         });
 
         // Server namespace set (scope) data source.
-        ReadableDataSource<String, Set<String>> namespaceDs = new NacosDataSource<>(remoteAddress, groupId,
-                namespaceSetDataId, source -> JSON.parseObject(source, new TypeReference<Set<String>>() {
-        }));
+        ReadableDataSource<String, Set<String>> namespaceDs = new NacosDataSource<>(
+                buildProperties(remoteAddress, nacosNamespace),
+                groupId, namespaceSetDataId,
+                source -> JSON.parseObject(source, new TypeReference<Set<String>>() {
+                })
+        );
+
         ClusterServerConfigManager.registerNamespaceSetProperty(namespaceDs.getProperty());
         // Server transport configuration data source.
-        ReadableDataSource<String, ServerTransportConfig> transportConfigDs = new NacosDataSource<>(remoteAddress,
+        ReadableDataSource<String, ServerTransportConfig> transportConfigDs = new NacosDataSource<>(
+                buildProperties(remoteAddress, nacosNamespace),
                 groupId, serverTransportDataId,
                 source -> JSON.parseObject(source, new TypeReference<ServerTransportConfig>() {
-                }));
+                })
+        );
         ClusterServerConfigManager.registerServerTransportProperty(transportConfigDs.getProperty());
+    }
+
+    private static Properties buildProperties(String serverAddr, String namespace) {
+        Properties properties = new Properties();
+        properties.setProperty(PropertyKeyConst.SERVER_ADDR, serverAddr);
+        properties.setProperty(PropertyKeyConst.NAMESPACE, namespace);
+        return properties;
     }
 }

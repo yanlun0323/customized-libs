@@ -28,7 +28,7 @@ public class ClusterServerStarter {
         // See the sample in ClusterServerInitFunc for detail.
         ClusterServerConfigManager.loadGlobalTransportConfig(new ServerTransportConfig()
                 .setIdleSeconds(600)
-                .setPort(11111));
+                .setPort(8718));
         ClusterServerConfigManager.loadServerNamespaceSet(Collections.singleton(ClusterConstants.APP_NAME));
 
         // Start the server.
