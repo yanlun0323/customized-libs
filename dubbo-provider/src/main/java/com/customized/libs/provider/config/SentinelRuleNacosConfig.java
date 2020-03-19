@@ -55,6 +55,7 @@ public class SentinelRuleNacosConfig implements InitFunc {
         );
         ClusterClientConfigManager.registerClientConfigProperty(clientConfigDs.getProperty());
 
+        // ClusterClientAssignConfig
         ReadableDataSource<String, ClusterClientAssignConfig> clientAssignDs = new NacosDataSource<>(
                 defaultProperties, GROUP_ID, CLIENT_CONFIG_DATA_ID,
                 source -> JSON.parseObject(source, new TypeReference<ClusterClientAssignConfig>() {

@@ -41,6 +41,7 @@ public class SentinelClusterServerInitFunc implements InitFunc {
                     }));
             return ds.getProperty();
         });
+
         // Register cluster parameter flow rule property supplier.
         ClusterParamFlowRuleManager.setPropertySupplier(namespace -> {
             ReadableDataSource<String, List<ParamFlowRule>> ds = new NacosDataSource<>(
@@ -56,8 +57,8 @@ public class SentinelClusterServerInitFunc implements InitFunc {
                 source -> JSON.parseObject(source, new TypeReference<Set<String>>() {
                 })
         );
-
         ClusterServerConfigManager.registerNamespaceSetProperty(namespaceDs.getProperty());
+
         // Server transport configuration data source.
         ReadableDataSource<String, ServerTransportConfig> transportConfigDs = new NacosDataSource<>(
                 defaultProperties, groupId, serverTransportDataId,
