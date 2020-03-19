@@ -33,39 +33,34 @@ public class SentinelRuleNacosConfig implements InitFunc {
      */
     @Override
     public void init() {
+        Properties defaultProperties = buildProperties(REMOTE_ADDRESS, NACOS_NAMESPACE);
 
-        // step:0
-
-        // remoteAddress 代表 Nacos 服务端的地址
-        // groupId 和 dataId 对应 Nacos 中相应配置
+        //  step:0 remoteAddress 代表 Nacos 服务端的地址，groupId 和 dataId 对应 Nacos 中相应配置
         ReadableDataSource<String, List<FlowRule>> ruleDs = new NacosDataSource<>(
-                buildProperties(REMOTE_ADDRESS, NACOS_NAMESPACE), GROUP_ID, CLIENT_FLOW_RULES_DATA_ID,
+                defaultProperties, GROUP_ID, CLIENT_FLOW_RULES_DATA_ID,
                 source -> JSON.parseObject(source, new TypeReference<List<FlowRule>>() {
                 })
         );
         FlowRuleManager.register2Property(ruleDs.getProperty());
 
 
-        // step:1
+        // 这个状态配置很重要！！顺序也重要！！（需要在step1之前ApplyState）
+        ClusterStateManager.applyState(ClusterStateManager.CLUSTER_CLIENT);
 
-        // 初始化一个配置ClusterClientConfig的 Nacos 数据源
+        // step:1 初始化一个配置ClusterClientConfig的 Nacos 数据源
         ReadableDataSource<String, ClusterClientConfig> clientConfigDs = new NacosDataSource<>(
-                buildProperties(REMOTE_ADDRESS, NACOS_NAMESPACE), GROUP_ID, CLIENT_CONFIG_DATA_ID,
+                defaultProperties, GROUP_ID, CLIENT_CONFIG_DATA_ID,
                 source -> JSON.parseObject(source, new TypeReference<ClusterClientConfig>() {
                 })
         );
         ClusterClientConfigManager.registerClientConfigProperty(clientConfigDs.getProperty());
 
-
         ReadableDataSource<String, ClusterClientAssignConfig> clientAssignDs = new NacosDataSource<>(
-                buildProperties(REMOTE_ADDRESS, NACOS_NAMESPACE), GROUP_ID, CLIENT_CONFIG_DATA_ID,
+                defaultProperties, GROUP_ID, CLIENT_CONFIG_DATA_ID,
                 source -> JSON.parseObject(source, new TypeReference<ClusterClientAssignConfig>() {
                 })
         );
         ClusterClientConfigManager.registerServerAssignProperty(clientAssignDs.getProperty());
-
-        // 这个状态配置很重要！！顺序也重要！！（需要在step1之后ApplyState）
-        ClusterStateManager.applyState(ClusterStateManager.CLUSTER_CLIENT);
     }
 
     private static Properties buildProperties(String serverAddr, String namespace) {
