@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -68,5 +70,19 @@ public class WebConfiguration implements WebMvcConfigurer {
         FastJsonHttpMessageConverter fastjson = new FastJsonHttpMessageConverter();
         FormHttpMessageConverter httpMessageConverter = new FormHttpMessageConverter();
         return new HttpMessageConverters(fastjson, httpMessageConverter);
+    }
+
+    /**
+     * 解决：DEBUG org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor - Could not find default TaskScheduler bean
+     * org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.scheduling.TaskScheduler' available
+     *
+     * @return
+     */
+    @Bean
+    public TaskScheduler scheduledExecutorService() {
+        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setPoolSize(8);
+        scheduler.setThreadNamePrefix("scheduled-thread-");
+        return scheduler;
     }
 }

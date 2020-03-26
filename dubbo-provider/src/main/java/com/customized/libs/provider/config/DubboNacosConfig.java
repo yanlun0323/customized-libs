@@ -26,8 +26,10 @@ import java.util.concurrent.Executor;
 
 /**
  * Config service example
- *
+ * <p>
  * 集群需要用VIP的方式才行，没有Zookeeper同样的集群地址配置方式
+ * <p>
+ * NacosPropertySource注解可配置多个dataId，那么同一个命名空间的不通dataConfig可共享，但是不能配置多个namespace
  *
  * @author Nacos
  */
@@ -36,6 +38,7 @@ import java.util.concurrent.Executor;
         serverAddr = "172.19.80.13:8848", namespace = "dubbo-provider"
 ))
 @NacosPropertySource(dataId = "dubbo-provider", autoRefreshed = true)
+@NacosPropertySource(dataId = "dubbo-provider-01", autoRefreshed = true)
 public class DubboNacosConfig {
 
     private static Logger logger = LoggerFactory.getLogger(DubboNacosConfig.class);

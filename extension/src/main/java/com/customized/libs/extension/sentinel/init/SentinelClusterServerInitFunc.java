@@ -65,6 +65,7 @@ public class SentinelClusterServerInitFunc implements InitFunc {
                 source -> JSON.parseObject(source, new TypeReference<ServerTransportConfig>() {
                 })
         );
+        // 监听注册 ==> 启动tokenServer
         ClusterServerConfigManager.registerServerTransportProperty(transportConfigDs.getProperty());
     }
 

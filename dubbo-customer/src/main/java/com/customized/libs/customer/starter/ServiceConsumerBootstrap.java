@@ -11,6 +11,8 @@ import org.springframework.context.annotation.PropertySource;
 import java.util.concurrent.Executors;
 
 /**
+ * PropertySource提供外部化配置功能
+ *
  * @author yan
  */
 @EnableDubbo

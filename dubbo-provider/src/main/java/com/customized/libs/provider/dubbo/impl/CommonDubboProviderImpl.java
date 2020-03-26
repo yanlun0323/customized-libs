@@ -22,6 +22,9 @@ public class CommonDubboProviderImpl implements CommonDubboProvider {
     @NacosValue(value = "${default.keywords}", autoRefreshed = true)
     private String defaultKeywords;
 
+    @NacosValue(value = "${default.keywords001}", autoRefreshed = true)
+    private String defaultKeywordsO01;
+
     @Override
     public String helloMsg(String userName) {
         userName = StringUtils.defaultString(userName, "N/A");

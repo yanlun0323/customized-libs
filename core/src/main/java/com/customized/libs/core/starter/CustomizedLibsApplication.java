@@ -1,12 +1,12 @@
 package com.customized.libs.core.starter;
 
 import lombok.extern.slf4j.Slf4j;
-import net.sf.cglib.core.DebuggingClassWriter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 /**
@@ -28,6 +28,7 @@ import org.springframework.context.annotation.ComponentScan;
 })
 @ComponentScan(basePackages = "com.customized.libs")
 @Slf4j
+@EnableScheduling
 public class CustomizedLibsApplication {
 
     // private static final Logger LOGGER = LogManager.getLogger(AnalyzeApplication.class);
