@@ -23,6 +23,14 @@ public @interface CService {
      *
      * @return the suggested component name, if any (or empty String otherwise)
      */
-    @AliasFor(annotation = Component.class)
+    @AliasFor(annotation = Component.class, attribute = "value")
     String value() default "";
+
+    /**
+     * 为什么这里再次定义Component@Value可以用CValue更改容器中bean name？
+     *
+     * @return
+     */
+    @AliasFor(annotation = Component.class, attribute = "value")
+    String cValue() default "";
 }

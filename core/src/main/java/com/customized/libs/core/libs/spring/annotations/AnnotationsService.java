@@ -5,7 +5,7 @@ import javax.annotation.PostConstruct;
 /**
  * @author yan
  */
-@CService
+@CService(cValue = "cAnnotationService")
 public class AnnotationsService {
 
     @PostConstruct

@@ -12,7 +12,7 @@ public class SpringAnnotationTest {
         context.register(AnnotationsService.class);
         context.refresh();
 
-        AnnotationsService service = context.getBean(AnnotationsService.class);
+        AnnotationsService service = context.getBean("cAnnotationService", AnnotationsService.class);
         service.sayHello();
     }
 }
