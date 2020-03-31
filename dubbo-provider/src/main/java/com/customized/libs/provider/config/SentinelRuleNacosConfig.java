@@ -35,7 +35,7 @@ public class SentinelRuleNacosConfig implements InitFunc {
     public void init() {
         Properties defaultProperties = buildProperties(REMOTE_ADDRESS, NACOS_NAMESPACE);
 
-        //  step:0 remoteAddress 代表 Nacos 服务端的地址，groupId 和 dataId 对应 Nacos 中相应配置
+        // step:0 remoteAddress 代表 Nacos 服务端的地址，groupId 和 dataId 对应 Nacos 中相应配置
         ReadableDataSource<String, List<FlowRule>> ruleDs = new NacosDataSource<>(
                 defaultProperties, GROUP_ID, CLIENT_FLOW_RULES_DATA_ID,
                 source -> JSON.parseObject(source, new TypeReference<List<FlowRule>>() {
