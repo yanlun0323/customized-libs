@@ -429,6 +429,12 @@
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-cluster-server-default</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.customized</groupId>
+            <artifactId>spring-expands</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
