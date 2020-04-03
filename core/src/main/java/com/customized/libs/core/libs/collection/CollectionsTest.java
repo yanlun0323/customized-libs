@@ -6,6 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Collection去重复的方式：
+ * <p>
+ * 1、通过LinkedHashSet：去重后能保证顺序
+ * <p>
+ * 2、通过HashSet：去重后不能保证顺序
+ * <p>
+ * 3、HashMap：内部通过LinkedHashMap可保证顺序，实际上1、2均依赖于Map
+ *
  * @author yan
  */
 public class CollectionsTest {
