@@ -1,7 +1,7 @@
 package com.customized.libs.core.libs.rocketmq;
 
 import com.customized.libs.core.libs.rocketmq.producer.CustomizedLibsProducer;
-import com.customized.libs.core.libs.utils.MapBuilder;
+import com.customized.libs.core.utils.MapBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

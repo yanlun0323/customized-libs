@@ -12,6 +12,44 @@ import java.util.function.Supplier;
  */
 public class CollectionUtils {
 
+    private static final Object PRESENT = new Object();
+
+    /**
+     * LinkedHashSet内部用的LinkedHashMap存储
+     *
+     * @param list
+     * @param <T>
+     * @return
+     */
+    public static final <T> List<T> removeDuplicates(List<T> list) {
+        return new ArrayList<>(new LinkedHashSet<>(list));
+    }
+
+    /**
+     * HashSet内部用的HashMap
+     *
+     * @param list
+     * @param <T>
+     * @return
+     */
+    public static final <T> List<T> removeDuplicatesWithHashSet(List<T> list) {
+        return new ArrayList<>(new HashSet<>(list));
+    }
+
+    /**
+     * 利用LinkedHashMap存储转存数据
+     *
+     * @param list
+     * @param <T>
+     * @return
+     */
+    @SuppressWarnings("all")
+    public static final <T> List<T> removeDuplicatesWithHashMap(List<T> list) {
+        Map data = new LinkedHashMap<>(Math.max((int) (list.size() / .75f) + 1, 16));
+        list.forEach(c -> data.put(c, PRESENT));
+        return new LinkedList<>(data.keySet());
+    }
+
     public static boolean isEmpty(Collection<?> dataSource) {
         return null == dataSource || dataSource.isEmpty();
     }

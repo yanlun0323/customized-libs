@@ -13,6 +13,7 @@
         <module>dubbo-provider</module>
         <module>core</module>
         <module>dubbo-api</module>
+        <module>spring-expands</module>
     </modules>
     <packaging>pom</packaging>
 

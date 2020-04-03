@@ -4,11 +4,10 @@ import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.customized.libs.customer.config.DubboNacosConfig;
 import com.customized.libs.customer.service.CommonDubboInvokerService;
+import com.customized.libs.dubbo.api.utils.ExecutorsPool;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.PropertySource;
-
-import java.util.concurrent.Executors;
 
 /**
  * PropertySource提供外部化配置功能
@@ -35,7 +34,7 @@ public class ServiceConsumerBootstrap {
         // 多线程调用的方式，方便查看瞬时QPS
         for (int i = 0; i < 2000; i++) {
             Thread.sleep(RandomUtils.nextLong(100L, 2000L));
-            Executors.newFixedThreadPool(10).submit(() -> invokerService.invoke());
+            ExecutorsPool.FIXED_EXECUTORS.submit(() -> invokerService.invoke());
         }
 
         context.close();

@@ -1,4 +1,4 @@
-package com.customized.libs.core.libs.utils;
+package com.customized.libs.core.utils;
 
 /**
  * Hash算法大全<br>

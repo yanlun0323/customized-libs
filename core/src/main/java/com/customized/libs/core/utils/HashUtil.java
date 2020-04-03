@@ -1,4 +1,6 @@
-package com.customized.libs.core.libs.utils;
+package com.customized.libs.core.utils;
+
+import com.customized.libs.core.utils.ByteUtil;
 
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;

@@ -1,6 +1,6 @@
 package com.customized.libs.core.libs.distributed.id;
 
-import com.customized.libs.core.libs.utils.IdUtil;
+import com.customized.libs.core.utils.IdUtil;
 
 public class IDGenerator {
 
