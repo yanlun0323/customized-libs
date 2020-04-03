@@ -25,18 +25,15 @@ import org.apache.logging.log4j.core.config.plugins.*;
 import org.apache.logging.log4j.core.layout.AbstractStringLayout;
 import org.apache.logging.log4j.core.layout.ByteBufferDestination;
 import org.apache.logging.log4j.core.layout.Encoder;
+import org.apache.logging.log4j.core.layout.PatternLayout.SerializerBuilder;
 import org.apache.logging.log4j.core.layout.PatternSelector;
 import org.apache.logging.log4j.core.pattern.LogEventPatternConverter;
-import org.apache.logging.log4j.core.pattern.PatternFormatter;
 import org.apache.logging.log4j.core.pattern.PatternParser;
 import org.apache.logging.log4j.core.pattern.RegexReplacement;
 import org.apache.logging.log4j.util.PropertiesUtil;
-import org.apache.logging.log4j.util.Strings;
 
 import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -295,177 +292,6 @@ public final class PatternLayout extends AbstractStringLayout {
                 .withHeader(headerPattern)
                 .withFooter(footerPattern)
                 .build();
-    }
-
-    private static class PatternSerializer implements Serializer, Serializer2 {
-
-        private final PatternFormatter[] formatters;
-        private final RegexReplacement replace;
-
-        private PatternSerializer(final PatternFormatter[] formatters, final RegexReplacement replace) {
-            super();
-            this.formatters = formatters;
-            this.replace = replace;
-        }
-
-        @Override
-        public String toSerializable(final LogEvent event) {
-            final StringBuilder sb = getStringBuilder();
-            try {
-                return toSerializable(event, sb).toString();
-            } finally {
-                trimToMaxSize(sb);
-            }
-        }
-
-        @Override
-        public StringBuilder toSerializable(final LogEvent event, final StringBuilder buffer) {
-            final int len = formatters.length;
-            for (int i = 0; i < len; i++) {
-                formatters[i].format(event, buffer);
-            }
-            if (replace != null) { // creates temporary objects
-                String str = buffer.toString();
-                str = replace.format(str);
-                buffer.setLength(0);
-                buffer.append(str);
-            }
-            return buffer;
-        }
-
-        @Override
-        public String toString() {
-            final StringBuilder builder = new StringBuilder();
-            builder.append(super.toString());
-            builder.append("[formatters=");
-            builder.append(Arrays.toString(formatters));
-            builder.append(", replace=");
-            builder.append(replace);
-            builder.append("]");
-            return builder.toString();
-        }
-    }
-
-    public static class SerializerBuilder implements org.apache.logging.log4j.core.util.Builder<Serializer> {
-
-        private Configuration configuration;
-        private RegexReplacement replace;
-        private String pattern;
-        private String defaultPattern;
-        private PatternSelector patternSelector;
-        private boolean alwaysWriteExceptions;
-        private boolean disableAnsi;
-        private boolean noConsoleNoAnsi;
-
-        @Override
-        public Serializer build() {
-            if (Strings.isEmpty(pattern) && Strings.isEmpty(defaultPattern)) {
-                return null;
-            }
-            if (patternSelector == null) {
-                try {
-                    final PatternParser parser = createPatternParser(configuration);
-                    final List<PatternFormatter> list = parser.parse(pattern == null ? defaultPattern : pattern,
-                            alwaysWriteExceptions, disableAnsi, noConsoleNoAnsi);
-                    final PatternFormatter[] formatters = list.toArray(new PatternFormatter[0]);
-                    return new PatternSerializer(formatters, replace);
-                } catch (final RuntimeException ex) {
-                    throw new IllegalArgumentException("Cannot parse pattern '" + pattern + "'", ex);
-                }
-            }
-            return new PatternSelectorSerializer(patternSelector, replace);
-        }
-
-        public SerializerBuilder setConfiguration(final Configuration configuration) {
-            this.configuration = configuration;
-            return this;
-        }
-
-        public SerializerBuilder setReplace(final RegexReplacement replace) {
-            this.replace = replace;
-            return this;
-        }
-
-        public SerializerBuilder setPattern(final String pattern) {
-            this.pattern = pattern;
-            return this;
-        }
-
-        public SerializerBuilder setDefaultPattern(final String defaultPattern) {
-            this.defaultPattern = defaultPattern;
-            return this;
-        }
-
-        public SerializerBuilder setPatternSelector(final PatternSelector patternSelector) {
-            this.patternSelector = patternSelector;
-            return this;
-        }
-
-        public SerializerBuilder setAlwaysWriteExceptions(final boolean alwaysWriteExceptions) {
-            this.alwaysWriteExceptions = alwaysWriteExceptions;
-            return this;
-        }
-
-        public SerializerBuilder setDisableAnsi(final boolean disableAnsi) {
-            this.disableAnsi = disableAnsi;
-            return this;
-        }
-
-        public SerializerBuilder setNoConsoleNoAnsi(final boolean noConsoleNoAnsi) {
-            this.noConsoleNoAnsi = noConsoleNoAnsi;
-            return this;
-        }
-
-    }
-
-    private static class PatternSelectorSerializer implements Serializer, Serializer2 {
-
-        private final PatternSelector patternSelector;
-        private final RegexReplacement replace;
-
-        private PatternSelectorSerializer(final PatternSelector patternSelector, final RegexReplacement replace) {
-            super();
-            this.patternSelector = patternSelector;
-            this.replace = replace;
-        }
-
-        @Override
-        public String toSerializable(final LogEvent event) {
-            final StringBuilder sb = getStringBuilder();
-            try {
-                return toSerializable(event, sb).toString();
-            } finally {
-                trimToMaxSize(sb);
-            }
-        }
-
-        @Override
-        public StringBuilder toSerializable(final LogEvent event, final StringBuilder buffer) {
-            final PatternFormatter[] formatters = patternSelector.getFormatters(event);
-            final int len = formatters.length;
-            for (int i = 0; i < len; i++) {
-                formatters[i].format(event, buffer);
-            }
-            if (replace != null) { // creates temporary objects
-                String str = buffer.toString();
-                str = replace.format(str);
-                buffer.setLength(0);
-                buffer.append(str);
-            }
-            return buffer;
-        }
-
-        @Override
-        public String toString() {
-            final StringBuilder builder = new StringBuilder();
-            builder.append(super.toString());
-            builder.append("[patternSelector=");
-            builder.append(patternSelector);
-            builder.append(", replace=");
-            builder.append(replace);
-            builder.append("]");
-            return builder.toString();
-        }
     }
 
     /**
