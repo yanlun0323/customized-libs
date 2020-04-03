@@ -1,4 +1,4 @@
-package com.customized.libs.core.libs.logger;
+package com.customized.libs.core.utils.logger;
 
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.fastjson.JSON;

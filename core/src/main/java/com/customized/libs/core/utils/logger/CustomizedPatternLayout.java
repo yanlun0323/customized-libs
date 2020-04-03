@@ -1,4 +1,4 @@
-package com.customized.libs.core.libs.logger;
+package com.customized.libs.core.utils.logger;
 
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.spi.LoggingEvent;

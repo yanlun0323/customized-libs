@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<Configuration status="WARN" packages="com.customized.libs.core">
     <Appenders>
         <!--<Loghub name="Loghub"
                 project="aliyun-log4j"
@@ -34,7 +34,7 @@
             </Filters>
         </Loghub>-->
         <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %x[%t] %-5level %logger{36} - %msg%n"/>
         </Console>
 
         <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用-->
