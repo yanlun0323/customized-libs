@@ -1,4 +1,4 @@
-package com.customized.libs.core.utils.logger;
+package com.customized.libs.core.logger;
 
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.fastjson.JSON;
@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author JueYue.Qu
  * @version 1.1去掉getLogId 统一由Layout处理,修复打印多次[]的问题
  */
-public class Logger {
+public class CustomizedLogger {
 
     public static final String LOG_ID_INDEX = "logIdIndex";
     public static final String LOG_ID = "logId";
@@ -22,13 +22,20 @@ public class Logger {
 
     private final org.apache.log4j.Logger logger;
 
-    final static String FQCN = Logger.class.getName();
+    /**
+     * FQCN -> Full Qualified Class Name
+     */
+    final static String FQCN = CustomizedLogger.class.getName();
 
-    private Logger(Class<?> clazz) {
+    public static String getDefaultFormatter() {
+        return CustomizedLogger.getLogId() + "[" + System.currentTimeMillis() + "." + CustomizedLogger.getLogIndex() + "] ";
+    }
+
+    private CustomizedLogger(Class<?> clazz) {
         logger = org.apache.log4j.Logger.getLogger(clazz);
     }
 
-    private Logger() {
+    private CustomizedLogger() {
         logger = org.apache.log4j.Logger.getRootLogger();
 
     }
@@ -37,17 +44,17 @@ public class Logger {
         return logger;
     }
 
-    public static Logger getLogger() {
+    public static CustomizedLogger getLogger() {
         StackTraceElement[] sts = Thread.currentThread().getStackTrace();
-        return new Logger(sts[2].getClass());
+        return new CustomizedLogger(sts[2].getClass());
     }
 
-    public static Logger getLogger(Class<?> clazz) {
-        return new Logger(clazz);
+    public static CustomizedLogger getLogger(Class<?> clazz) {
+        return new CustomizedLogger(clazz);
     }
 
-    public static Logger getRootLogger() {
-        return new Logger();
+    public static CustomizedLogger getRootLogger() {
+        return new CustomizedLogger();
     }
 
     public static String getLogId() {

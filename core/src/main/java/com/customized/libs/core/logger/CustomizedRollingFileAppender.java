@@ -1,4 +1,4 @@
-package com.customized.libs.core.utils.logger;
+package com.customized.libs.core.logger;
 
 import org.apache.logging.log4j.core.*;
 import org.apache.logging.log4j.core.appender.AbstractOutputStreamAppender;

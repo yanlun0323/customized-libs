@@ -31,7 +31,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class CustomizedLibsApplication {
 
-    // private static final Logger LOGGER = LogManager.getLogger(AnalyzeApplication.class);
+    // private static final CustomizedLogger LOGGER = LogManager.getLogger(AnalyzeApplication.class);
 
     public static void main(String[] args) {
 

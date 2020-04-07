@@ -431,6 +431,10 @@
         </dependency>
 
         <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-spring-webmvc-adapter</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.customized</groupId>
             <artifactId>spring-expands</artifactId>
             <version>1.0.1-SNAPSHOT</version>

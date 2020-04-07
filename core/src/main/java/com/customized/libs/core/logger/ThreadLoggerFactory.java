@@ -1,7 +1,8 @@
-package com.customized.libs.core.utils.logger;
+package com.customized.libs.core.logger;
 
 import io.netty.util.concurrent.FastThreadLocal;
 import org.apache.log4j.*;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
