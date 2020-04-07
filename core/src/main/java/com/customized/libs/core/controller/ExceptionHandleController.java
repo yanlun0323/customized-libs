@@ -222,6 +222,12 @@ public class ExceptionHandleController extends BaseController {
         return getJsonResp(entity, HttpStatus.FORBIDDEN);
     }
 
+    /**
+     * String直接返回错误，会导致中文乱码，那么就说明ResponseEntity涉及到中文编码的问题，会自动处理响应数据
+     *
+     * @param e
+     * @return
+     */
     @ExceptionHandler(BlockException.class)
     @ResponseBody
     public ResponseEntity<CommResp> sentinelBlockHandler(BlockException e) {
