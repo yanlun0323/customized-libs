@@ -47,13 +47,13 @@ public class SentinelRuleNacosConfig implements InitFunc {
         // 这个状态配置很重要！！顺序也重要！！（需要在step1之前ApplyState）
 
         /*
-          1、com.alibaba.csp.sentinel.cluster.ClusterStateManager.ClusterStatePropertyListener
+          1、ClusterStatePropertyListener
 
-          2、com.alibaba.csp.sentinel.cluster.ClusterStateManager.setToClient()
+          2、ClusterStateManager.setToClient()
 
-          3、com.alibaba.csp.sentinel.cluster.client.DefaultClusterTokenClient()
+          3、DefaultClusterTokenClient()
 
-          4、初始化 private static final List<ServerChangeObserver> SERVER_CHANGE_OBSERVERS = new ArrayList<>();
+          4、初始化 SERVER_CHANGE_OBSERVERS
 
           5、完成监听器注册，可监听集群模式下的数据源变化
          */
