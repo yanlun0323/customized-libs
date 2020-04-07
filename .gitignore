@@ -27,3 +27,4 @@
 /logs/
 /log/
 /target-generate/*
+/target/*
