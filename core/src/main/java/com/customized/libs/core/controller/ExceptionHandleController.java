@@ -1,9 +1,13 @@
 package com.customized.libs.core.controller;
 
+import com.alibaba.csp.sentinel.slots.block.AbstractRule;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.customized.libs.core.exception.CommonErrCode;
 import com.customized.libs.core.exception.CommonException;
 import com.customized.libs.core.model.CommResp;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -31,6 +35,8 @@ import java.util.regex.Pattern;
 @ControllerAdvice
 @Slf4j
 public class ExceptionHandleController extends BaseController {
+
+    private static Logger logger = LoggerFactory.getLogger(ExceptionHandleController.class);
 
     /**
      * 添加关键字以"|"分割("数据库|异常")
@@ -213,6 +219,16 @@ public class ExceptionHandleController extends BaseController {
     @ResponseBody
     public ResponseEntity<CommResp> handleNoPermissionException(NoPermissionException ex) {
         CommResp entity = new CommResp(FORBIDDEN, ex.getMessage());
+        return getJsonResp(entity, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(BlockException.class)
+    @ResponseBody
+    public ResponseEntity<CommResp> sentinelBlockHandler(BlockException e) {
+        AbstractRule rule = e.getRule();
+        logger.warn("Blocked by Sentinel: {}", rule.toString());
+
+        CommResp entity = new CommResp(FORBIDDEN, DEFAULT_ERROR_MSG);
         return getJsonResp(entity, HttpStatus.FORBIDDEN);
     }
 

@@ -1,10 +1,12 @@
 package com.customized.libs.core.starter;
 
+import com.customized.libs.core.utils.SpringContextLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -46,6 +48,7 @@ public class CustomizedLibsApplication {
 
         log.error("log4j error log", new RuntimeException("Runtime Exception"));
 
-        SpringApplication.run(CustomizedLibsApplication.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(CustomizedLibsApplication.class, args);
+        SpringContextLoader.init(context);
     }
 }

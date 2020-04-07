@@ -406,6 +406,7 @@
             <version>1.9.4</version>
         </dependency>
 
+        <!-- Sentinel 限流组件 -->
         <!-- Alibaba Sentinel Core -->
         <dependency>
             <groupId>com.alibaba.csp</groupId>
@@ -416,6 +417,12 @@
         <dependency>
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-annotation-aspectj</artifactId>
+        </dependency>
+
+        <!-- 支持集群模式限流 -->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-cluster-client-default</artifactId>
         </dependency>
 
         <!-- 客户端需要引入 Transport 模块来与 Sentinel 控制台进行通信 -->
@@ -434,6 +441,24 @@
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-spring-webmvc-adapter</artifactId>
         </dependency>
+
+        <!-- Nacos数据源引入 -->
+        <!-- Keep latest Nacos client version -->
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-spring-context</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.customized</groupId>
             <artifactId>spring-expands</artifactId>

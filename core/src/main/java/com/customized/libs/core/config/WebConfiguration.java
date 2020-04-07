@@ -1,5 +1,7 @@
 package com.customized.libs.core.config;
 
+import com.alibaba.csp.sentinel.adapter.spring.webmvc.SentinelWebInterceptor;
+import com.alibaba.csp.sentinel.adapter.spring.webmvc.config.SentinelWebMvcConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.customized.libs.core.mvc.servlet.DispatcherServlet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
@@ -29,6 +32,15 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Autowired
     private ApplicationContext context;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        SentinelWebMvcConfig config = new SentinelWebMvcConfig();
+        // Enable the HTTP method prefix.
+        config.setHttpMethodSpecify(true);
+        // Add to the interceptor list.
+        registry.addInterceptor(new SentinelWebInterceptor(config)).addPathPatterns("/**");
+    }
 
     @Bean
     public FilterRegistrationBean webFilter() {
