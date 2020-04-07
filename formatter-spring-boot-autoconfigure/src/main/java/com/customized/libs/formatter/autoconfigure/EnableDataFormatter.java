@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Import;
 import java.lang.annotation.*;
 
 /**
+ * Enable Data Formatter注解开启Formatter
+ *
  * @author yan
  */
 @Retention(RetentionPolicy.RUNTIME)

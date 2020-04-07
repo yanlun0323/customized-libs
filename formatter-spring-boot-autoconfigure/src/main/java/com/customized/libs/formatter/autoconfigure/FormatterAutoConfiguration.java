@@ -12,6 +12,10 @@ import org.springframework.context.annotation.Configuration;
 import java.util.logging.Logger;
 
 /**
+ * AutoConfiguration标记Configuration/EnableConfigurationProperties
+ * <p>
+ * EnableConfigurationProperties配合标记ConfigurationProperties的Properties可动态注入属性数据
+ *
  * @author yan
  */
 @Configuration
