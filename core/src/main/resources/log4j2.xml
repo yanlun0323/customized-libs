@@ -43,7 +43,8 @@
             <CustomizedPatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>
         </File>
 
-        <CustomizedRollingFile name="CUSTOMIZED" fileName="logs/customized-libs-customized.log"
+        <!--根据线程分割日志可定义：CustomizedRollingFile-->
+        <RollingFile name="CUSTOMIZED" fileName="logs/customized-libs-customized.log"
                      filePattern="logs/$${date:yyyy-MM}/customized-libs-customized-%d{yyyy-MM-dd}-%i.log">
             <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
@@ -51,7 +52,7 @@
                 <TimeBasedTriggeringPolicy/>
                 <SizeBasedTriggeringPolicy size="100 MB"/>
             </Policies>
-        </CustomizedRollingFile>
+        </RollingFile>
 
         <!-- ${sys:user.home}/这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
         <RollingFile name="INFO" fileName="logs/customized-libs-info.log"
