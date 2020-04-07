@@ -25,6 +25,7 @@ public class FormatterAutoConfiguration {
     private static Logger logger = Logger.getLogger(FormatterAutoConfiguration.class.getSimpleName());
 
     /**
+     * ConditionalOnClass可根据是否引入了对应的JAR来启用不同的格式化服务
      * Data Formatter Builder
      */
     @Bean
