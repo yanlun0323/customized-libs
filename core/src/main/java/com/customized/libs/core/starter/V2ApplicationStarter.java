@@ -2,10 +2,11 @@ package com.customized.libs.core.starter;
 
 import com.customized.libs.core.utils.SpringContextLoader;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -31,24 +32,15 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @ComponentScan(basePackages = "com.customized.libs")
 @Slf4j
 @EnableScheduling
-public class CustomizedLibsApplication {
-
-    // private static final CustomizedLogger LOGGER = LogManager.getLogger(AnalyzeApplication.class);
+public class V2ApplicationStarter {
 
     public static void main(String[] args) {
-
-        // System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
-        // System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "./libs/proxy-target");
-
-
-        log.trace("log4j trace log");
-        log.debug("log4j debug log");
-        log.info("log4j info log");
-        log.warn("log4j warn log");
-
-        log.error("log4j error log", new RuntimeException("Runtime Exception"));
-
-        ConfigurableApplicationContext context = SpringApplication.run(CustomizedLibsApplication.class, args);
+        /*
+         * 实际上SpringApplicationBuilder也是基于new SpringApplication()实现的，build方式提供链式调用结构。
+         */
+        ConfigurableApplicationContext context = new SpringApplicationBuilder(V2ApplicationStarter.class)
+                .web(WebApplicationType.SERVLET)
+                .run(args);
         SpringContextLoader.init(context);
     }
 }
