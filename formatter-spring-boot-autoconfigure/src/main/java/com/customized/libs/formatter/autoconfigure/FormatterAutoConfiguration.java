@@ -5,6 +5,7 @@ import com.customized.libs.formatter.autoconfigure.service.DefaultDataFormatterS
 import com.customized.libs.formatter.autoconfigure.service.FastJSONDataFormatterService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,7 @@ import java.util.logging.Logger;
  */
 @Configuration
 @EnableConfigurationProperties(FormatterProperties.class)
+@ConditionalOnProperty(prefix = "formatter", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class FormatterAutoConfiguration {
 
     private static Logger logger = Logger.getLogger(FormatterAutoConfiguration.class.getSimpleName());
