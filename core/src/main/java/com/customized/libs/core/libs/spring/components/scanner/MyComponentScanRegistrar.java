@@ -1,9 +1,11 @@
 package com.customized.libs.core.libs.spring.components.scanner;
 
+import com.customized.libs.core.libs.spring.components.scanner.expand.MyBeanProxyHandler;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.AnnotationAttributes;
@@ -16,6 +18,9 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * @author yan
+ */
 public class MyComponentScanRegistrar implements ImportBeanDefinitionRegistrar, ResourceLoaderAware, BeanFactoryAware {
 
     private ResourceLoader resourceLoader;
@@ -24,6 +29,12 @@ public class MyComponentScanRegistrar implements ImportBeanDefinitionRegistrar, 
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata metadata, BeanDefinitionRegistry registry) {
+        // Expand MyBeanProxyHandler
+        GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
+        beanDefinition.setBeanClass(MyBeanProxyHandler.class);
+        registry.registerBeanDefinition("beanProxyHandler", beanDefinition);
+
+        // Component Scan
         MyComponentClassPathBeanDefinitionScanner scanner = new MyComponentClassPathBeanDefinitionScanner(registry);
         Set<String> packagesToScan = this.getPackagesToScan(metadata);
         scanner.doScan(packagesToScan.toArray(new String[packagesToScan.size()]));
