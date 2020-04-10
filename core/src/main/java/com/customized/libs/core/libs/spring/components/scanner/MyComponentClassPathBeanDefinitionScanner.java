@@ -41,6 +41,9 @@ public class MyComponentClassPathBeanDefinitionScanner extends ClassPathBeanDefi
                     + "' package. Please check your configuration.");
         }
 
+        // 在覆写doScan这一步RegisterBeanDefinition，同名的bean注册，会直接覆盖原有的beanDefinition。
+        // 那么就能在spring bean容器中获取到代理后的bean对象。
+        // 这里我拿到的实际上是BeanDefinitionHolder对象，实际上是一份beanDefinitionHolder的拷贝，这也是为什么add target beanDefinition后能正确拿到实现类对象的原因。
         GenericBeanDefinition definition;
         for (BeanDefinitionHolder holder : beanDefinitionHolders) {
             definition = (GenericBeanDefinition) holder.getBeanDefinition();
@@ -54,6 +57,8 @@ public class MyComponentClassPathBeanDefinitionScanner extends ClassPathBeanDefi
             beanDefinitionProxy.setBeanClass(MyBeanProxyFactory.class);
 
             String targetBeanName = BeanUtils.buildDefaultBeanName(definition.getBeanClassName());
+            // getRegistry() == org.springframework.beans.factory.support.DefaultListableBeanFactory
+            // beanDefinition存储在org.springframework.beans.factory.support.DefaultListableBeanFactory.beanDefinitionMap对象内
             getRegistry().registerBeanDefinition(targetBeanName, beanDefinitionProxy);
         }
 

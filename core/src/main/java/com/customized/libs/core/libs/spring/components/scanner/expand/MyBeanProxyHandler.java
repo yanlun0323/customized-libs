@@ -13,6 +13,15 @@ public class MyBeanProxyHandler<T> implements InvocationHandler {
 
     private T targetImpl;
 
+    /**
+     * 此处可针对每一个标记@MyComponent的接口实现统计成功率、调用频次、处理耗时等
+     *
+     * @param proxy
+     * @param method
+     * @param args
+     * @return
+     * @throws Throwable
+     */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         long currentTimeMillis = System.currentTimeMillis();
