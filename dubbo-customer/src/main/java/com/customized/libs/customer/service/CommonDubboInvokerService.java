@@ -19,11 +19,8 @@ public class CommonDubboInvokerService {
 
     @SuppressWarnings("all")
     public void invoke() {
-        for (int i = 0; i < 1000; i++) {
-            logger.warn("<! The Invoke Result ==> {}",
-                    this.commonDubboProvider.helloMsg("小马哥（mercyblitz）")
-            );
-        }
+        logger.warn("<! The Invoke Result ==> {}",
+                this.commonDubboProvider.helloMsg("小马哥（mercyblitz）")
+        );
     }
-
 }

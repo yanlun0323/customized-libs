@@ -9,6 +9,8 @@ import org.apache.commons.lang3.RandomUtils;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.PropertySource;
 
+import java.io.IOException;
+
 /**
  * PropertySource提供外部化配置功能
  *
@@ -19,7 +21,9 @@ import org.springframework.context.annotation.PropertySource;
 @SuppressWarnings("all")
 public class ServiceConsumerBootstrap {
 
-    public static void main(String[] args) throws NacosException, InterruptedException {
+    private static final Integer MAX_INVOKE_TIMES = 0;
+
+    public static void main(String[] args) throws NacosException, InterruptedException, IOException {
         DubboNacosConfig.init();
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
@@ -29,14 +33,16 @@ public class ServiceConsumerBootstrap {
 
         context.refresh();
 
+        System.out.println("Service Provider Is Starting...");
+
         CommonDubboInvokerService invokerService = context.getBean(CommonDubboInvokerService.class);
 
         // 多线程调用的方式，方便查看瞬时QPS
-        for (int i = 0; i < 2000; i++) {
+        for (int i = 0; i < MAX_INVOKE_TIMES; i++) {
             Thread.sleep(RandomUtils.nextLong(100L, 2000L));
             ExecutorsPool.FIXED_EXECUTORS.submit(() -> invokerService.invoke());
         }
 
-        context.close();
+        System.in.read();
     }
 }

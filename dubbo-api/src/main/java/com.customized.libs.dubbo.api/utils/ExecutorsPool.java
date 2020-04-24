@@ -10,6 +10,12 @@ import java.util.concurrent.TimeUnit;
  */
 public class ExecutorsPool {
 
+    private static final String FIXED_EXECUTOR = "fixed-executor";
+
+    private static final String CORE_EXECUTOR = "core-executor";
+
+    private static final String SCHEDULE_EXECUTOR = "schedule-executor";
+
     private ExecutorsPool() {
 
     }
@@ -22,19 +28,19 @@ public class ExecutorsPool {
 
     public static ExecutorService FIXED_EXECUTORS = new ThreadPoolExecutor(nThreads * 2, nThreads * 2, 60L, TimeUnit.SECONDS,
             new ArrayBlockingQueue<>(2048),
-            new NamedThreadFactory("fixed-executor"),
-            new ThreadPoolExecutor.CallerRunsPolicy()
+            new NamedThreadFactory(FIXED_EXECUTOR),
+            new CallerRunsPolicyWithReport(FIXED_EXECUTOR)
     );
 
     public static ExecutorService CORE_EXECUTORS = new ThreadPoolExecutor(nThreads * 2, nThreads * 2, 60L, TimeUnit.SECONDS,
             new ArrayBlockingQueue<>(1024),
-            new NamedThreadFactory("core-executor"),
-            new ThreadPoolExecutor.CallerRunsPolicy()
+            new NamedThreadFactory(CORE_EXECUTOR),
+            new CallerRunsPolicyWithReport(CORE_EXECUTOR)
     );
 
     public static ExecutorService SCHEDULE_EXECUTORS = new ThreadPoolExecutor(nThreads * 2, nThreads * 2, 60L, TimeUnit.SECONDS,
             new ArrayBlockingQueue<>(1024),
-            new NamedThreadFactory("schedule-executor"),
-            new ThreadPoolExecutor.CallerRunsPolicy()
+            new NamedThreadFactory(SCHEDULE_EXECUTOR),
+            new CallerRunsPolicyWithReport(SCHEDULE_EXECUTOR)
     );
 }
