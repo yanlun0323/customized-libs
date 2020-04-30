@@ -1,0 +1,2 @@
+UserRegister = com.customized.libs.core.libs.dispatcher.impl.UserRegister
+VIPRegister = com.customized.libs.core.libs.dispatcher.impl.VIPRegister

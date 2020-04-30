@@ -1,0 +1,2 @@
+apple = com.customized.libs.core.libs.dubbo.adaptive.supports.AppleFruitGranter
+banana = com.customized.libs.core.libs.dubbo.adaptive.supports.BananaFruitGranter
