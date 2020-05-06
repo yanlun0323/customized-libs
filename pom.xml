@@ -50,11 +50,6 @@
                 <version>${sentinel.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.alibaba.csp</groupId>
-                <artifactId>sentinel-datasource-nacos</artifactId>
-                <version>1.7.1</version>
-            </dependency>
-            <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
                 <version>4.1.43.Final</version>
@@ -129,11 +124,6 @@
             <dependency>
                 <groupId>com.alibaba.csp</groupId>
                 <artifactId>sentinel-cluster-client-default</artifactId>
-                <version>${sentinel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.csp</groupId>
-                <artifactId>sentinel-datasource-nacos</artifactId>
                 <version>${sentinel.version}</version>
             </dependency>
             <dependency>
