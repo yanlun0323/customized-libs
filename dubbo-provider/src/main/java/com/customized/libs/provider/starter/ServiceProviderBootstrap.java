@@ -19,6 +19,17 @@ import java.io.IOException;
 public class ServiceProviderBootstrap {
 
     public static void main(String[] args) throws IOException, NacosException {
+
+        // Spring cglib生成的代理类
+
+        // System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
+        // System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "./generator/spring-cglib");
+
+        // Dubbo javassit生成的代理类
+
+        // CtClass.debugDump = "./generator/dubbo-javassist";
+
+
         DubboNacosConfig.init();
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
