@@ -1,4 +1,4 @@
-package com.customized.libs.core.libs.netty;
+package com.customized.libs.core.libs.netty.handler;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -18,11 +18,11 @@ public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (msg instanceof ByteBuf) {
             String value = ((ByteBuf) msg).toString(Charset.defaultCharset());
-            System.out.println("服务器端返回的数据:" + value);
+            System.out.println("The Sever Response Data ==> " + value + "\r\n");
         }
 
         AttributeKey<String> key = AttributeKey.valueOf("ServerData");
-        ctx.channel().attr(key).set("客户端处理完毕");
+        ctx.channel().attr(key).set("Client Processing Complete!!");
 
         //把客户端的通道关闭
         ctx.channel().close();

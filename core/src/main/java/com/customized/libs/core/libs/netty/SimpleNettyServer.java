@@ -1,5 +1,8 @@
 package com.customized.libs.core.libs.netty;
 
+import com.customized.libs.core.libs.netty.cfg.NettyConfig;
+import com.customized.libs.core.libs.netty.handler.SimpleServerHandler;
+import com.customized.libs.core.libs.netty.handler.SimpleServerOutHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -16,19 +19,21 @@ import io.netty.handler.codec.string.StringDecoder;
 /**
  * @author yan
  */
-public class TimeServer {
+public class SimpleNettyServer {
 
-    public void bind(int port) throws Exception {
+    private void bind(int port) throws Exception {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workGroup = new NioEventLoopGroup();
         try {
-            ServerBootstrap b = new ServerBootstrap();
+            ServerBootstrap bootstrap = new ServerBootstrap();
+
             // 最大连接数量设定 BACKLOG用于构造服务端套接字ServerSocket对象，标识当服务器请求处理线程全满时，
             // 用于临时存放已完成三次握手的请求的队列的最大长度。如果未设置或所设置的值小于1，Java将使用默认值50。
-            b.group(bossGroup, workGroup).channel(NioServerSocketChannel.class).
-                    option(ChannelOption.SO_BACKLOG, 1024).childHandler(new ChildChannelHandler());
+            bootstrap.group(bossGroup, workGroup).channel(NioServerSocketChannel.class).
+                    option(ChannelOption.SO_BACKLOG, 128).childHandler(new ChildChannelHandler());
+
             // 绑定端口，等待同步成功
-            ChannelFuture f = b.bind(port).sync();
+            ChannelFuture f = bootstrap.bind(port).sync();
             f.channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();
@@ -39,7 +44,7 @@ public class TimeServer {
     private class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
 
         /**
-         * 执行顺序 DelimiterBasedFrameDecoder --> StringDecoder --> TimeServerHandler
+         * 执行顺序 DelimiterBasedFrameDecoder --> StringDecoder --> SimpleServerHandler
          * 1. 对于channelInboundHandler,总是会从传递事件的开始，向链表末尾方向遍历执行可用的inboundHandler。
          * <p>
          * 2. 对于channelOutboundHandler，总是会从write事件执行的开始，向链表头部方向遍历执行可用的outboundHandler。
@@ -52,21 +57,23 @@ public class TimeServer {
          */
         @Override
         protected void initChannel(SocketChannel socketChannel) {
-            ByteBuf delimiter = Unpooled.copiedBuffer("$_$".getBytes());
-            socketChannel.pipeline().addFirst(new TimeServerOutHandler());
+            ByteBuf delimiter = Unpooled.copiedBuffer(NettyConfig.DEFAULT_DELIMITER.getBytes());
 
-            // 如果TimeServerOutHandler添加在了InHandler后面，则Read事件执行完后，像链表头方向遍历，则找不到该Handler
+            socketChannel.pipeline().addFirst(new SimpleServerOutHandler());
+
+            // 如果TimeServerOutHandler添加在了InHandler后面，则Read事件执行完后，向链表头方向遍历，则找不到该Handler
             // 为什么要按照方向区分Read/Write事件？此处完全可以Read事件遍历方向为表头->表尾；Write事件遍历方向表尾->表头
             socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(Integer.MAX_VALUE, delimiter));
             socketChannel.pipeline().addLast(new StringDecoder());
-            socketChannel.pipeline().addLast(new TimeServerHandler());
+
+            socketChannel.pipeline().addLast(new SimpleServerHandler());
         }
     }
 
     public static void main(String[] args) {
-        int port = 9000;
+        int port = 9888;
         try {
-            new TimeServer().bind(port);
+            new SimpleNettyServer().bind(port);
         } catch (Exception e) {
             e.printStackTrace();
         }
