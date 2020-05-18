@@ -1,6 +1,9 @@
 package com.customized.libs.customer.starter;
 
+import com.alibaba.dubbo.config.model.ApplicationModel;
+import com.alibaba.dubbo.config.model.ConsumerModel;
 import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
+import com.alibaba.dubbo.rpc.service.EchoService;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.customized.libs.customer.config.DubboNacosConfig;
 import com.customized.libs.customer.service.CommonDubboInvokerService;
@@ -44,6 +47,13 @@ public class ServiceConsumerBootstrap {
         System.out.println("Service Consumer get all Spring bean names begin...\r\n");
         context.getBeanFactory().getBeanNamesIterator().forEachRemaining(System.out::println);
         System.out.println("Service Consumer get all Spring bean names end...\r\n");
+
+
+        // 通过ApplicationModel获取ConsumerModel对象，内部存储着Reference对象，实现了CommonDubboProvider及EchoService
+        ConsumerModel consumerModel = ApplicationModel.
+                getConsumerModel("com.customized.libs.dubbo.api.CommonDubboProvider:1.0");
+        EchoService echoService = (EchoService) consumerModel.getProxyObject();
+        System.out.println("Dubbo Consumer Echo Test ==> " + echoService.$echo("get!!"));
 
         // 多线程调用的方式，方便查看瞬时QPS
         for (int i = 0; i < MAX_INVOKE_TIMES; i++) {
