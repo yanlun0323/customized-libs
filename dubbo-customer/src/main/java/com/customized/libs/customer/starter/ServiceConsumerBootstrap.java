@@ -7,6 +7,7 @@ import com.customized.libs.customer.service.CommonDubboInvokerService;
 import com.customized.libs.dubbo.api.utils.ExecutorsPool;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 
 import java.io.IOException;
@@ -16,26 +17,33 @@ import java.io.IOException;
  *
  * @author yan
  */
-@EnableDubbo
+@EnableDubbo(scanBasePackages = "com.customized.libs.customer.service")
+@ComponentScan(value = {"com.customized.libs.customer"})
 @PropertySource(value = "classpath:/consumer-config.properties")
 @SuppressWarnings("all")
 public class ServiceConsumerBootstrap {
 
-    private static final Integer MAX_INVOKE_TIMES = 0;
+    private static final Integer MAX_INVOKE_TIMES = 5;
 
     public static void main(String[] args) throws NacosException, InterruptedException, IOException {
         DubboNacosConfig.init();
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.register(ServiceConsumerBootstrap.class);
-        context.register(CommonDubboInvokerService.class);
-        context.register(DubboNacosConfig.class);
 
+        // 此处初始化有2种方案：
+        // 1、context.scan；2、context.register
+
+        // context.scan("com.customized.libs.customer");
+        context.register(ServiceConsumerBootstrap.class);
         context.refresh();
 
         System.out.println("Service Consumer Is Starting...");
 
-        CommonDubboInvokerService invokerService = context.getBean(CommonDubboInvokerService.class);
+        CommonDubboInvokerService invokerService = (CommonDubboInvokerService) context.getBean("commonDubboInvokerService");
+
+        System.out.println("Service Consumer get all Spring bean names begin...\r\n");
+        context.getBeanFactory().getBeanNamesIterator().forEachRemaining(System.out::println);
+        System.out.println("Service Consumer get all Spring bean names end...\r\n");
 
         // 多线程调用的方式，方便查看瞬时QPS
         for (int i = 0; i < MAX_INVOKE_TIMES; i++) {
