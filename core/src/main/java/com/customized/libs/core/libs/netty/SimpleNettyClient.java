@@ -3,9 +3,8 @@ package com.customized.libs.core.libs.netty;
 
 import com.customized.libs.core.libs.netty.cfg.NettyConfig;
 import com.customized.libs.core.libs.netty.handler.SimpleClientHandler;
+import com.customized.libs.core.libs.netty.message.NettyMessageWrapper;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
@@ -38,10 +37,9 @@ public class SimpleNettyClient {
             @Override
             protected void initChannel(NioSocketChannel ch) {
                 // 当定义了delimiter后，则客户端/服务端对应的通讯都需要通过这个结尾，否则会出现通讯异常（不抛出任何异常，很诧异）
-                ByteBuf delimiter = Unpooled.copiedBuffer(NettyConfig.DEFAULT_DELIMITER.getBytes());
                 // 字符串编码，一定要加在SimpleClientHandler前面
                 ch.pipeline().addLast(new StringEncoder());
-                ch.pipeline().addLast(new DelimiterBasedFrameDecoder(Integer.MAX_VALUE, delimiter));
+                ch.pipeline().addLast(new DelimiterBasedFrameDecoder(Integer.MAX_VALUE, NettyConfig.DEFAULT_DELIMITER));
                 ch.pipeline().addLast(new SimpleClientHandler());
             }
         });
@@ -57,8 +55,7 @@ public class SimpleNettyClient {
 
             // 第四步 连接服务器
             ChannelFuture future = client.connect("localhost", 9888).sync();
-            future.channel().writeAndFlush(data);
-            future.channel().writeAndFlush(NettyConfig.DEFAULT_DELIMITER);
+            future.channel().writeAndFlush(NettyMessageWrapper.build(data));
             future.channel().closeFuture().sync();
 
             //接收服务端返回的数据

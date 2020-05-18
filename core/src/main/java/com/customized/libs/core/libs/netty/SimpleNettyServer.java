@@ -4,8 +4,6 @@ import com.customized.libs.core.libs.netty.cfg.NettyConfig;
 import com.customized.libs.core.libs.netty.handler.SimpleServerHandler;
 import com.customized.libs.core.libs.netty.handler.SimpleServerOutHandler;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -57,13 +55,11 @@ public class SimpleNettyServer {
          */
         @Override
         protected void initChannel(SocketChannel socketChannel) {
-            ByteBuf delimiter = Unpooled.copiedBuffer(NettyConfig.DEFAULT_DELIMITER.getBytes());
-
             socketChannel.pipeline().addFirst(new SimpleServerOutHandler());
 
             // 如果TimeServerOutHandler添加在了InHandler后面，则Read事件执行完后，向链表头方向遍历，则找不到该Handler
             // 为什么要按照方向区分Read/Write事件？此处完全可以Read事件遍历方向为表头->表尾；Write事件遍历方向表尾->表头
-            socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(Integer.MAX_VALUE, delimiter));
+            socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(Integer.MAX_VALUE, NettyConfig.DEFAULT_DELIMITER));
             socketChannel.pipeline().addLast(new StringDecoder());
 
             socketChannel.pipeline().addLast(new SimpleServerHandler());

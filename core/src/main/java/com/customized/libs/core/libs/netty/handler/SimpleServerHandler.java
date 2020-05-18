@@ -1,6 +1,6 @@
 package com.customized.libs.core.libs.netty.handler;
 
-import com.customized.libs.core.libs.netty.cfg.NettyConfig;
+import com.customized.libs.core.libs.netty.message.NettyMessageWrapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -18,9 +18,9 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
 
         String body = (String) msg;
         try {
-            System.out.println("The Simple Server Receive Order : " + (++counter) + " ==> " + body + "\r\n");
-            String currentTime = System.currentTimeMillis() + NettyConfig.DEFAULT_DELIMITER;
-            ByteBuf resp = Unpooled.copiedBuffer(currentTime.getBytes());
+            System.out.println("The Simple Server Receive Order : " + (++counter) + " ==> " + body);
+            byte[] theRespData = NettyMessageWrapper.build2Bytes(System.currentTimeMillis());
+            ByteBuf resp = Unpooled.copiedBuffer(theRespData);
             ctx.write(resp);
         } catch (Exception e) {
             e.printStackTrace();
