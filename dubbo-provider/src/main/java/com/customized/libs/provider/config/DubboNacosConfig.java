@@ -21,6 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
@@ -66,9 +68,25 @@ public class DubboNacosConfig {
         String content = configService.getConfig(dataId, group, 5000);
         logger.warn("<<< Dubbo-Provider Nacos Config ==> \r\n{}", content);
 
+
+        Properties props = new Properties();
+        try {
+            InputStream input = new ByteArrayInputStream(content.getBytes("utf-8"));
+            props.load(input);
+        } catch (java.io.IOException e) {
+            logger.warn(">>> load precessing error!", e);
+        }
+
         configService.addListener(dataId, group, new Listener() {
             @Override
             public void receiveConfigInfo(String configInfo) {
+                Properties props = new Properties();
+                try {
+                    InputStream input = new ByteArrayInputStream(configInfo.getBytes("utf-8"));
+                    props.load(input);
+                } catch (java.io.IOException e) {
+                    logger.warn(">>> load precessing error!", e);
+                }
                 logger.warn("<<<Dubbo-Provider Nacos Receive Data ==> \r\n{}", configInfo);
             }
 

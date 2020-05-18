@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.boot.context.properties.source.ConfigurationPropertyName;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 
@@ -23,6 +24,8 @@ public class SpringAutowiredTest implements EnvironmentAware, BeanFactoryAware {
         System.out.println(this.beanFactory.getClass().getSimpleName());
         System.out.println(JSON.toJSONString(this.environment.getActiveProfiles()));
         System.out.println(JSON.toJSONString(this.environment.getDefaultProfiles()));
+
+        ConfigurationPropertyName.of("xxxx");
     }
 
     @Override
