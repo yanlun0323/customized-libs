@@ -33,7 +33,7 @@ public class ServiceConsumerBootstrap {
 
         context.refresh();
 
-        System.out.println("Service Provider Is Starting...");
+        System.out.println("Service Consumer Is Starting...");
 
         CommonDubboInvokerService invokerService = context.getBean(CommonDubboInvokerService.class);
 
