@@ -16,6 +16,7 @@
         <module>spring-expands</module>
         <module>formatter-spring-boot-autoconfigure</module>
         <module>formatter-spring-boot-starter</module>
+        <module>shardingsphere</module>
     </modules>
     <packaging>pom</packaging>
 
