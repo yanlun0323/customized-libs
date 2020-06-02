@@ -33,5 +33,5 @@ spring:
         username: root
 logging:
   file:
-    name: shardingsphere-learning.log
+    name: logs/shardingsphere-learning.log
   config: classpath:logback-spring.xml
