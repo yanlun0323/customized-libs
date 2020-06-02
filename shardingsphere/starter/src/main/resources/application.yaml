@@ -1,0 +1,37 @@
+mybatis:
+    config-location: classpath:mybatis-configuration.xml
+    mapper-locations: classpath*:mapper/**/*.xml
+    type-aliases-package: com.customized.libs.shardingsphere.entity
+server:
+    port: 8003
+spring:
+    profiles:
+      active: @activatedProperties@
+    application:
+        name: alibaba-sentinel-datasource-nacos
+    cloud:
+        sentinel:
+            datasource:
+                ds:
+                    nacos:
+                        dataId: ${spring.application.name}-sentinel
+                        groupId: DEFAULT_GROUP
+                        rule-type: flow
+                        server-addr: ${spring.cloud.nacos.server-addr}
+            transport:
+                dashboard: http://172.19.80.13:29091
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        hikari:
+            connection-timeout: 30000
+            idle-timeout: 600000
+            maximum-pool-size: 20
+            minimum-idle: 10
+        password: qJwP6NZ1dFx!QXTL
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:mysql://127.0.0.1:3306/diego?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: root
+logging:
+  file:
+    name: shardingsphere-learning.log
+  config: classpath:logback-spring.xml
