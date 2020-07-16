@@ -1,5 +1,7 @@
 package com.customized.libs.core.utils;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.math.BigDecimal;
 
 /**
@@ -11,6 +13,11 @@ public class CommonUtils {
         for (long i = 0; i < 2000000L; i++) {
             System.out.println(fen2Yuan(i));
         }
+    }
+
+    public static String buildLogString(String text, String delimiter, Integer length) {
+        String delimiters = StringUtils.leftPad(delimiter, length, delimiter);
+        return String.format("%s%s%s", delimiters, text, delimiters);
     }
 
     /**
