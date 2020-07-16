@@ -36,6 +36,7 @@ public class DisruptorRunner {
         EventFactory<LongEvent> eventEventFactory = new LongEventFactory();
 
         //RingBuffer大小必须是2的N次方
+        // todo tips: 1024 * 1024会导致OOM，因为Disruptor作为一个环形队列，在对象没有被覆盖之前是一直存在的。
         int ringBufferSize = 1024 * 1024;
 
         Disruptor<LongEvent> disruptor = new Disruptor<>(eventEventFactory, ringBufferSize, disruptorThreadFactory,
@@ -58,9 +59,16 @@ public class DisruptorRunner {
         }
 
         start = System.currentTimeMillis();
-        for (int i = 0; i < 1000000; i++) {
-            long finalStart = start;
-            EXECUTOR_SERVICE.submit(() -> DisruptorEventPublisher.publishEvent(disruptor, finalStart));
+        for (int i = 0; i < 5000000; i++) {
+            try {
+                Thread.sleep(RandomUtils.nextInt(10, 200));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            for (int j = 0; j < 700; j++) {
+                long finalStart = start;
+                EXECUTOR_SERVICE.submit(() -> DisruptorEventPublisher.publishEvent(disruptor, finalStart));
+            }
         }
         System.out.println(System.currentTimeMillis() - start);
 
