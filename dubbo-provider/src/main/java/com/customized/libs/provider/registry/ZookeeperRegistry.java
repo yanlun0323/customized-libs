@@ -25,6 +25,9 @@ public class ZookeeperRegistry {
     @Value("${_zookeeper.address}")
     private String zookeeperAddress;
 
+    @Value("${dubbo.protocol.port}")
+    private Integer dubboPort;
+
     private CuratorFramework client;
 
     @PostConstruct
@@ -46,10 +49,11 @@ public class ZookeeperRegistry {
     }
 
     public void createChildPath() throws Exception {
-        String data = String.format("ip:%s", MachineUtil.getFristIPv4());
+        String ipAddress = MachineUtil.getFristIPv4();
+        String data = String.format("%s:%s", ipAddress, dubboPort);
         client.create().creatingParentContainersIfNeeded() // 递归创建所需父节点
                 .withMode(CreateMode.EPHEMERAL)
-                .forPath("/setup", data.getBytes()); // 目录及内容
+                .forPath("/server/" + String.format("%s:%s", ipAddress, dubboPort), data.getBytes()); // 目录及内容
         logger.warn("==> Dubbo Provider Zookeeper Monitor Starting...");
     }
 }

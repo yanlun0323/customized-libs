@@ -1,5 +1,6 @@
 package com.customized.libs.customer.zookeeper.subscribe;
 
+import com.alibaba.dubbo.common.utils.StringUtils;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -14,6 +15,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
 @Component
@@ -24,6 +29,8 @@ public class ZookeeperRegistrySubscribe {
 
     private static CountDownLatch watch = new CountDownLatch(1);
 
+    private Map<String, Set<String>> NAMESPACE_CACHE = new ConcurrentHashMap<>(128);
+
     @Value("${_zookeeper.address}")
     private String zookeeperAddress;
 
@@ -33,7 +40,7 @@ public class ZookeeperRegistrySubscribe {
     public void setup() throws Exception {
         this.buildClient();
 
-        this.zkWatch("/setup");
+        this.zkWatch("/server");
     }
 
     private void buildClient() {
@@ -64,12 +71,16 @@ public class ZookeeperRegistrySubscribe {
                 switch (event.getType()) {
                     case NODE_ADDED:
                         logger.warn(path + "节点添加" + eventData.getPath() + "\t添加数据为：" + new String(eventData.getData()));
+                        refreshNamespace(eventData.getPath(), new String(eventData.getData()));
                         break;
                     case NODE_UPDATED:
-                        logger.warn(eventData.getPath() + "节点数据更新\t更新数据为：" + new String(eventData.getData()) + "\t版本为：" + eventData.getStat().getVersion());
+                        logger.warn(eventData.getPath() + "节点数据更新\t更新数据为："
+                                + new String(eventData.getData()) + "\t版本为：" + eventData.getStat().getVersion());
+                        refreshNamespace(eventData.getPath(), new String(eventData.getData()));
                         break;
                     case NODE_REMOVED:
                         logger.warn(eventData.getPath() + "节点被删除");
+                        refreshNamespace(eventData.getPath(), null);
                         break;
                     default:
                         break;
@@ -79,5 +90,20 @@ public class ZookeeperRegistrySubscribe {
 
         treeCache.start();
         watch.await();  //如果不执行 watch.countDown()，进程会一致阻塞在 watch.await()
+    }
+
+    private void refreshNamespace(String key, String data) {
+        logger.warn("==> Dubbo Server Namesapce Register..");
+
+        Set<String> childs = NAMESPACE_CACHE.getOrDefault(key, new LinkedHashSet<>());
+
+        if (StringUtils.isEmpty(data)) {
+            NAMESPACE_CACHE.remove(key);
+        } else {
+            childs.add(data);
+            NAMESPACE_CACHE.putIfAbsent(key, childs);
+        }
+
+        logger.warn("==> Current Namesapce: {}", NAMESPACE_CACHE);
     }
 }
