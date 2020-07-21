@@ -16,6 +16,8 @@ class LRUCache<K, V> extends LinkedHashMap<K, V> {
 
     /**
      * 传递进来最多能缓存多少数据
+     * <p>
+     * LinkedHashMap accessOrder按照访问顺序排序
      *
      * @param cacheSize 缓存大小
      */
