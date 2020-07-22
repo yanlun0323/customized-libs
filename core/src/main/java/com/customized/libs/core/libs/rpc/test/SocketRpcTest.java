@@ -6,6 +6,7 @@ import com.customized.libs.core.libs.rpc.socket.base.SocketRpcClientImpl;
 import com.customized.libs.core.libs.rpc.socket.base.SocketRpcServerImpl;
 
 import java.net.InetSocketAddress;
+import java.util.stream.IntStream;
 
 public class SocketRpcTest {
 
@@ -25,9 +26,9 @@ public class SocketRpcTest {
         client.connect(new InetSocketAddress("127.0.0.1", port));
 
         Tinterface tinterface = (Tinterface) client.getInvoker(Tinterface.class);
-        System.out.println(tinterface.send("rpc 测试用例0"));
-        System.out.println(tinterface.send("rpc 测试用例1"));
-        System.out.println(tinterface.send("rpc 测试用例2"));
-        System.out.println(tinterface.send("rpc 测试用例3"));
+
+        IntStream.range(0, 20).forEach(c -> {
+            System.out.println(tinterface.send("Rpc ==> Data " + c));
+        });
     }
 }
