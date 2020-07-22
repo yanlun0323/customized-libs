@@ -46,7 +46,7 @@ public class SocketRpcServerImpl implements RpcServer {
 
             // 启动监听
             while (true) {
-                this.doInvokeListener(socket);
+                this.doInvokeListener(socket.accept());
             }
         } catch (Exception ex) {
             log.error("==> Open Socket Port " + port + " Failed!!", ex);
@@ -62,15 +62,13 @@ public class SocketRpcServerImpl implements RpcServer {
     }
 
     @SuppressWarnings("unchecked")
-    private void doInvokeListener(ServerSocket socket) {
+    private void doInvokeListener(Socket client) {
         SOCKET_RPC_EXECUTORS.submit(() -> {
             ObjectInputStream ois = null;
             ObjectOutputStream oos = null;
-            Socket client = null;
 
             // service + method + parameterTypes + args
             try {
-                client = socket.accept();
                 ois = new ObjectInputStream(client.getInputStream());
                 String serviceName = ois.readUTF();
                 String methodName = ois.readUTF();
