@@ -31,6 +31,18 @@ public class FindTopNWordsJMHTest {
         }
     }
 
+    /**
+     * # Run complete. Total time: 00:00:56
+     * <p>
+     * Benchmark                    Mode  Cnt        Score       Error  Units
+     * <p>
+     * FindTopNWordsJMHTest.v0Test  avgt    5  3759217.832 ± 75222.611  us/op
+     * <p>
+     * FindTopNWordsJMHTest.v1Test  avgt    5   728391.427 ± 17325.065  us/op
+     *
+     * @param args
+     * @throws RunnerException
+     */
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(FindTopNWordsJMHTest.class.getSimpleName())
