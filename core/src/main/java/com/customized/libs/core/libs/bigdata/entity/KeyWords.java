@@ -38,7 +38,7 @@ public class KeyWords implements Comparable<KeyWords> {
      */
     @Override
     public int compareTo(KeyWords o) {
-        return Integer.compare(this.total, o.getTotal());
+        return Integer.compare(this.getTotal(), o.getTotal());
     }
 
     @Override

@@ -39,14 +39,14 @@ public class FindTop100Words {
         // 数据分组
         List<List<String>> items = splitWords(words, 500);
 
-        // System.out.println(items);
+        System.out.println(items);
         List<Map<String, Integer>> statistics = doStatistics(items);
 
-        // System.out.println(statistics);
+        System.out.println(statistics);
 
         Map<String, Integer> topN = getTopN(statistics, 100);
 
-        // System.out.println(topN);
+        System.out.println(topN);
     }
 
     /**

@@ -23,7 +23,7 @@ public class FindTop100WordsV2 {
      * @param args
      */
     public static void main(String[] args) {
-        doGetTopNWords(5000);
+        doGetTopNWords(50000);
     }
 
     public static void doGetTopNWords(Integer elementSize) {
@@ -36,14 +36,14 @@ public class FindTop100WordsV2 {
         // 数据分组
         List<List<String>> items = splitWords(words, 500);
 
-        // System.out.println(items);
+        System.out.println(items);
         List<Map<String, Integer>> statistics = doStatistics(items);
 
-        // System.out.println(statistics);
+        System.out.println(statistics);
 
         List<KeyWords> topN = getTopN(statistics, 100);
 
-        // System.out.println(topN);
+        System.out.println(topN);
     }
 
     /**
@@ -58,16 +58,29 @@ public class FindTop100WordsV2 {
      */
     public static List<KeyWords> getTopN(List<Map<String, Integer>> statistics, Integer top) {
         PriorityQueue<KeyWords> maxHeap = new PriorityQueue<>();
+
         for (int i = 0; i < statistics.size(); i++) {
             for (Map.Entry<String, Integer> entry : statistics.get(i).entrySet()) {
-                maxHeap.add(new KeyWords(entry.getKey(), entry.getValue()));
-                if (maxHeap.size() > top) {
+                KeyWords keyWords = new KeyWords(entry.getKey(), entry.getValue());
+
+                if (maxHeap.size() < top) {
+                    maxHeap.add(keyWords);
+                } else if (maxHeap.peek().getTotal() < keyWords.getTotal()) {
+                    //如果堆顶元素 < 新数，则删除堆顶，加入新数入堆
                     maxHeap.poll();
+                    maxHeap.add(keyWords);
                 }
             }
         }
 
-        return new ArrayList<>(maxHeap);
+        KeyWords[] result = new KeyWords[top];
+        int index = maxHeap.size();
+        for (int i = 0; i < top && !maxHeap.isEmpty(); i++) {
+            KeyWords data = maxHeap.poll();
+            result[--index] = data;
+        }
+
+        return Arrays.asList(result);
     }
 
     /**
