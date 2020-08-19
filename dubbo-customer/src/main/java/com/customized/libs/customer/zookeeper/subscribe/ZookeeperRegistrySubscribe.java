@@ -103,6 +103,7 @@ public class ZookeeperRegistrySubscribe {
             childs.add(data);
             NAMESPACE_CACHE.putIfAbsent(key, childs);
         }
+        watch.countDown();
 
         logger.warn("==> Current Namesapce: {}", NAMESPACE_CACHE);
     }

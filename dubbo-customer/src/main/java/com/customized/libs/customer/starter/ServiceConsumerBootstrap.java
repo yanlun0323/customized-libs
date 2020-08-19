@@ -26,7 +26,7 @@ import java.io.IOException;
 @SuppressWarnings("all")
 public class ServiceConsumerBootstrap {
 
-    private static final Integer MAX_INVOKE_TIMES = 500;
+    private static final Integer MAX_INVOKE_TIMES = 20000;
 
     public static void main(String[] args) throws NacosException, InterruptedException, IOException {
         DubboNacosConfig.init();
@@ -57,7 +57,7 @@ public class ServiceConsumerBootstrap {
 
         // 多线程调用的方式，方便查看瞬时QPS
         for (int i = 0; i < MAX_INVOKE_TIMES; i++) {
-            //  Thread.sleep(RandomUtils.nextLong(100L, 2000L));
+            Thread.sleep(RandomUtils.nextLong(10L, 50L));
             ExecutorsPool.FIXED_EXECUTORS.submit(() -> invokerService.invoke());
         }
 
