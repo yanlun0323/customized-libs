@@ -1,4 +1,4 @@
-package com.customized.rpc.server;
+package com.customized.rpc.core.bean.registry;
 
 import com.customized.rpc.core.annotations.Service;
 import org.slf4j.Logger;
@@ -27,6 +27,12 @@ public class ServiceRegistry implements ApplicationContextAware {
         return (T) SERVICES.get(className);
     }
 
+    /**
+     * 静态方法服务注册
+     *
+     * @param interfaceClass
+     * @param implClass
+     */
     public static void doRegister(Class<?> interfaceClass, Class<?> implClass) {
         try {
             SERVICES.putIfAbsent(interfaceClass.getCanonicalName(), implClass.newInstance());
@@ -36,10 +42,16 @@ public class ServiceRegistry implements ApplicationContextAware {
         }
     }
 
+    /**
+     * 基于Spring动态注入
+     *
+     * @param applicationContext
+     * @throws BeansException
+     */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         Map<String, Object> services = applicationContext.getBeansWithAnnotation(Service.class);
-        if (services != null && services.size() > 0) {
+        if (services.size() > 0) {
             for (Object service : services.values()) {
                 String interfaceName = service.getClass().getAnnotation(Service.class).value().getName();
                 SERVICES.putIfAbsent(interfaceName, service);

@@ -1,5 +1,6 @@
 package com.customized.rpc.server;
 
+import com.customized.rpc.core.bean.registry.ServiceRegistry;
 import com.customized.rpc.core.protocol.RpcRequest;
 import com.customized.rpc.core.protocol.RpcResponse;
 import org.slf4j.Logger;

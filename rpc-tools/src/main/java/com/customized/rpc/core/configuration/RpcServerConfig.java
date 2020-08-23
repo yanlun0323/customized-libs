@@ -1,7 +1,7 @@
 package com.customized.rpc.core.configuration;
 
 import com.customized.rpc.server.RpcServer;
-import com.customized.rpc.server.ServiceRegistry;
+import com.customized.rpc.core.bean.registry.ServiceRegistry;
 import com.customized.rpc.server.bio.BioRpcServer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
