@@ -1,0 +1,2 @@
+loggerProvider=com.customized.log.trace.dubbo.filter.LogTraceProviderFilter
+loggerConsumer=com.customized.log.trace.dubbo.filter.LogTraceConsumerFilter

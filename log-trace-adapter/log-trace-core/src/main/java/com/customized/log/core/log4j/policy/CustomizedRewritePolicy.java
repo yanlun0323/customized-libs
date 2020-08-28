@@ -45,8 +45,8 @@ public final class CustomizedRewritePolicy implements RewritePolicy {
     public LogEvent rewrite(final LogEvent source) {
         StringMap contextData = (StringMap) source.getContextData();
         HashMap<String, String> contextMap = Maps.newHashMap(contextData.toMap());
-        contextMap.put(Context.TRACEID, contextMap.containsKey(Context.TRACEID)
-                ? contextMap.get(Context.TRACEID) : "");
+        contextMap.put(Context.TRACE_ID, contextMap.containsKey(Context.TRACE_ID)
+                ? contextMap.get(Context.TRACE_ID) : "");
 
         contextData = ContextDataFactory.createContextData(); // replace with new instance
         if (contextMap != null) {

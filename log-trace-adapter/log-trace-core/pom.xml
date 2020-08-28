@@ -23,6 +23,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>2.6.5</version>
+        </dependency>
+
        <!-- * compile （编译）
         compile是默认的范围；如果没有提供一个范围，那该依赖的范围就是编译范围。编译范围依赖在所有的classpath中可用，同时它们也会被打包。
         * provided （已提供）

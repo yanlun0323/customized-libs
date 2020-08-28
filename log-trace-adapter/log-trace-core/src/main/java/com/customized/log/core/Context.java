@@ -7,7 +7,7 @@ import org.apache.logging.log4j.ThreadContext;
  */
 public class Context {
 
-    public final static String TRACEID = "_traceid";
+    public final static String TRACE_ID = "_traceid";
 
     private static final ThreadLocal<Request> REQUEST_LOCAL = new ThreadLocal<Request>();
 
@@ -16,7 +16,7 @@ public class Context {
             return;
         }
         // log4j上线稳重添加traceId
-        ThreadContext.put(TRACEID, request.getTraceId());
+        ThreadContext.put(TRACE_ID, request.getTraceId());
         REQUEST_LOCAL.set(request);
     }
 
