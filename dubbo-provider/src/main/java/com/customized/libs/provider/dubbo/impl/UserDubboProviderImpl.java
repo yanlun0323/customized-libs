@@ -37,4 +37,9 @@ public class UserDubboProviderImpl implements UserDubboProvider {
         logger.warn("<<< {}", tag);
         return String.format("%s %s!", defaultKeywords, userName);
     }
+
+    @Override
+    public String getUser() {
+        return String.format("%s %s!", defaultKeywords, "empty");
+    }
 }
