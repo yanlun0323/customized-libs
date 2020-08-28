@@ -4,6 +4,7 @@ import com.alibaba.csp.sentinel.adapter.spring.webmvc.SentinelWebInterceptor;
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.config.SentinelWebMvcConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.customized.libs.core.mvc.servlet.DispatcherServlet;
+import com.customized.log.spring.webmvc.GlobalLogTraceInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -40,6 +41,8 @@ public class WebConfiguration implements WebMvcConfigurer {
         config.setHttpMethodSpecify(true);
         // Add to the interceptor list.
         registry.addInterceptor(new SentinelWebInterceptor(config)).addPathPatterns("/**");
+
+        registry.addInterceptor(new GlobalLogTraceInterceptor()).addPathPatterns("/**");
     }
 
     @Bean
