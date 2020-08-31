@@ -38,6 +38,9 @@ public class DynamicThreadPool implements InitializingBean {
     @Value("${" + MAXIMUM_POOL_SIZE_KEY + "}")
     private Integer maximumPoolSize;
 
+    @Value("${sentinel.dashboard}")
+    private String dashboard;
+
     @Override
     public void afterPropertiesSet() {
         this.initialization();
