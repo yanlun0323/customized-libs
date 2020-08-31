@@ -5,5 +5,5 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.customized.libs.com/schema/apollo http://www.customized.libs.com/schema/apollo.xsd">
 
-    <apollo:config namespaces="application" order="1"/>
+    <apollo:config namespaces="application,XFT_DEV.sentinel" order="1"/>
 </beans>

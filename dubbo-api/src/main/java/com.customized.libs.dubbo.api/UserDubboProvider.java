@@ -6,4 +6,6 @@ package com.customized.libs.dubbo.api;
 public interface UserDubboProvider {
 
     String getUser(String userName);
+
+    String getUser();
 }

@@ -21,6 +21,7 @@
         <module>rpc-tools</module>
         <module>object-size-fetcher</module>
         <module>blade-web</module>
+        <module>log-trace-adapter</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -243,8 +244,10 @@
             <id>dev</id>
             <properties>
                 <zookeeper.address>172.19.80.10:2181</zookeeper.address>
-                <rocketmq.namesrv.addr>172.19.100.48:9876</rocketmq.namesrv.addr>
+                <rocketmq.namesrv.addr>172.19.80.13:9876</rocketmq.namesrv.addr>
                 <logger.level>DEBUG</logger.level>
+                <apollo.meta.service>http://172.19.100.129:8080</apollo.meta.service>
+                <filters.env>test</filters.env>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -254,15 +257,17 @@
             <id>test</id>
             <properties>
                 <zookeeper.address>172.19.80.13:2181</zookeeper.address>
-                <rocketmq.namesrv.addr>172.19.100.48:9876</rocketmq.namesrv.addr>
+                <rocketmq.namesrv.addr>172.19.80.13:9876</rocketmq.namesrv.addr>
                 <logger.level>DEBUG</logger.level>
+                <apollo.meta.service>http://172.19.100.129:8080</apollo.meta.service>
+                <filters.env>test</filters.env>
             </properties>
         </profile>
         <profile>
             <id>pressure</id>
             <properties>
                 <zookeeper.address>172.19.100.44:2181</zookeeper.address>
-                <rocketmq.namesrv.addr>172.19.100.48:9876</rocketmq.namesrv.addr>
+                <rocketmq.namesrv.addr>172.19.80.13:9876</rocketmq.namesrv.addr>
                 <logger.level>INFO</logger.level>
             </properties>
         </profile>
