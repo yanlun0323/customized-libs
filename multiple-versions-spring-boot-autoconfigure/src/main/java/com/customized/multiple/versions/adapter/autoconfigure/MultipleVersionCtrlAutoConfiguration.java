@@ -5,7 +5,12 @@ import com.customized.multiple.versions.adapter.discover.ApiVersionCodeDiscovere
 import com.customized.multiple.versions.adapter.discover.impl.DefaultApiVersionCodeDiscoverer;
 import com.customized.multiple.versions.adapter.discover.impl.HeaderApiVersionCodeDiscoverer;
 import com.customized.multiple.versions.adapter.handler.MultiVersionRequestMappingHandlerMapping;
+import org.springframework.beans.factory.ListableBeanFactory;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +23,12 @@ import java.util.logging.Logger;
  * AutoConfiguration标记Configuration/EnableConfigurationProperties
  * <p>
  * EnableConfigurationProperties配合标记ConfigurationProperties的Properties可动态注入属性数据
+ * <p>
+ * 可以看到WebMvcAutoConfiguration包含条件注解@ConditionalOnMissingBean(WebMvcConfigurationSupport.class)，那么当我们继承了WebMvcConfigurationSupport，则SpringBoot自定义的实现失效
  *
  * @author yan
+ * @see org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration.EnableWebMvcConfiguration
+ * @see org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration
  */
 @Configuration
 @EnableConfigurationProperties(MultipleVersionProperties.class)
@@ -29,9 +38,14 @@ import java.util.logging.Logger;
         havingValue = "true",
         matchIfMissing = true
 )
-public class MultipleVersionCtrlAutoConfiguration extends WebMvcConfigurationSupport {
+public class MultipleVersionCtrlAutoConfiguration extends WebMvcAutoConfiguration.EnableWebMvcConfiguration {
 
     private static Logger logger = Logger.getLogger(MultipleVersionCtrlAutoConfiguration.class.getSimpleName());
+
+    public MultipleVersionCtrlAutoConfiguration(ObjectProvider<WebMvcProperties> mvcPropertiesProvider
+            , ObjectProvider<WebMvcRegistrations> mvcRegistrationsProvider, ListableBeanFactory beanFactory) {
+        super(mvcPropertiesProvider, mvcRegistrationsProvider, beanFactory);
+    }
 
     /**
      * 重写RequestMappingHandlerMapping，支持API多版本处理
