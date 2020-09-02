@@ -140,6 +140,7 @@ public class MultiVersionRequestMappingHandlerMapping extends RequestMappingHand
         }
     }
 
+    @SuppressWarnings("unchecked")
     private HandlerMethod lookupMultiVersionApiHandlerMethod(String lookupPath, HttpServletRequest request) {
         String version = tryResolveApiVersion(request);
         if (StringUtils.hasText(version)) {
@@ -149,12 +150,13 @@ public class MultiVersionRequestMappingHandlerMapping extends RequestMappingHand
                 if (logger.isDebugEnabled()) {
                     logger.debug("lookup ApiVersion HandlerMethod of {} {}", key, handlerMethods);
                 }
+                Map<String, Object> env = new HashMap<>(16);
+                env.put("version", VersionsUtil.convertVersion(version));
+
                 return Objects.requireNonNull(handlerMethods.entrySet().stream()
-                        .filter(m -> {
-                            Map<String, Object> env = new HashMap<>(16);
-                            env.put("version", VersionsUtil.convertVersion(version));
-                            return (boolean) AviatorEvaluator.execute(m.getKey(), env);
-                        }).findFirst().orElse(null)).getValue();
+                        .filter(m -> (boolean) AviatorEvaluator.execute(m.getKey(), env))
+                        .findFirst().orElse(null))
+                        .getValue();
             }
             logger.debug("lookup ApiVersion HandlerMethod of {} failed", key);
         }

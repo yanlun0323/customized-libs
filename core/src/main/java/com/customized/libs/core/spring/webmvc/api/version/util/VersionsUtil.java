@@ -10,11 +10,13 @@ import java.math.BigDecimal;
 public class VersionsUtil {
 
     public static Double convertVersion(String version) {
-        String[] components = version.split("\\.");
         Double sum = 0D;
+        if (StringUtils.isNotBlank(version)) {
+            String[] components = version.split("\\.");
 
-        for (int i = 0; i < components.length; i++) {
-            sum += Integer.valueOf(components[i]) * getDisplacementMultiple(i);
+            for (int i = 0; i < components.length; i++) {
+                sum += Integer.valueOf(components[i]) * getDisplacementMultiple(i);
+            }
         }
         return sum;
     }
@@ -32,11 +34,15 @@ public class VersionsUtil {
     }
 
     private static String keepFirstPointChar(String data) {
-        String[] components = data.split("\\.");
+        StringBuilder target = new StringBuilder();
 
-        StringBuilder target = new StringBuilder(components[0] + ".");
-        for (int i = 1; i < components.length; i++) {
-            target.append(components[i]);
+        if (StringUtils.isNotBlank(data)) {
+            String[] components = data.split("\\.");
+
+            target.append(components[0]).append(".");
+            for (int i = 1; i < components.length; i++) {
+                target.append(components[i]);
+            }
         }
 
         return StringUtils.removeEnd(target.toString(), ".");
