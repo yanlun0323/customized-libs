@@ -523,9 +523,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.googlecode.aviator</groupId>
-            <artifactId>aviator</artifactId>
-            <version>4.2.0</version>
+            <groupId>com.customized</groupId>
+            <artifactId>multiple-versions-spring-boot-starter</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

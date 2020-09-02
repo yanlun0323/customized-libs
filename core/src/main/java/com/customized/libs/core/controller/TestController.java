@@ -1,6 +1,6 @@
 package com.customized.libs.core.controller;
 
-import com.customized.libs.core.spring.webmvc.api.version.annotations.Version;
+import com.customized.multiple.versions.adapter.annotations.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;

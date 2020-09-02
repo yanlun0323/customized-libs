@@ -29,7 +29,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication(exclude = {
         MongoDataAutoConfiguration.class, MongoAutoConfiguration.class
 })
-@ComponentScan(basePackages = "com.customized.libs")
+@ComponentScan(basePackages = {"com.customized.libs", "com.customized.multiple.versions"})
 @Slf4j
 @EnableScheduling
 public class V2ApplicationStarter {
