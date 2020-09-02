@@ -1,11 +1,9 @@
 package com.customized.libs.core.controller;
 
+import com.customized.libs.core.spring.webmvc.api.version.annotations.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -19,5 +17,17 @@ public class TestController {
     public Object test(@RequestBody Map requestBody) {
         LOGGER.info("requestBody={}", requestBody);
         return requestBody;
+    }
+
+    @Version("version>=5")
+    @RequestMapping(value = "bingo", method = RequestMethod.GET)
+    public Object testV1() {
+        return "v1";
+    }
+
+    @Version("version<5")
+    @RequestMapping(value = "bingo", method = RequestMethod.GET)
+    public Object testV2() {
+        return "v2";
     }
 }
