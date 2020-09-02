@@ -1,4 +1,4 @@
-package com.customized.libs.core.spring.webmvc.api.version.annotations;
+package com.customized.multiple.versions.adapter.annotations;
 
 import org.springframework.web.bind.annotation.Mapping;
 

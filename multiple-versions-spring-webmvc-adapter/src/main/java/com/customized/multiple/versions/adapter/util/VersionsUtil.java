@@ -1,4 +1,4 @@
-package com.customized.libs.core.spring.webmvc.api.version.util;
+package com.customized.multiple.versions.adapter.util;
 
 import org.apache.commons.lang3.StringUtils;
 

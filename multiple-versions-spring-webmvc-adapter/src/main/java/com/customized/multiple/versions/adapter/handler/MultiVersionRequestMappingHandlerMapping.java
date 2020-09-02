@@ -1,8 +1,8 @@
-package com.customized.libs.core.spring.webmvc.api.version.handler;
+package com.customized.multiple.versions.adapter.handler;
 
-import com.customized.libs.core.spring.webmvc.api.version.annotations.Version;
-import com.customized.libs.core.spring.webmvc.api.version.discover.ApiVersionCodeDiscoverer;
-import com.customized.libs.core.spring.webmvc.api.version.util.VersionsUtil;
+import com.customized.multiple.versions.adapter.annotations.Version;
+import com.customized.multiple.versions.adapter.discover.ApiVersionCodeDiscoverer;
+import com.customized.multiple.versions.adapter.util.VersionsUtil;
 import com.googlecode.aviator.AviatorEvaluator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

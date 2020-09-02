@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.customized.libs.core.spring.webmvc.api.version.condition;
+package com.customized.multiple.versions.adapter.condition;
 
-import com.customized.libs.core.spring.webmvc.api.version.util.VersionsUtil;
+import com.customized.multiple.versions.adapter.util.VersionsUtil;
 import com.googlecode.aviator.AviatorEvaluator;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.Nullable;

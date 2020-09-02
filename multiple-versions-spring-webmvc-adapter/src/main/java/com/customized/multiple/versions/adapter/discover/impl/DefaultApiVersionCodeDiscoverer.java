@@ -1,6 +1,6 @@
-package com.customized.libs.core.spring.webmvc.api.version.discover.impl;
+package com.customized.multiple.versions.adapter.discover.impl;
 
-import com.customized.libs.core.spring.webmvc.api.version.discover.ApiVersionCodeDiscoverer;
+import com.customized.multiple.versions.adapter.discover.ApiVersionCodeDiscoverer;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;

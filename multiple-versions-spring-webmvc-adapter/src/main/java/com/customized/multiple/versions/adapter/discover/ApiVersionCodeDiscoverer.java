@@ -1,4 +1,4 @@
-package com.customized.libs.core.spring.webmvc.api.version.discover;
+package com.customized.multiple.versions.adapter.discover;
 
 import javax.servlet.http.HttpServletRequest;
 

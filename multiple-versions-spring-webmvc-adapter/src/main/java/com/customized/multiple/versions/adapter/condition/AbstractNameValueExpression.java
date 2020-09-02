@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.customized.libs.core.spring.webmvc.api.version.condition;
+package com.customized.multiple.versions.adapter.condition;
 
-import com.customized.libs.core.spring.webmvc.api.version.util.VersionsUtil;
+import com.customized.multiple.versions.adapter.util.VersionsUtil;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.mvc.condition.NameValueExpression;
 
