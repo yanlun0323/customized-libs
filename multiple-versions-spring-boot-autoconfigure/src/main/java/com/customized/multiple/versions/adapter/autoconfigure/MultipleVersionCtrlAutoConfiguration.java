@@ -14,7 +14,6 @@ import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.logging.Logger;
@@ -35,8 +34,7 @@ import java.util.logging.Logger;
 @ConditionalOnProperty(
         prefix = MultipleVersionsConstants.VERSIONS_PROPERTIES_PREFIX,
         name = "enabled",
-        havingValue = "true",
-        matchIfMissing = true
+        havingValue = "true"
 )
 public class MultipleVersionCtrlAutoConfiguration extends WebMvcAutoConfiguration.EnableWebMvcConfiguration {
 
