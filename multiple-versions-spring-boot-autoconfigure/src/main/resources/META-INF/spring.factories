@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.customized.multiple.versions.adapter.autoconfigure.MultipleVersionCtrlAutoConfiguration
+  com.customized.multiple.versions.adapter.autoconfigure.web.servlet.config.annotation.MultipleVersionDelegatingWebMvcConfiguration
