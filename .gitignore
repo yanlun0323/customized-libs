@@ -28,3 +28,5 @@
 /log/
 /target-generate/*
 /target/*
+
+/core/src/main/java/com/customized/libs/core/libs/httpclient/*

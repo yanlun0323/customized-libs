@@ -1,5 +1,6 @@
 package com.customized.libs.core.starter;
 
+import com.customized.libs.core.libs.spring.bean.EnableBeanPostConfig;
 import com.customized.libs.core.utils.SpringContextLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.WebApplicationType;
@@ -29,9 +30,13 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication(exclude = {
         MongoDataAutoConfiguration.class, MongoAutoConfiguration.class
 })
+/**
+ * EnableAutoConfiguration依然依赖于ComponentScan组件的basePackages标记
+ */
 @ComponentScan(basePackages = {"com.customized.libs", "com.customized.multiple.versions"})
 @Slf4j
 @EnableScheduling
+@EnableBeanPostConfig
 public class V2ApplicationStarter {
 
     public static void main(String[] args) {

@@ -25,6 +25,7 @@
         <module>multiple-versions-spring-boot-starter</module>
         <module>multiple-versions-spring-boot-autoconfigure</module>
         <module>multiple-versions-spring-webmvc-adapter</module>
+        <module>communication</module>
     </modules>
     <packaging>pom</packaging>
 
