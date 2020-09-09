@@ -19,15 +19,21 @@ public class TestController {
         return requestBody;
     }
 
-    @Version("version>=5")
+    @Version("version>=1.2.5 && version <=1.2.7")
     @RequestMapping(value = "bingo", method = RequestMethod.GET)
     public Object testV1() {
-        return "v1";
+        return ">=1.2.5 && <=1.2.7";
     }
 
-    @Version("version<5")
+    @Version("version<1.2.5")
     @RequestMapping(value = "bingo", method = RequestMethod.GET)
     public Object testV2() {
-        return "v2";
+        return "<1.2.5";
+    }
+
+    @Version("version>1.2.7")
+    @RequestMapping(value = "bingo", method = RequestMethod.GET)
+    public Object testV3() {
+        return ">1.2.7";
     }
 }
