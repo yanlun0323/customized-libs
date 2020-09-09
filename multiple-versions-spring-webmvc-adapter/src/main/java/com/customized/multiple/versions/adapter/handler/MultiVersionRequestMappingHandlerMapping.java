@@ -131,7 +131,8 @@ public class MultiVersionRequestMappingHandlerMapping extends RequestMappingHand
             Map<String, HandlerMethod> handlerMethods = HANDLER_METHOD_MAP
                     .getOrDefault(key, new HashMap<>(16));
             HandlerMethod handlerMethod = super.createHandlerMethod(handler, method);
-            handlerMethods.putIfAbsent(version.value(), handlerMethod);
+            handlerMethods.putIfAbsent(VersionsUtil
+                    .convertVersionWithExpression(version.value()), handlerMethod);
 
             HANDLER_METHOD_MAP.putIfAbsent(key, handlerMethods);
             if (logger.isDebugEnabled()) {
@@ -151,7 +152,7 @@ public class MultiVersionRequestMappingHandlerMapping extends RequestMappingHand
                     logger.debug("lookup ApiVersion HandlerMethod of {} {}", key, handlerMethods);
                 }
                 Map<String, Object> env = new HashMap<>(16);
-                env.put("version", VersionsUtil.convertVersion(version));
+                env.put("version", VersionsUtil.fastConvertVersion(version));
 
                 return Objects.requireNonNull(handlerMethods.entrySet().stream()
                         .filter(m -> (boolean) AviatorEvaluator.execute(m.getKey(), env))
