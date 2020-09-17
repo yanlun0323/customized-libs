@@ -1,0 +1,4 @@
+filter0=com.customized.libs.core.libs.dubbo.filter.C0FilterImpl
+filter1=com.customized.libs.core.libs.dubbo.filter.C1FilterImpl
+default1=com.customized.libs.core.libs.dubbo.filter.CDefault1FilterImpl
+default0=com.customized.libs.core.libs.dubbo.filter.CDefault0FilterImpl

@@ -527,6 +527,11 @@
             <artifactId>multiple-versions-spring-boot-starter</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.jslint4java</groupId>
+            <artifactId>jslint4java</artifactId>
+            <version>LATEST</version>
+        </dependency>
     </dependencies>
 
     <build>
