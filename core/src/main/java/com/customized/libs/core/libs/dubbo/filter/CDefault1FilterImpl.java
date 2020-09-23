@@ -6,7 +6,7 @@ import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.customized.libs.core.libs.dubbo.invoker.CInvoker;
 
-@Activate(order = 1)
+@Activate(order = 1, group = "dubbo-filter")
 public class CDefault1FilterImpl implements CFilter {
 
     @Override

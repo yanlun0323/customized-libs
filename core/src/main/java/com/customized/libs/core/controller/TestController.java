@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+/**
+ * @author yan
+ */
 @RestController
 @RequestMapping("/test")
-public class TestController {
+public class TestController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TestController.class);
 
@@ -22,18 +25,18 @@ public class TestController {
     @Version("version>=1.2.5 && version <=1.2.7")
     @RequestMapping(value = "bingo", method = RequestMethod.GET)
     public Object testV1() {
-        return ">=1.2.5 && <=1.2.7";
+        return getMessageResp(">=1.2.5 && <=1.2.7");
     }
 
     @Version("version<1.2.5")
     @RequestMapping(value = "bingo", method = RequestMethod.GET)
     public Object testV2() {
-        return "<1.2.5";
+        return getMessageResp("<1.2.5");
     }
 
     @Version("version>1.2.7")
     @RequestMapping(value = "bingo", method = RequestMethod.GET)
     public Object testV3() {
-        return ">1.2.7";
+        return getMessageResp(">1.2.7");
     }
 }

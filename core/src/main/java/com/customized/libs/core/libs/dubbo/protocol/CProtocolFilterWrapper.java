@@ -70,7 +70,7 @@ public class CProtocolFilterWrapper {
                 return rt;
             }
         };
-        CInvoker target = CProtocolFilterWrapper.buildInvokerChain(zero, "filter", "");
+        CInvoker target = CProtocolFilterWrapper.buildInvokerChain(zero, "filter", "dubbo-filter");
         Result rt = target.invoke(null);
         System.out.println(rt);
 
