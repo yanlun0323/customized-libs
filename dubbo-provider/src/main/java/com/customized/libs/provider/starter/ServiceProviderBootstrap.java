@@ -35,6 +35,7 @@ public class ServiceProviderBootstrap {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.register(ServiceProviderBootstrap.class);
+        context.register(com.alipay.sofa.tracer.plugins.zipkin.initialize.ZipkinReportRegisterBean.class);
         context.refresh();
 
         DubboFallbackRegistry.setProviderFallback(new CustomizedDubboFallback());

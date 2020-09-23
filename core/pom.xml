@@ -19,6 +19,10 @@
             <!-- SOFA Boot 版本统一管控 -->
         </dependency>
         <dependency>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>sofa-tracer-httpclient-plugin</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.zipkin.zipkin2</groupId>
             <artifactId>zipkin</artifactId>
         </dependency>
@@ -458,12 +462,6 @@
         </dependency>
 
         <!-- Nacos数据源引入 -->
-        <!-- Keep latest Nacos client version -->
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-client</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-spring-context</artifactId>

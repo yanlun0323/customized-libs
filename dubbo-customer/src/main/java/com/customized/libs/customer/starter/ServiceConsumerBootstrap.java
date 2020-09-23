@@ -26,7 +26,7 @@ import java.io.IOException;
 @SuppressWarnings("all")
 public class ServiceConsumerBootstrap {
 
-    private static final Integer MAX_INVOKE_TIMES = 20000;
+    private static final Integer MAX_INVOKE_TIMES = 50;
 
     public static void main(String[] args) throws NacosException, InterruptedException, IOException {
         DubboNacosConfig.init();
@@ -38,6 +38,7 @@ public class ServiceConsumerBootstrap {
 
         // context.scan("com.customized.libs.customer");
         context.register(ServiceConsumerBootstrap.class);
+        context.register(com.alipay.sofa.tracer.plugins.zipkin.initialize.ZipkinReportRegisterBean.class);
         context.refresh();
 
         System.out.println("Service Consumer Is Starting...");

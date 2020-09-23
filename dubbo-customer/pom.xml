@@ -14,10 +14,38 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>tracer-sofa-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alipay.sofa</groupId>
+                    <artifactId>sofa-tracer-dubbo-plugin</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>io.zipkin.zipkin2</groupId>
+            <artifactId>zipkin</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin.reporter2</groupId>
+            <artifactId>zipkin-reporter</artifactId>
+        </dependency>
+
+        <!--1、如果是单独只需要 dubbo 埋点，则可以仅引入 dubbo 插件依赖，下面是  2.6.x 版本插件-->
+        <dependency>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>sofa-tracer-dubbo-2.6.x-plugin</artifactId>
+            <version>3.0.7</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-spring-context</artifactId>
         </dependency>
-        
+
         <!-- Dubbo Nacos registry dependency -->
         <dependency>
             <groupId>com.alibaba</groupId>
