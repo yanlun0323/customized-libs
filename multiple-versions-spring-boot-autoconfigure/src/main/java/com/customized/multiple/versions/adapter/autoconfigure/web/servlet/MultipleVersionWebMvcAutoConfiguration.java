@@ -16,9 +16,9 @@
 
 package com.customized.multiple.versions.adapter.autoconfigure.web.servlet;
 
-import com.customized.multiple.versions.adapter.autoconfigure.web.servlet.config.annotation.MultipleVersionDelegatingWebMvcConfiguration;
 import com.customized.multiple.versions.adapter.autoconfigure.MultipleVersionProperties;
 import com.customized.multiple.versions.adapter.autoconfigure.constants.MultipleVersionsConstants;
+import com.customized.multiple.versions.adapter.autoconfigure.web.servlet.config.annotation.MultipleVersionDelegatingWebMvcConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.BeanFactory;
@@ -43,8 +43,8 @@ import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoC
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.filter.OrderedFormContentFilter;
 import org.springframework.boot.web.servlet.filter.OrderedHiddenHttpMethodFilter;
-import org.springframework.boot.web.servlet.filter.OrderedHttpPutFormContentFilter;
 import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ResourceLoaderAware;
@@ -74,8 +74,8 @@ import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextListener;
+import org.springframework.web.filter.FormContentFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
-import org.springframework.web.filter.HttpPutFormContentFilter;
 import org.springframework.web.filter.RequestContextFilter;
 import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.config.annotation.*;
@@ -140,15 +140,16 @@ public class MultipleVersionWebMvcAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(HiddenHttpMethodFilter.class)
+    @ConditionalOnProperty(prefix = "spring.mvc.hiddenmethod.filter", name = "enabled", matchIfMissing = false)
     public OrderedHiddenHttpMethodFilter hiddenHttpMethodFilter() {
         return new OrderedHiddenHttpMethodFilter();
     }
 
     @Bean
-    @ConditionalOnMissingBean(HttpPutFormContentFilter.class)
-    @ConditionalOnProperty(prefix = "spring.mvc.formcontent.putfilter", name = "enabled", matchIfMissing = true)
-    public OrderedHttpPutFormContentFilter httpPutFormContentFilter() {
-        return new OrderedHttpPutFormContentFilter();
+    @ConditionalOnMissingBean(FormContentFilter.class)
+    @ConditionalOnProperty(prefix = "spring.mvc.formcontent.filter", name = "enabled", matchIfMissing = true)
+    public OrderedFormContentFilter formContentFilter() {
+        return new OrderedFormContentFilter();
     }
 
     // Defined as a nested config to ensure WebMvcConfigurer is not read when not
@@ -585,14 +586,13 @@ public class MultipleVersionWebMvcAutoConfiguration {
                     registration.resourceChain(properties.isCache()));
         }
 
-        private void configureResourceChain(ResourceProperties.Chain properties,
-                                            ResourceChainRegistration chain) {
+        private void configureResourceChain(ResourceProperties.Chain properties, ResourceChainRegistration chain) {
             Strategy strategy = properties.getStrategy();
+            if (properties.isCompressed()) {
+                chain.addResolver(new EncodedResourceResolver());
+            }
             if (strategy.getFixed().isEnabled() || strategy.getContent().isEnabled()) {
                 chain.addResolver(getVersionResourceResolver(strategy));
-            }
-            if (properties.isGzipped()) {
-                chain.addResolver(new GzipResourceResolver());
             }
             if (properties.isHtmlApplicationCache()) {
                 chain.addTransformer(new AppCacheManifestTransformer());

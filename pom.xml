@@ -32,11 +32,18 @@
     <name>customized-libs</name>
     <description>Customized libs for Spring Boot</description>
 
-    <parent>
+    <!--<parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.2.RELEASE</version>
-        <relativePath/> <!-- loorelativent from repository -->
+        <relativePath/> &lt;!&ndash; loorelativent from repository &ndash;&gt;
+    </parent>-->
+
+    <parent>
+        <groupId>com.alipay.sofa</groupId>
+        <artifactId>sofaboot-dependencies</artifactId>
+        <version>3.1.5</version>
+        <relativePath></relativePath>
     </parent>
 
     <properties>
@@ -195,6 +202,23 @@
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-recipes</artifactId>
                 <version>2.12.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.redislabs</groupId>
+                <artifactId>lettusearch</artifactId>
+                <version>2.4.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.zipkin.zipkin2</groupId>
+                <artifactId>zipkin</artifactId>
+                <version>2.11.12</version>
+            </dependency>
+            <dependency>
+                <groupId>io.zipkin.reporter2</groupId>
+                <artifactId>zipkin-reporter</artifactId>
+                <version>2.7.13</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
