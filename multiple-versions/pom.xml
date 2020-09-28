@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>libs</artifactId>
+        <groupId>com.customized</groupId>
+        <version>1.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>multiple-versions</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>multiple-versions-spring-boot-starter</module>
+        <module>multiple-versions-spring-webmvc-adapter</module>
+        <module>multiple-versions-spring-boot-autoconfigure</module>
+    </modules>
+
+    <properties>
+        <servlet.api.version>2.5</servlet.api.version>
+        <apache.commons.version>3.8.1</apache.commons.version>
+        <spring.webmvc.version>5.1.14.RELEASE</spring.webmvc.version>
+        <google.aviator.version>4.2.0</google.aviator.version>
+        <spring.boot.dependencies.version>2.1.6.RELEASE</spring.boot.dependencies.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.dependencies.version}</version>
+                <!-- type定义很重要(default jar) -->
+                <type>pom</type>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>${servlet.api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${spring.webmvc.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache.commons.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.googlecode.aviator</groupId>
+                <artifactId>aviator</artifactId>
+                <version>${google.aviator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.customized</groupId>
+                <artifactId>multiple-versions-spring-boot-autoconfigure</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.customized</groupId>
+                <artifactId>multiple-versions-spring-webmvc-adapter</artifactId>
+                <version>1.0.0-RELEASE</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
