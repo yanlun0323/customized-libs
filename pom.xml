@@ -14,18 +14,14 @@
         <module>core</module>
         <module>dubbo-api</module>
         <module>spring-expands</module>
-        <module>formatter-spring-boot-autoconfigure</module>
-        <module>formatter-spring-boot-starter</module>
         <module>shardingsphere</module>
         <module>smart-proxy</module>
         <module>rpc-tools</module>
         <module>object-size-fetcher</module>
         <module>blade-web</module>
         <module>log-trace-adapter</module>
-        <module>multiple-versions-spring-boot-starter</module>
-        <module>multiple-versions-spring-boot-autoconfigure</module>
-        <module>multiple-versions-spring-webmvc-adapter</module>
-        <module>communication</module>
+        <module>multiple-versions</module>
+        <module>formatter</module>
     </modules>
     <packaging>pom</packaging>
 
