@@ -14,7 +14,7 @@
 
     <properties>
         <apache.commons.version>3.8.1</apache.commons.version>
-        <spring.webmvc.version>5.1.8.RELEASE</spring.webmvc.version>
+        <spring.webmvc.version>5.1.14.RELEASE</spring.webmvc.version>
         <google.aviator.version>4.2.0</google.aviator.version>
     </properties>
 
