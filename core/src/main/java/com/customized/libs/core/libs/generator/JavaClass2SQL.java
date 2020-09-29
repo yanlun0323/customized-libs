@@ -56,7 +56,7 @@ public class JavaClass2SQL {
     };
 
 
-    private static final String SCAN_PACKAGES = "com.customized.libs.libs.generator.pojo";
+    private static final String SCAN_PACKAGES = "com.customized.libs.core.libs.generator.pojo";
 
     public static void main(String[] args) throws IOException {
         List<String> sql = scanAndGeneratorSQL(SCAN_PACKAGES, "`sms`.", "Example");

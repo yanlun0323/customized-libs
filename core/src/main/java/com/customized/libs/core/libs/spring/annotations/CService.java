@@ -9,6 +9,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Annotation派生
+ *
  * @author yan
  */
 @Target(ElementType.TYPE)
