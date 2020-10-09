@@ -18,11 +18,13 @@
             <artifactId>tracer-sofa-boot-starter</artifactId>
             <!-- SOFA Boot 版本统一管控 -->
         </dependency>
+        <!--
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>sofa-boot-autoconfigure</artifactId>
             <version>3.4.4.1-SNAPSHOT</version>
         </dependency>
+        -->
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>sofa-tracer-httpclient-plugin</artifactId>
@@ -593,7 +595,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.customized.libs.starter.CustomizedLibsApplication</mainClass>
+                    <mainClass>com.customized.libs.core.starter.V2ApplicationStarter</mainClass>
                 </configuration>
                 <executions>
                     <execution>

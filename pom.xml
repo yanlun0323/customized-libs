@@ -220,6 +220,24 @@
 
     <dependencies>
 
+        <!--
+        spring5.0开始支持@Indexed来提升进应用启动速度，通过Annotation Processing Tools API在编译时来构建索引文件，本质是通过静态化来解决启动时Bean扫描加载的时间长的问题。
+
+        what is Annotation Processing Tools API？
+
+        不是什么黑科技，之前的系列也讲过，有点类似lombok。
+
+        哪些资源会被索引？
+
+        默认支持标记为Component及其派生注解（Controller、Repository、Service、Configuration等）的类，当然也可以是非spring bean（@Indexed修饰的类）。
+
+        注：如果已经是spring bean（Component修饰的类，并且Component已经被标记为@Indexed）了就没必要再标记@Indexed，否则索引文件会再追加一个相同的，感觉这是个bug
+        -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-indexer</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <profiles>
