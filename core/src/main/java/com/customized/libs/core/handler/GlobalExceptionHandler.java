@@ -1,7 +1,8 @@
-package com.customized.libs.core.controller;
+package com.customized.libs.core.handler;
 
 import com.alibaba.csp.sentinel.slots.block.AbstractRule;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.customized.libs.core.controller.BaseController;
 import com.customized.libs.core.exception.CommonErrCode;
 import com.customized.libs.core.exception.CommonException;
 import com.customized.libs.core.model.CommResp;
@@ -32,11 +33,14 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 
+/**
+ * @author yan
+ */
 @ControllerAdvice
 @Slf4j
-public class ExceptionHandleController extends BaseController {
+public class GlobalExceptionHandler extends BaseController {
 
-    private static Logger logger = LoggerFactory.getLogger(ExceptionHandleController.class);
+    private static Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * 添加关键字以"|"分割("数据库|异常")
