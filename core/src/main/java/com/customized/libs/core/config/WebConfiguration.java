@@ -21,14 +21,15 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.servlet.Filter;
+import javax.servlet.Servlet;
 
 /**
+ * TODO dubbo启动，则不需要@ImportResouce导入Spring-MVC.xml配置
+ *
  * @author yan
  */
 @Configuration
-/**
- * TODO dubbo启动，则不需要@ImportResouce导入Spring-MVC.xml配置
- */
 @ImportResource("classpath:spring-mvc.xml")
 public class WebConfiguration implements WebMvcConfigurer {
 
@@ -50,7 +51,7 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Bean
     public FilterRegistrationBean webFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
+        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<>();
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
         characterEncodingFilter.setEncoding("UTF-8");
         registration.setFilter(characterEncodingFilter);
@@ -65,8 +66,8 @@ public class WebConfiguration implements WebMvcConfigurer {
      */
     @Bean
     public ServletRegistrationBean webServlet() {
-        ServletRegistrationBean registrationBean =
-                new ServletRegistrationBean(new DispatcherServlet(context), "/dispatcher/*");
+        ServletRegistrationBean<Servlet> registrationBean =
+                new ServletRegistrationBean<>(new DispatcherServlet(context), "/dispatcher/*");
 
         /**
          * 其中需要注意的是registration.setName("rest")，这个语句很重要，因为name相同的ServletRegistrationBean只有一个会生效，
