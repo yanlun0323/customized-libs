@@ -5,9 +5,9 @@ import com.alibaba.fastjson.JSON;
 public class ObjectArraysTest {
 
     public static void main(String[] args) {
-        String[] strs = new String[]{"aa", "bb"};
-        Object[] obj = strs;
-        display(strs);
+        Object strs = new String[]{"aa", "bb"};
+        Object[] obj = (Object[]) strs;
+        display((Object[]) strs, "a");
         display(obj);
     }
 
