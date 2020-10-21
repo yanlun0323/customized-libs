@@ -1,5 +1,6 @@
 package com.customized.libs.shardingsphere.service;
 
+import com.alibaba.fastjson.JSON;
 import com.customized.libs.shardingsphere.dao.generate.TRouteChannelMapper;
 import com.customized.libs.shardingsphere.entity.generate.TRouteChannel;
 import com.customized.libs.shardingsphere.entity.generate.TRouteChannelExample;
@@ -22,6 +23,6 @@ public class ChannelServcie {
     @PostConstruct
     public void setup() {
         List<TRouteChannel> records = this.tRouteChannelMapper.selectByExample(new TRouteChannelExample());
-        logger.warn("<[ Route Channel Records ==> {}", records);
+        logger.warn("<[ Route Channel Records ==> {}", JSON.toJSONString(records, Boolean.TRUE));
     }
 }

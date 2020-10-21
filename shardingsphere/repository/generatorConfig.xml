@@ -27,7 +27,8 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 		<!-- 此处为demo -->
-		<table tableName="t_route_channel" domainObjectName="TRouteChannel">
+		<!--<table tableName="t_route_channel" domainObjectName="TRouteChannel">-->
+		<table tableName="t_spring_scheduled_cron" domainObjectName="TSpringScheduledCron">
         </table>
 
     </context>
