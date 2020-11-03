@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication(exclude = {MongoAutoConfiguration.class})
 @EnableTransactionManagement
 @EnableScheduling
-@ComponentScan("com.customized.libs.shardingsphere")
+@ComponentScan(basePackages = {"com.customized.libs.shardingsphere"})
 @MapperScan("com.customized.libs.shardingsphere.dao")
 public class ShardingshpereApplication {
 

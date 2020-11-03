@@ -9,9 +9,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>shardingshpere</artifactId>
+    <artifactId>web-starter</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>shardingshpere</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

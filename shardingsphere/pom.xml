@@ -10,6 +10,14 @@
         <version>2.3.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
+    <modules>
+        <module>model</module>
+        <module>repository</module>
+        <module>service</module>
+        <module>starter</module>
+    </modules>
+
     <groupId>com.customized.libs</groupId>
     <artifactId>shardingsphere</artifactId>
     <version>0.0.1-SNAPSHOT</version>

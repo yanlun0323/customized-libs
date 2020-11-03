@@ -1,4 +1,4 @@
-package com.customized.libs.shardingsphere.controller.config;
+package com.customized.libs.shardingsphere.config;
 
 import com.customized.libs.shardingsphere.entity.generate.TSpringScheduledCron;
 import com.customized.libs.shardingsphere.service.TaskConfigService;
@@ -25,7 +25,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
  * @author yan
  */
 @Configuration
-public class DynamicScheduledConfig implements SchedulingConfigurer {
+public class DynamicScheduledConfig  {
 
     private static final Logger log = LoggerFactory.getLogger(DynamicScheduledConfig.class);
 
@@ -35,7 +35,7 @@ public class DynamicScheduledConfig implements SchedulingConfigurer {
     @Autowired
     private ApplicationContext context;
 
-    @Override
+    /*@Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         List<TSpringScheduledCron> records = this.taskConfigService.findAll();
 
@@ -62,7 +62,7 @@ public class DynamicScheduledConfig implements SchedulingConfigurer {
                     }
             );
         }
-    }
+    }*/
 
     @Bean
     public Executor taskExecutor() {
