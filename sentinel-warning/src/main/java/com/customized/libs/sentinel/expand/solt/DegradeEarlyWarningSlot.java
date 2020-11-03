@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
  */
 public class DegradeEarlyWarningSlot extends AbstractLinkedProcessorSlot<DefaultNode> {
 
-    private static Logger log = LoggerFactory.getLogger(DegradeEarlyWarningSlot.class);
+    private static final Logger log = LoggerFactory.getLogger(DegradeEarlyWarningSlot.class);
 
-    private SentinelMonitorAlarmChain alarmChain = MonitorAlarmChainProvider.newMonitorChain();
+    private final SentinelMonitorAlarmChain alarmChain = MonitorAlarmChainProvider.newMonitorChain();
 
     /**
      * 与流控基本一致 就是取原规则的方式不一样

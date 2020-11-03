@@ -1,1 +1,3 @@
+# Sentinel expand ProcessorSlots
 com.customized.libs.sentinel.expand.solt.FlowEarlyWarningSolt
+com.customized.libs.sentinel.expand.solt.DegradeEarlyWarningSlot

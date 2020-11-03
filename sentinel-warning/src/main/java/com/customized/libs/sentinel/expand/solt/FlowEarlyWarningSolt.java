@@ -29,11 +29,11 @@ import java.util.stream.Collectors;
  */
 public class FlowEarlyWarningSolt extends AbstractLinkedProcessorSlot<DefaultNode> {
 
-    private static Logger log = LoggerFactory.getLogger(FlowEarlyWarningSolt.class);
+    private static final Logger log = LoggerFactory.getLogger(FlowEarlyWarningSolt.class);
 
     private final FlowRuleChecker checker;
 
-    private SentinelMonitorAlarmChain alarmChain = MonitorAlarmChainProvider.newMonitorChain();
+    private final SentinelMonitorAlarmChain alarmChain = MonitorAlarmChainProvider.newMonitorChain();
 
     public FlowEarlyWarningSolt() {
         this(new FlowRuleChecker());

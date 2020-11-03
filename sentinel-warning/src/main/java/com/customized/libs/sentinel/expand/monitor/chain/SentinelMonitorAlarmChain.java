@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class SentinelMonitorAlarmChain {
 
-    private List<SentinelMonitorAlarm> container = new CopyOnWriteArrayList<>();
+    private final List<SentinelMonitorAlarm> container = new CopyOnWriteArrayList<>();
 
     public void addLast(SentinelMonitorAlarm sender) {
         this.container.add(sender);

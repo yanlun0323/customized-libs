@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultSentinelMonitorAlarm implements SentinelMonitorAlarm {
 
-    private static Logger log = LoggerFactory.getLogger(DefaultSentinelMonitorAlarm.class);
+    private final static Logger log = LoggerFactory.getLogger(DefaultSentinelMonitorAlarm.class);
 
     @Override
     public void sendAlarm(String msg) {
-        System.out.println(String.format("==> Send Monitor Alarm to xx. {%s}", msg));
+        System.out.printf("==> Send Monitor Alarm to xx. {%s}%n", msg);
         log.info("==> Send Monitor Alarm to xx. {}", msg);
     }
 }
