@@ -32,3 +32,7 @@
 /core/src/main/java/com/customized/libs/core/libs/httpclient/*
 
 /communication/*
+*/**/target/
+/config-cache
+/core/src/main/resources/offsets.json
+/core/src/main/resources/offsets.json.bak
