@@ -22,6 +22,8 @@
         <module>log-trace-adapter</module>
         <module>multiple-versions</module>
         <module>formatter</module>
+        <module>springboot</module>
+        <module>sentinel-warning</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -249,6 +251,17 @@
                 <module>extension</module>
                 <module>core</module>
                 <module>dubbo-api</module>
+                <module>spring-expands</module>
+                <module>shardingsphere</module>
+                <module>smart-proxy</module>
+                <module>rpc-tools</module>
+                <module>object-size-fetcher</module>
+                <module>blade-web</module>
+                <module>log-trace-adapter</module>
+                <module>multiple-versions</module>
+                <module>formatter</module>
+                <module>springboot</module>
+                <module>sentinel-warning</module>
             </modules>
         </profile>
         <profile>
