@@ -45,7 +45,7 @@ public class GlobalExceptionHandler extends BaseController {
     /**
      * 添加关键字以"|"分割("数据库|异常")
      */
-    private static Pattern ERROR_MSG_KEYWORD_REGEX = Pattern.compile("(网络超时或未知异常|服务器内部错误|数据库|Exception|服务调用出错|Service Not Exists|Service Unavailable|Invoke Service Fail)");
+    private static final Pattern ERROR_MSG_KEYWORD_REGEX = Pattern.compile("(网络超时或未知异常|服务器内部错误|数据库|Exception|服务调用出错|Service Not Exists|Service Unavailable|Invoke Service Fail)");
 
     private static final String DEFAULT_ERROR_MSG = "系统繁忙，请稍后重试";
 

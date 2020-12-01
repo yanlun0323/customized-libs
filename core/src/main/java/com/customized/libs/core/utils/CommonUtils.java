@@ -26,7 +26,7 @@ public class CommonUtils {
 
     public static String buildLogString(String text, String delimiter, Integer length) {
         String delimiters = StringUtils.leftPad(delimiter, length, delimiter);
-        return String.format("%s%s%s", delimiters, text, delimiters);
+        return String.format("%s %s %s", delimiters, text, delimiters);
     }
 
     /**

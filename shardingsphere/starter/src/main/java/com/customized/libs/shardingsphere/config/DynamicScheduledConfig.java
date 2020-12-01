@@ -25,7 +25,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
  * @author yan
  */
 @Configuration
-public class DynamicScheduledConfig  {
+public class DynamicScheduledConfig implements SchedulingConfigurer {
 
     private static final Logger log = LoggerFactory.getLogger(DynamicScheduledConfig.class);
 
@@ -35,7 +35,7 @@ public class DynamicScheduledConfig  {
     @Autowired
     private ApplicationContext context;
 
-    /*@Override
+    @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         List<TSpringScheduledCron> records = this.taskConfigService.findAll();
 
@@ -62,7 +62,7 @@ public class DynamicScheduledConfig  {
                     }
             );
         }
-    }*/
+    }
 
     @Bean
     public Executor taskExecutor() {

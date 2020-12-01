@@ -40,7 +40,7 @@
     <parent>
         <groupId>com.alipay.sofa</groupId>
         <artifactId>sofaboot-dependencies</artifactId>
-        <version>3.4.4</version>
+        <version>3.4.6</version>
         <relativePath/>
     </parent>
 
@@ -235,11 +235,11 @@
 
         注：如果已经是spring bean（Component修饰的类，并且Component已经被标记为@Indexed）了就没必要再标记@Indexed，否则索引文件会再追加一个相同的，感觉这是个bug
         -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-indexer</artifactId>
             <optional>true</optional>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <profiles>
