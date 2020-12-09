@@ -10,13 +10,13 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>service</artifactId>
+    <artifactId>shardingsphere-service</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>com.customized.libs</groupId>
-            <artifactId>repository</artifactId>
+            <artifactId>shardingsphere-repository</artifactId>
             <version>${project.version}</version>
         </dependency>
 
