@@ -29,6 +29,9 @@ spring:
     add-mappings: true
   application:
     name: eureka-server
+  data:
+    mongodb:
+      oss-uri: mongodb://172.19.100.96:27017/privateupload
 server:
   port: 8080
 logging:

@@ -26,7 +26,7 @@ import java.io.IOException;
 @SuppressWarnings("all")
 public class ServiceConsumerBootstrap {
 
-    private static final Integer MAX_INVOKE_TIMES = 50;
+    private static final Integer MAX_INVOKE_TIMES = 2;
 
     public static void main(String[] args) throws NacosException, InterruptedException, IOException {
         DubboNacosConfig.init();

@@ -79,8 +79,11 @@ public class VersionsUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(convertVersion("1.5.3"));
-        System.out.println(fastConvertVersion("1.5.3"));
+        System.out.println(convertVersion("1.0.3"));
+        System.out.println(convertVersion("1.0.11"));
+        System.out.println(fastConvertVersion("1.0.3"));
+        System.out.println(fastConvertVersion("1.0.11"));
         System.out.println(convertVersionWithExpression("version>=1.5.3 && version<=1.8.2"));
+        System.out.println(convertVersionWithExpression("version>=1.0.3 && version<=1.0.11"));
     }
 }

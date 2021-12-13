@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.data.mongodb.oss-uri",
+      "type": "java.lang.String",
+      "description": "Description for spring.data.mongodb.oss-uri."
+  }
+] }

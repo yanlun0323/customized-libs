@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
@@ -43,7 +44,7 @@ import java.util.concurrent.Executor;
 @NacosPropertySource(dataId = "dubbo-provider-01", autoRefreshed = true)
 public class DubboNacosConfig {
 
-    private static Logger logger = LoggerFactory.getLogger(DubboNacosConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(DubboNacosConfig.class);
 
     public static void main(String[] args) throws NacosException {
         DubboNacosConfig.init();
@@ -68,11 +69,9 @@ public class DubboNacosConfig {
         String content = configService.getConfig(dataId, group, 5000);
         logger.warn("<<< Dubbo-Provider Nacos Config ==> \r\n{}", content);
 
-
-        Properties props = new Properties();
         try {
-            InputStream input = new ByteArrayInputStream(content.getBytes("utf-8"));
-            props.load(input);
+            InputStream input = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
+            new Properties().load(input);
         } catch (java.io.IOException e) {
             logger.warn(">>> load precessing error!", e);
         }
@@ -80,10 +79,9 @@ public class DubboNacosConfig {
         configService.addListener(dataId, group, new Listener() {
             @Override
             public void receiveConfigInfo(String configInfo) {
-                Properties props = new Properties();
                 try {
-                    InputStream input = new ByteArrayInputStream(configInfo.getBytes("utf-8"));
-                    props.load(input);
+                    InputStream input = new ByteArrayInputStream(configInfo.getBytes(StandardCharsets.UTF_8));
+                    new Properties().load(input);
                 } catch (java.io.IOException e) {
                     logger.warn(">>> load precessing error!", e);
                 }

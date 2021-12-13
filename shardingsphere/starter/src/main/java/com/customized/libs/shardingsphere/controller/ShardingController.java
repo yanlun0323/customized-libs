@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.TimeUnit;
+
 @RestController
 public class ShardingController extends BaseController {
 
@@ -22,5 +24,19 @@ public class ShardingController extends BaseController {
         commResp.setData("Pong");
         commResp.setKey(SDKConst.CommonRespCode.OK);
         return this.getJsonResp(commResp);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "httpclient/multi1")
+    public ResponseEntity<String> invoke1() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(5);
+        return this.getStringResp("OK");
+    }
+
+    @ResponseBody
+    @GetMapping(value = "httpclient/multi2")
+    public ResponseEntity<String> invoke2() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(5);
+        return this.getStringResp("OK");
     }
 }
