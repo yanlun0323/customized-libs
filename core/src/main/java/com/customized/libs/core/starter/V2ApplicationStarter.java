@@ -2,6 +2,7 @@ package com.customized.libs.core.starter;
 
 import com.customized.libs.core.libs.spring.bean.EnableBeanPostConfig;
 import com.customized.libs.core.utils.SpringContextLoader;
+import com.customized.multiple.versions.adapter.autoconfigure.EnableMultipleVersions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 
@@ -37,6 +39,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Slf4j
 @EnableScheduling
 @EnableBeanPostConfig
+@EnableAspectJAutoProxy
+@EnableMultipleVersions
 public class V2ApplicationStarter {
 
     public static void main(String[] args) {
