@@ -23,11 +23,13 @@ public class TimeUtil {
      */
     private static volatile long currentTimeMillis;
 
+    private static Thread daemon;
+
     // 静态代码块中执行数据初始化及动态更新
     static {
         currentTimeMillis = System.currentTimeMillis();
 
-        Thread daemon = new Thread(() -> {
+        daemon = new Thread(() -> {
             while (true) {
                 try {
                     TimeUnit.MILLISECONDS.sleep(1000);
@@ -50,6 +52,12 @@ public class TimeUtil {
         daemon.setDaemon(true);
         daemon.setName("sentinel-time-tick-thread");
         daemon.start();
+    }
+
+
+    public static void shutdownNow() throws InterruptedException {
+        Thread.sleep(1);
+        daemon.interrupt();
     }
 
     public static long currentTimeMillis() {

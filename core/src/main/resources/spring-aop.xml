@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="orderServiceImpl" class="com.customized.libs.core.libs.aop.spring.biz.impl.OrderServiceImpl"/>
+    <bean id="userServiceImpl" class="com.customized.libs.core.libs.aop.spring.biz.impl.UserServiceDisabledAutoProxy"/>
+    <bean id="UserServiceImplZZ" class="com.customized.libs.core.libs.aop.spring.biz.impl.UserServiceImplZZ"/>
+
+    <bean id="logResultService" class="com.customized.libs.core.libs.aop.spring.aspect.LogResultService"/>
+    <bean id="logArgsService" class="com.customized.libs.core.libs.aop.spring.aspect.LogArgsService"/>
+
+    <bean id="debugInterceptor" class="com.customized.libs.core.libs.aop.spring.interceptor.DebugInterceptor"/>
+
+    <!--    <bean id="orderServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">-->
+    <!--        &lt;!&ndash; 代理的接口 &ndash;&gt;-->
+    <!--        <property name="proxyInterfaces">-->
+    <!--            <list>-->
+    <!--                <value>com.customized.libs.core.libs.aop.spring.biz.OrderService</value>-->
+    <!--            </list>-->
+    <!--        </property>-->
+    <!--        &lt;!&ndash; 代理的具体实现 &ndash;&gt;-->
+    <!--        <property name="target" ref="orderServiceImpl"/>-->
+
+    <!--        &lt;!&ndash; 配置拦截器 &ndash;&gt;-->
+    <!--        <property name="interceptorNames">-->
+    <!--            <list>-->
+    <!--                <value>logResultService</value>-->
+    <!--                <value>logArgsService</value>-->
+    <!--                <value>debugInterceptor</value>-->
+    <!--            </list>-->
+    <!--        </property>-->
+    <!--    </bean>-->
+
+
+    <!--    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">-->
+    <!--        <property name="interceptorNames">-->
+    <!--            <list>-->
+    <!--                <value>logResultService</value>-->
+    <!--                <value>logArgsService</value>-->
+    <!--            </list>-->
+    <!--        </property>-->
+    <!--        <property name="beanNames" value="*ServiceImpl"/>-->
+    <!--    </bean>-->
+
+    <bean id="logArgsAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="advice" ref="logArgsService"/>
+        <!--任意方法拦截-->
+        <property name="pattern" value="com.customized.libs.core.libs.aop.spring.biz..*ServiceImpl\..*"/>
+    </bean>
+
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+</beans>

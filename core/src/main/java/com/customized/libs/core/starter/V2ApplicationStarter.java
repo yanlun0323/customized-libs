@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.server.WebServer;
+import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -44,6 +46,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class V2ApplicationStarter {
 
     public static void main(String[] args) {
+        // System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
+        // System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "./libs/proxy-target");
+
         /*
          * 实际上SpringApplicationBuilder也是基于new SpringApplication()实现的，build方式提供链式调用结构。
          */
@@ -51,5 +56,9 @@ public class V2ApplicationStarter {
                 .web(WebApplicationType.SERVLET)
                 .run(args);
         SpringContextLoader.init(context);
+
+        WebServer webServer = ((ServletWebServerApplicationContext) context).getWebServer();
+        System.out.println(" ==> " + webServer.toString());
+        // webServer.stop();
     }
 }

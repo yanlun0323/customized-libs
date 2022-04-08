@@ -32,6 +32,11 @@ spring:
   data:
     mongodb:
       oss-uri: mongodb://172.19.100.96:27017/privateupload
+  gobrs:
+    async:
+      rules: '[{name: "test", content: "GobrsAService->GobrsBService,GobrsCService;GobrsDService"}]'
+      #      rules: '[{name: "test", content: "BService->CService->EService->DService:not;AService->DService:not"}]'
+      task-interrupt: true #局部异常是否打断主流程
 server:
   port: 8080
 logging:
