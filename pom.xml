@@ -24,6 +24,7 @@
         <module>formatter</module>
         <module>springboot</module>
         <module>sentinel-warning</module>
+        <module>spring-webflux</module>
     </modules>
     <packaging>pom</packaging>
 
