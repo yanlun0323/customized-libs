@@ -1,8 +1,12 @@
 package com.customized.libs.core.framework.rpc;
 
+import com.customized.libs.core.framework.rpc.remoting.exchange.Request;
+import com.customized.libs.core.framework.rpc.remoting.exchange.Response;
+import com.customized.libs.core.framework.rpc.remoting.transport.ExchangeCodec;
+
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -34,20 +38,17 @@ public class RpcFramework {
             Socket socket = RpcFramework.SERVER.accept();
             new Thread(() -> {
                 try {
-                    try (ObjectInputStream input = new ObjectInputStream(socket.getInputStream())) {
+                    ExchangeCodec codec = new ExchangeCodec();
+                    try (InputStream inputStream = socket.getInputStream()) {
                         // 解析参数和class
-                        String serviceKey = input.readUTF();
-                        Class<?>[] parameterTypes = (Class<?>[]) input.readObject();
-                        Object[] arguments = (Object[]) input.readObject();
-                        // 输出流
-                        ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
-                        Invoker invoker = exported.get(serviceKey);
+                        Request request = (Request) codec.decode(inputStream);
+                        Invoker invoker = getInvoker(request.getKey());
                         try {
-                            output.writeObject(invoker.invoke(parameterTypes, arguments));
+                            Response response = new Response();
+                            response.setResult(invoker.invoke((Object[]) request.getData()));
+                            codec.encode(socket.getOutputStream(), response);
                         } catch (Throwable t) {
-                            output.writeObject(t);
-                        } finally {
-                            output.close();
+                            t.printStackTrace();
                         }
                     } finally {
                         socket.close();
@@ -57,6 +58,10 @@ public class RpcFramework {
                 }
             }).start();
         }
+    }
+
+    private static Invoker getInvoker(String serviceKey) {
+        return exported.get(serviceKey);
     }
 
     /**
@@ -71,6 +76,10 @@ public class RpcFramework {
         }
         System.out.println("Export service " + service.getClass().getName());
         String serviceKey = buildServiceKey(service.getClass().getInterfaces()[0], method);
+        exportedInvoker(service, method, serviceKey);
+    }
+
+    private static void exportedInvoker(Object service, String method, String serviceKey) {
         exported.put(serviceKey, new Invoker(service, method));
     }
 
@@ -103,6 +112,7 @@ public class RpcFramework {
         }
         System.out.println("Get remote service" + interfaceClass.getName() + "from server " + host + ":" + port);
 
+        ExchangeCodec codec = new ExchangeCodec();
         //  动态代理对象
         return (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), new Class<?>[]{interfaceClass},
                 new InvocationHandler() {
@@ -112,20 +122,16 @@ public class RpcFramework {
                         try {
                             // 为什么要包装一层？
                             // 此处可根据注册中心的注册列表路由具体服务地址，然后实现端到端的RPC调用
-                            try (Socket socket = new Socket(host, port);
-                                 ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream())) {
+                            try (Socket socket = new Socket(host, port); OutputStream outputStream = socket.getOutputStream()) {
                                 // 写入方法/参数类型等，通过socket执行数据写出
-                                output.writeUTF(buildServiceKey(interfaceClass, method.getName()));
-                                output.writeObject(method.getParameterTypes());
-                                output.writeObject(args);
+                                Request req = new Request();
+                                req.setData(args);
+                                req.setKey(buildServiceKey(interfaceClass, method.getName()));
+                                codec.encode(outputStream, req);
                                 // socket通讯，获取输入流
-                                try (ObjectInputStream
-                                             input = new ObjectInputStream(socket.getInputStream())) {
-                                    Object result = input.readObject();
-                                    if (result instanceof Throwable) {
-                                        throw (Throwable) result;
-                                    }
-                                    return result;
+                                try (InputStream inputStream = socket.getInputStream()) {
+                                    Response result = (Response) codec.decode(inputStream);
+                                    return result.getResult();
                                 }
                             }
                         } catch (Exception e) {

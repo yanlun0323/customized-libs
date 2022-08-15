@@ -25,6 +25,7 @@
         <module>springboot</module>
         <module>sentinel-warning</module>
         <module>spring-webflux</module>
+        <module>spring-ioc</module>
     </modules>
     <packaging>pom</packaging>
 

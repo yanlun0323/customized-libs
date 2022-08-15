@@ -1,0 +1,3 @@
+kryo=com.customized.libs.core.framework.rpc.serialize.kryo.KryoSerialization
+jdk=com.customized.libs.core.framework.rpc.serialize.jdk.JdkSerialization
+fastjson=com.customized.libs.core.framework.rpc.serialize.fastjson.FastjsonSerialization
