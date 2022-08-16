@@ -1,6 +1,6 @@
 package com.smart.lib.spring.ioc.bean.test;
 
-import lombok.Data;
+import com.smart.lib.spring.ioc.bean.annotations.Component;
 
 import java.util.Map;
 
@@ -10,7 +10,7 @@ import java.util.Map;
  * @description
  * @date 2022/8/15 10:50
  */
-@Data
+@Component
 public class UserServiceImpl {
 
     private String name;
@@ -35,5 +35,21 @@ public class UserServiceImpl {
 
     public void hello() {
         System.out.println("Hello " + this.name + "!");
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public UserDaoImpl getUserDao() {
+        return userDao;
+    }
+
+    public void setUserDao(UserDaoImpl userDao) {
+        this.userDao = userDao;
     }
 }

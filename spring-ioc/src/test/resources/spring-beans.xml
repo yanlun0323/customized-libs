@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+    <bean id="userDao" class="com.smart.lib.spring.ioc.bean.test.UserDaoImpl"/>
+    <bean id="UserServiceImpl" class="com.smart.lib.spring.ioc.bean.test.UserServiceImpl">
+        <property name="name" value="10001"/>
+        <property name="userDao" ref="userDao"/>
+    </bean>
+</beans>

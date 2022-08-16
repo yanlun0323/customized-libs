@@ -1,8 +1,8 @@
 package com.smart.lib.spring.ioc.bean.factory.support;
 
-import com.smart.lib.spring.ioc.bean.factory.config.BeanDefinition;
 import com.smart.lib.spring.ioc.bean.exception.BeanException;
 import com.smart.lib.spring.ioc.bean.factory.BeanFactory;
+import com.smart.lib.spring.ioc.bean.factory.config.BeanDefinition;
 
 /**
  * @author yan
