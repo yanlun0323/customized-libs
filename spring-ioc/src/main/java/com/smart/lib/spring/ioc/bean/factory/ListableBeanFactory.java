@@ -16,7 +16,7 @@
 
 package com.smart.lib.spring.ioc.bean.factory;
 
-import com.smart.lib.spring.ioc.bean.exception.BeanException;
+import com.smart.lib.spring.ioc.bean.exception.BeansException;
 
 import java.lang.annotation.Annotation;
 import java.util.Map;
@@ -134,7 +134,7 @@ public interface ListableBeanFactory extends BeanFactory {
      * @see BeanFactoryUtils#beansOfTypeIncludingAncestors(ListableBeanFactory, Class)
      * @since 1.1.2
      */
-    <T> Map<String, T> getBeansOfType(Class<T> type) throws BeanException;
+    <T> Map<String, T> getBeansOfType(Class<T> type) throws BeansException;
 
     /**
      * Find all names of beans which are annotated with the supplied {@link Annotation}
@@ -162,6 +162,6 @@ public interface ListableBeanFactory extends BeanFactory {
      * @see #findAnnotationOnBean
      * @since 3.0
      */
-    Map<String, Object> getBeansWithAnnotation(Class<? extends Annotation> annotationType) throws BeanException;
+    Map<String, Object> getBeansWithAnnotation(Class<? extends Annotation> annotationType) throws BeansException;
 
 }

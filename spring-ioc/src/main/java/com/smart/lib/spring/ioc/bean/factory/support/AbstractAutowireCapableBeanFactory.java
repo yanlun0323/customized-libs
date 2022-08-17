@@ -2,8 +2,10 @@ package com.smart.lib.spring.ioc.bean.factory.support;
 
 import com.smart.lib.spring.ioc.bean.beans.PropertyValue;
 import com.smart.lib.spring.ioc.bean.beans.PropertyValues;
-import com.smart.lib.spring.ioc.bean.exception.BeanException;
+import com.smart.lib.spring.ioc.bean.exception.BeansException;
+import com.smart.lib.spring.ioc.bean.factory.config.AutowireCapableBeanFactory;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanDefinition;
+import com.smart.lib.spring.ioc.bean.factory.config.BeanPostProcessor;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanReference;
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -16,21 +18,23 @@ import java.lang.reflect.InvocationTargetException;
  * @description bean自动注入
  * @date 2022/8/15 11:14
  */
-public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
+public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory implements AutowireCapableBeanFactory {
 
     private InstantiationStrategy instantiationStrategy = new SimpleInstantiationStrategy();
 
 
     @Override
     protected Object creatBean(String beanName, BeanDefinition beanDefinition, Object[] args)
-            throws BeanException {
+            throws BeansException {
         Object bean;
         try {
             bean = doCreateBeanInstance(beanName, beanDefinition, args);
             // 给 Bean 填充属性
             applyPropertyValues(beanName, bean, beanDefinition);
+            // 执行 Bean 的初始化方法和 BeanPostProcessor 的前置和后置处理方法
+            bean = initializeBean(beanName, bean, beanDefinition);
         } catch (Exception e) {
-            throw new BeanException("Instantiation of bean failed");
+            throw new BeansException("Instantiation of bean failed");
         }
         this.addSingleton(beanName, bean);
         return bean;
@@ -65,9 +69,47 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
                 }
                 BeanUtils.setProperty(bean, name, value);
             } catch (IllegalAccessException | InvocationTargetException e) {
-                throw new BeanException("Error setting property values：" + beanName);
+                throw new BeansException("Error setting property values：" + beanName);
             }
         }
+    }
+
+    private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) {
+        // 1. 执行 BeanPostProcessor Before 处理
+        Object wrappedBean = applyBeanPostProcessorsBeforeInitialization(bean, beanName);
+
+        // 待完成内容：invokeInitMethods(beanName, wrappedBean, beanDefinition);
+        invokeInitMethods(beanName, wrappedBean, beanDefinition);
+
+        // 2. 执行 BeanPostProcessor After 处理
+        wrappedBean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
+        return wrappedBean;
+    }
+
+    private void invokeInitMethods(String beanName, Object wrappedBean, BeanDefinition beanDefinition) {
+
+    }
+
+    @Override
+    public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName) throws BeansException {
+        Object result = existingBean;
+        for (BeanPostProcessor processor : getBeanPostProcessors()) {
+            Object current = processor.postProcessBeforeInitialization(result, beanName);
+            if (null == current) return result;
+            result = current;
+        }
+        return result;
+    }
+
+    @Override
+    public Object applyBeanPostProcessorsAfterInitialization(Object existingBean, String beanName) throws BeansException {
+        Object result = existingBean;
+        for (BeanPostProcessor processor : getBeanPostProcessors()) {
+            Object current = processor.postProcessAfterInitialization(result, beanName);
+            if (null == current) return result;
+            result = current;
+        }
+        return result;
     }
 
     public InstantiationStrategy getInstantiationStrategy() {

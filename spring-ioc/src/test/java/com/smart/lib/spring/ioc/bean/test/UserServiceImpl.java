@@ -15,6 +15,8 @@ public class UserServiceImpl {
 
     private String name;
 
+    private String company;
+
     private UserDaoImpl userDao;
 
     public UserServiceImpl() {
@@ -51,5 +53,13 @@ public class UserServiceImpl {
 
     public void setUserDao(UserDaoImpl userDao) {
         this.userDao = userDao;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 }

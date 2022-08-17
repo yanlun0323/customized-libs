@@ -1,7 +1,7 @@
 package com.smart.lib.spring.ioc.bean.factory.support;
 
 import com.smart.lib.spring.ioc.bean.factory.config.BeanDefinition;
-import com.smart.lib.spring.ioc.bean.exception.BeanException;
+import com.smart.lib.spring.ioc.bean.exception.BeansException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -28,12 +28,12 @@ public class SimpleInstantiationStrategy implements InstantiationStrategy {
      * @param ctor
      * @param args
      * @return
-     * @throws BeanException
+     * @throws BeansException
      */
     @Override
     @SuppressWarnings({"unchecked", "rawtypes"})
     public Object instantiate(BeanDefinition beanDefinition, String beanName
-            , Constructor<?> ctor, Object[] args) throws BeanException {
+            , Constructor<?> ctor, Object[] args) throws BeansException {
         Class clazz = beanDefinition.getBeanClass();
         try {
             if (ctor != null) {
@@ -43,7 +43,7 @@ public class SimpleInstantiationStrategy implements InstantiationStrategy {
             }
         } catch (InstantiationException | IllegalAccessException
                 | InvocationTargetException | NoSuchMethodException e) {
-            throw new BeanException("Failed to instantiate [" + clazz.getName() + "]");
+            throw new BeansException("Failed to instantiate [" + clazz.getName() + "]");
         }
     }
 }

@@ -3,6 +3,10 @@
     <bean id="userDao" class="com.smart.lib.spring.ioc.bean.test.UserDaoImpl"/>
     <bean id="UserServiceImpl" class="com.smart.lib.spring.ioc.bean.test.UserServiceImpl">
         <property name="name" value="10001"/>
+        <property name="company" value="卡友"/>
         <property name="userDao" ref="userDao"/>
     </bean>
+
+    <bean class="com.smart.lib.spring.ioc.bean.test.bean.support.MyBeanFactoryPostProcessor"/>
+    <bean class="com.smart.lib.spring.ioc.bean.test.bean.support.MyBeanPostProcessor"/>
 </beans>

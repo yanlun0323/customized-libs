@@ -1,17 +1,17 @@
 package com.smart.lib.spring.ioc.bean.factory;
 
-import com.smart.lib.spring.ioc.bean.exception.BeanException;
+import com.smart.lib.spring.ioc.bean.exception.BeansException;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanDefinition;
+import com.smart.lib.spring.ioc.bean.factory.config.BeanPostProcessor;
 import com.smart.lib.spring.ioc.bean.factory.config.ConfigurableListableBeanFactory;
 import com.smart.lib.spring.ioc.bean.factory.support.AbstractAutowireCapableBeanFactory;
 import com.smart.lib.spring.ioc.bean.factory.support.BeanDefinitionRegistry;
+import com.smart.lib.spring.ioc.bean.utils.Assert;
 
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author yan
@@ -24,20 +24,36 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
 
     /**
+     * BeanPostProcessors to apply in createBean.
+     */
+    private final List<BeanPostProcessor> beanPostProcessors = new CopyOnWriteArrayList<>();
+
+    /**
      * Map of bean definition objects, keyed by bean name.
      */
     private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(256);
+
     /**
      * List of bean definition names, in registration order.
      */
     private volatile List<String> beanDefinitionNames = new ArrayList<>(256);
 
     @Override
-    public BeanDefinition getBeanDefinition(String beanName) throws BeanException {
+    public BeanDefinition getBeanDefinition(String beanName) throws BeansException {
         BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
         if (beanDefinition == null)
-            throw new BeanException("No bean named '" + beanName + "' is defined");
+            throw new BeansException("No bean named '" + beanName + "' is defined");
         return beanDefinition;
+    }
+
+    @Override
+    protected List<BeanPostProcessor> getBeanPostProcessors() {
+        return this.beanPostProcessors;
+    }
+
+    @Override
+    public void preInstantiateSingletons() throws BeansException {
+
     }
 
     /**
@@ -72,10 +88,14 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     }
 
     @Override
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public String[] getBeanNamesForType(Class<?> type) {
         List<String> beanNames = new ArrayList<>(8);
+        Class beanClass;
         for (Map.Entry<String, BeanDefinition> beanDefinition : this.beanDefinitionMap.entrySet()) {
-            if (beanDefinition.getValue().getBeanClass().equals(type)) {
+            beanClass = beanDefinition.getValue().getBeanClass();
+            if (beanClass.isAssignableFrom(type)
+                    || Arrays.stream(beanClass.getInterfaces()).anyMatch(bean -> bean.isAssignableFrom(type))) {
                 beanNames.add(beanDefinition.getKey());
             }
         }
@@ -84,7 +104,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> Map<String, T> getBeansOfType(Class<T> type) throws BeanException {
+    public <T> Map<String, T> getBeansOfType(Class<T> type) throws BeansException {
         String[] beanNamesForType = getBeanNamesForType(type);
         Map<String, T> beansOfType = new HashMap<>(beanNamesForType.length);
         for (String beanName : beanNamesForType) {
@@ -107,12 +127,21 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     }
 
     @Override
-    public Map<String, Object> getBeansWithAnnotation(Class<? extends Annotation> annotationType) throws BeanException {
+    public Map<String, Object> getBeansWithAnnotation(Class<? extends Annotation> annotationType) throws BeansException {
         String[] beanNamesForAnnotation = getBeanNamesForAnnotation(annotationType);
         Map<String, Object> beansOfType = new HashMap<>(beanNamesForAnnotation.length);
         for (String beanName : beanNamesForAnnotation) {
             beansOfType.put(beanName, getBean(beanName));
         }
         return beansOfType;
+    }
+
+    @Override
+    public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
+        Assert.notNull(beanPostProcessor, "BeanPostProcessor must not be null");
+        // Remove from old position, if any
+        this.beanPostProcessors.remove(beanPostProcessor);
+        // Add to end of list
+        this.beanPostProcessors.add(beanPostProcessor);
     }
 }

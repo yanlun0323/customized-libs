@@ -3,7 +3,7 @@ package com.smart.lib.spring.ioc.bean.factory.support;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.XmlUtil;
 import com.smart.lib.spring.ioc.bean.beans.PropertyValue;
-import com.smart.lib.spring.ioc.bean.exception.BeanException;
+import com.smart.lib.spring.ioc.bean.exception.BeansException;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanDefinition;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanReference;
 import com.smart.lib.spring.ioc.bean.io.DefaultResourceLoader;
@@ -33,28 +33,30 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
     }
 
     @Override
-    public void loadBeanDefinitions(Resource resource) throws BeanException {
+    public void loadBeanDefinitions(Resource resource) throws BeansException {
         try {
             try (InputStream inputStream = resource.getInputStream()) {
                 doLoadBeanDefinitions(inputStream);
             }
         } catch (IOException | ClassNotFoundException e) {
-            throw new BeanException("IOException parsing XML document from " + resource);
+            throw new BeansException("IOException parsing XML document from " + resource);
         }
     }
 
     @Override
-    public void loadBeanDefinitions(Resource... resources) throws BeanException {
+    public void loadBeanDefinitions(Resource... resources) throws BeansException {
         for (Resource resource : resources) {
             loadBeanDefinitions(resource);
         }
     }
 
     @Override
-    public void loadBeanDefinitions(String location) throws BeanException {
+    public void loadBeanDefinitions(String[] locations) throws BeansException {
         ResourceLoader resourceLoader = new DefaultResourceLoader();
-        Resource resource = resourceLoader.getResource(location);
-        loadBeanDefinitions(resource);
+        for (String location : locations) {
+            Resource resource = resourceLoader.getResource(location);
+            loadBeanDefinitions(resource);
+        }
     }
 
     protected void doLoadBeanDefinitions(InputStream inputStream) throws ClassNotFoundException {
@@ -99,7 +101,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
                 beanDefinition.getPropertyValues().addPropertyValue(propertyValue);
             }
             if (getRegistry().containsBeanDefinition(beanName)) {
-                throw new BeanException("Duplicate beanName[" + beanName + "] is not allowed");
+                throw new BeansException("Duplicate beanName[" + beanName + "] is not allowed");
             }
             // 注册 BeanDefinition
             getRegistry().registerBeanDefinition(beanName, beanDefinition);

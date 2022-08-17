@@ -1,8 +1,11 @@
 package com.smart.lib.spring.ioc.bean.factory.support;
 
-import com.smart.lib.spring.ioc.bean.exception.BeanException;
+import com.smart.lib.spring.ioc.bean.exception.BeansException;
 import com.smart.lib.spring.ioc.bean.factory.BeanFactory;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanDefinition;
+import com.smart.lib.spring.ioc.bean.factory.config.BeanPostProcessor;
+
+import java.util.List;
 
 /**
  * @author yan
@@ -33,7 +36,9 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
         return (T) creatBean(beanName, beanDefinition, args);
     }
 
-    protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeanException;
+    protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeansException;
 
-    protected abstract Object creatBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeanException;
+    protected abstract Object creatBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException;
+
+    protected abstract List<BeanPostProcessor> getBeanPostProcessors();
 }

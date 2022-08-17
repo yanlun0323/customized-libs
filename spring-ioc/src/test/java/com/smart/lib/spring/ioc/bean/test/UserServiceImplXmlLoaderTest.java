@@ -18,7 +18,7 @@ public class UserServiceImplXmlLoaderTest {
     public static void main(String[] args) {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
         XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
-        xmlBeanDefinitionReader.loadBeanDefinitions("classpath:spring-beans.xml");
+        xmlBeanDefinitionReader.loadBeanDefinitions(new String[]{"classpath:spring-beans.xml"});
 
         UserServiceImpl service = beanFactory.getBean(UserServiceImpl.class);
         service.hello();

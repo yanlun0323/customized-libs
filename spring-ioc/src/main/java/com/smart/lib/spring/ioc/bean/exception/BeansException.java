@@ -6,11 +6,11 @@ package com.smart.lib.spring.ioc.bean.exception;
  * @description
  * @date 2022/8/15 10:55
  */
-public class BeanException extends RuntimeException {
+public class BeansException extends RuntimeException {
 
     private static final long serialVersionUID = -6937938663825994296L;
 
-    public BeanException(String errorMsg) {
+    public BeansException(String errorMsg) {
         super(errorMsg);
     }
 }
