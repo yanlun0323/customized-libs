@@ -11,10 +11,18 @@ import java.util.Map;
  */
 public class UserDaoImpl {
 
-    public Map<String, Object> getAllUser() {
-        Map<String, Object> users = new HashMap<>();
+    private final Map<String, Object> users = new HashMap<>();
+
+    public void initData() {
         users.put("001", "JAVA");
         users.put("002", "IDEA");
+    }
+
+    public void destroy() {
+        users.clear();
+    }
+
+    public Map<String, Object> getAllUser() {
         return users;
     }
 }

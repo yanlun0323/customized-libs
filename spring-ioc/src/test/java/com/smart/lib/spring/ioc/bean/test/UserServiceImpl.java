@@ -1,6 +1,8 @@
 package com.smart.lib.spring.ioc.bean.test;
 
 import com.smart.lib.spring.ioc.bean.annotations.Component;
+import com.smart.lib.spring.ioc.bean.factory.DisposableBean;
+import com.smart.lib.spring.ioc.bean.factory.InitializingBean;
 
 import java.util.Map;
 
@@ -11,7 +13,7 @@ import java.util.Map;
  * @date 2022/8/15 10:50
  */
 @Component
-public class UserServiceImpl {
+public class UserServiceImpl implements DisposableBean, InitializingBean {
 
     private String name;
 
@@ -61,5 +63,15 @@ public class UserServiceImpl {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        System.out.println("destroy");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("afterPropertiesSet");
     }
 }

@@ -20,6 +20,13 @@ import java.util.Map;
  */
 public abstract class AbstractApplicationContext extends DefaultResourceLoader implements ConfigurableApplicationContext {
 
+    private Thread shutdownHook;
+
+    /**
+     * Synchronization monitor for the "refresh" and "destroy".
+     */
+    private final Object startupShutdownMonitor = new Object();
+
     @Override
     public void refresh() throws BeansException {
         // 1、创建beanFactory，并加载BeanDefinition
@@ -36,6 +43,40 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
     protected abstract void refreshBeanFactory() throws BeansException;
 
     protected abstract ConfigurableListableBeanFactory getBeanFactory();
+
+    @SuppressWarnings({"AlibabaAvoidManuallyCreateThread"})
+    @Override
+    public void registerShutdownHook() {
+        if (this.shutdownHook == null) {
+            this.shutdownHook = new Thread(SHUTDOWN_HOOK_THREAD_NAME) {
+                @Override
+                public void run() {
+                    synchronized (startupShutdownMonitor) {
+                        doClose();
+                    }
+                }
+            };
+            Runtime.getRuntime().addShutdownHook(shutdownHook);
+        }
+    }
+
+    @Override
+    public void close() {
+        synchronized (startupShutdownMonitor) {
+            doClose();
+            if (this.shutdownHook != null) {
+                try {
+                    Runtime.getRuntime().removeShutdownHook(this.shutdownHook);
+                } catch (IllegalStateException ex) {
+                    // ignore - VM is already shutting down
+                }
+            }
+        }
+    }
+
+    public void doClose() {
+        getBeanFactory().destroySingletons();
+    }
 
     private void invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory beanFactory) {
         Map<String, BeanFactoryPostProcessor> beansOfType = beanFactory.getBeansOfType(BeanFactoryPostProcessor.class);
