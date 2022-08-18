@@ -1,6 +1,8 @@
 package com.smart.lib.spring.ioc.bean.test;
 
 import com.smart.lib.spring.ioc.bean.annotations.Component;
+import com.smart.lib.spring.ioc.bean.context.ApplicationContext;
+import com.smart.lib.spring.ioc.bean.context.ApplicationContextAware;
 import com.smart.lib.spring.ioc.bean.factory.DisposableBean;
 import com.smart.lib.spring.ioc.bean.factory.InitializingBean;
 
@@ -13,7 +15,9 @@ import java.util.Map;
  * @date 2022/8/15 10:50
  */
 @Component
-public class UserServiceImpl implements DisposableBean, InitializingBean {
+public class UserServiceImpl implements DisposableBean, InitializingBean, ApplicationContextAware {
+
+    private ApplicationContext applicationContext;
 
     private String name;
 
@@ -34,6 +38,8 @@ public class UserServiceImpl implements DisposableBean, InitializingBean {
     }
 
     public Map<String, Object> getAllUser() {
+        UserDaoImpl bean = (UserDaoImpl) this.applicationContext.getBean(UserDaoImpl.class);
+        System.out.println("applicationContext get bean ==> " + bean.getAllUser());
         return this.userDao.getAllUser();
     }
 
@@ -73,5 +79,10 @@ public class UserServiceImpl implements DisposableBean, InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         System.out.println(this.getClass().getSimpleName() + " 执行：init-method方法");
+    }
+
+    @Override
+    public void setApplicationContextAware(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
 }

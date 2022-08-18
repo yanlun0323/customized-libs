@@ -10,4 +10,10 @@ public interface ConfigurableBeanFactory extends BeanFactory {
     void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
 
     void destroySingletons();
+
+
+    void setBeanClassLoader(ClassLoader beanClassLoader);
+
+    ClassLoader getBeanClassLoader();
+
 }

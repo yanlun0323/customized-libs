@@ -1,9 +1,11 @@
 package com.smart.lib.spring.ioc.bean.factory.support;
 
 import com.smart.lib.spring.ioc.bean.exception.BeansException;
-import com.smart.lib.spring.ioc.bean.factory.BeanFactory;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanDefinition;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanPostProcessor;
+import com.smart.lib.spring.ioc.bean.factory.config.ConfigurableBeanFactory;
+import com.smart.lib.spring.ioc.bean.utils.BeanNameUtils;
+import com.smart.lib.spring.ioc.bean.utils.ClassUtils;
 
 import java.util.List;
 
@@ -13,12 +15,24 @@ import java.util.List;
  * @description
  * @date 2022/8/15 11:11
  */
-public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory {
+public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements ConfigurableBeanFactory {
+
+    private ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
+
+    @Override
+    public void setBeanClassLoader(ClassLoader beanClassLoader) {
+        this.beanClassLoader = (beanClassLoader != null ? beanClassLoader : ClassUtils.getDefaultClassLoader());
+    }
+
+    @Override
+    public ClassLoader getBeanClassLoader() {
+        return this.beanClassLoader;
+    }
 
     @Override
     @SuppressWarnings("unchecked")
     public <T> T getBean(Class<T> beanClass, Object... args) {
-        return (T) getBean(beanClass.getSimpleName(), args);
+        return (T) getBean(BeanNameUtils.translateBeanName(beanClass), args);
     }
 
     @Override
@@ -41,4 +55,6 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
     protected abstract Object creatBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeansException;
 
     protected abstract List<BeanPostProcessor> getBeanPostProcessors();
+
+
 }

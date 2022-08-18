@@ -2,12 +2,12 @@
 <beans xmlns="http://com.smart.lib.spring/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://com.smart.lib.spring/schema/beans http://com.smart.lib.spring.ioc/spring-beans-2.0.xsd">
-    <bean id="userDao" class="com.smart.lib.spring.ioc.bean.test.UserDaoImpl" init-method="initData"
+    <bean id="userDaoImpl" class="com.smart.lib.spring.ioc.bean.test.UserDaoImpl" init-method="initData"
           destroy-method="destroy"/>
-    <bean id="UserServiceImpl" class="com.smart.lib.spring.ioc.bean.test.UserServiceImpl">
+    <bean id="userServiceImpl" class="com.smart.lib.spring.ioc.bean.test.UserServiceImpl">
         <property name="name" value="10001"/>
         <property name="company" value="卡友"/>
-        <property name="userDao" ref="userDao"/>
+        <property name="userDao" ref="userDaoImpl"/>
     </bean>
 
     <bean class="com.smart.lib.spring.ioc.bean.test.bean.support.MyBeanFactoryPostProcessor"/>

@@ -1,6 +1,7 @@
 package com.smart.lib.spring.ioc.bean.io;
 
 import com.smart.lib.spring.ioc.bean.utils.Assert;
+import com.smart.lib.spring.ioc.bean.utils.ClassUtils;
 
 import java.net.MalformedURLException;
 
@@ -11,6 +12,12 @@ import java.net.MalformedURLException;
  * @date 2022/8/16 10:00
  */
 public class DefaultResourceLoader implements ResourceLoader {
+
+    private final ClassLoader classLoader;
+
+    public DefaultResourceLoader() {
+        this.classLoader = this.getClassLoader();
+    }
 
     @Override
     public Resource getResource(String location) {
@@ -25,5 +32,10 @@ public class DefaultResourceLoader implements ResourceLoader {
                 return new FileSystemResource(location);
             }
         }
+    }
+
+    @Override
+    public ClassLoader getClassLoader() {
+        return (this.classLoader != null ? this.classLoader : ClassUtils.getDefaultClassLoader());
     }
 }
