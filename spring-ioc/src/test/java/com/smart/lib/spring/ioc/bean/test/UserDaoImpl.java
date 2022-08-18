@@ -14,11 +14,13 @@ public class UserDaoImpl {
     private final Map<String, Object> users = new HashMap<>();
 
     public void initData() {
+        System.out.println(this.getClass().getSimpleName() + " 执行：init-method方法");
         users.put("001", "JAVA");
         users.put("002", "IDEA");
     }
 
     public void destroy() {
+        System.out.println(this.getClass().getSimpleName() + " 执行：destroy-method方法");
         users.clear();
     }
 

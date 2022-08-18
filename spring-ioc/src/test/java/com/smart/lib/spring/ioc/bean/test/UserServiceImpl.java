@@ -67,11 +67,11 @@ public class UserServiceImpl implements DisposableBean, InitializingBean {
 
     @Override
     public void destroy() throws Exception {
-        System.out.println("destroy");
+        System.out.println(this.getClass().getSimpleName() + " 执行：destroy-method方法");
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        System.out.println("afterPropertiesSet");
+        System.out.println(this.getClass().getSimpleName() + " 执行：init-method方法");
     }
 }
