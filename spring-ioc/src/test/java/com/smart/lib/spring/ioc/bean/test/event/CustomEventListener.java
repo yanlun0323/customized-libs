@@ -1,9 +1,11 @@
 package com.smart.lib.spring.ioc.bean.test.event;
 
+import com.smart.lib.spring.ioc.bean.annotations.Component;
 import com.smart.lib.spring.ioc.bean.context.ApplicationListener;
 
 import java.util.Date;
 
+@Component
 public class CustomEventListener implements ApplicationListener<CustomEvent> {
 
     @Override

@@ -10,10 +10,14 @@
         <property name="userDao" ref="userDao"/>
     </bean>
 
-    <bean class="com.smart.lib.spring.ioc.bean.test.bean.support.MyBeanFactoryPostProcessor"/>
-    <bean class="com.smart.lib.spring.ioc.bean.test.bean.support.MyBeanPostProcessor"/>
+    <bean class="com.smart.lib.spring.ioc.bean.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:application.properties"/>
+    </bean>
 
-    <bean class="com.smart.lib.spring.ioc.bean.test.event.ContextClosedEventListener"/>
-    <bean class="com.smart.lib.spring.ioc.bean.test.event.ContextRefreshedEventListener"/>
-    <bean class="com.smart.lib.spring.ioc.bean.test.event.CustomEventListener"/>
+<!--    <bean class="com.smart.lib.spring.ioc.bean.test.bean.support.MyBeanFactoryPostProcessor"/>-->
+<!--    <bean class="com.smart.lib.spring.ioc.bean.test.bean.support.MyBeanPostProcessor"/>-->
+
+<!--    <bean class="com.smart.lib.spring.ioc.bean.test.event.ContextClosedEventListener"/>-->
+<!--    <bean class="com.smart.lib.spring.ioc.bean.test.event.ContextRefreshedEventListener"/>-->
+<!--    <bean class="com.smart.lib.spring.ioc.bean.test.event.CustomEventListener"/>-->
 </beans>

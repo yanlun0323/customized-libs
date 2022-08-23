@@ -3,6 +3,7 @@ package com.smart.lib.spring.ioc.bean.factory.support;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.XmlUtil;
 import com.smart.lib.spring.ioc.bean.beans.PropertyValue;
+import com.smart.lib.spring.ioc.bean.context.annotation.ClassPathBeanDefinitionScanner;
 import com.smart.lib.spring.ioc.bean.exception.BeansException;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanDefinition;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanReference;
@@ -64,11 +65,23 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         Element root = doc.getDocumentElement();
         NodeList childNodes = root.getChildNodes();
 
+        // 解析 context:component-scan 标签，扫描包中的类并提取相关信息，用于组装 BeanDefinition
         for (int i = 0; i < childNodes.getLength(); i++) {
             // 判断元素
             if (!(childNodes.item(i) instanceof Element)) continue;
             // 判断对象
-            if (!"bean".equals(childNodes.item(i).getNodeName())) continue;
+            if (!"bean".equals(childNodes.item(i).getNodeName())) {
+                Element componentScan = (Element) childNodes.item(i);
+                if ("context:component-scan".equals(componentScan.getNodeName())) {
+                    String basePackage = componentScan.getAttribute("base-package");
+                    // 解析
+                    if (StrUtil.isEmptyIfStr(basePackage)) {
+                        throw new BeansException("The value of base-package attribute can not be empty or null");
+                    }
+                    scanPackage(basePackage);
+                }
+                continue;
+            }
 
             // 解析标签
             Element bean = (Element) childNodes.item(i);
@@ -115,5 +128,10 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             // 注册 BeanDefinition
             getRegistry().registerBeanDefinition(beanName, beanDefinition);
         }
+    }
+
+    private void scanPackage(String basePackage) {
+        ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(getRegistry());
+        scanner.doScan(basePackage);
     }
 }

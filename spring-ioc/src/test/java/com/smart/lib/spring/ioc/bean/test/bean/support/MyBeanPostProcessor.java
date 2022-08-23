@@ -1,9 +1,11 @@
 package com.smart.lib.spring.ioc.bean.test.bean.support;
 
+import com.smart.lib.spring.ioc.bean.annotations.Component;
 import com.smart.lib.spring.ioc.bean.exception.BeansException;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanPostProcessor;
 import com.smart.lib.spring.ioc.bean.test.UserServiceImpl;
 
+@Component
 public class MyBeanPostProcessor implements BeanPostProcessor {
 
     @Override

@@ -1,5 +1,6 @@
 package com.smart.lib.spring.ioc.bean.test.event;
 
+import com.smart.lib.spring.ioc.bean.annotations.Component;
 import com.smart.lib.spring.ioc.bean.context.ApplicationListener;
 import com.smart.lib.spring.ioc.bean.context.event.ContextClosedEvent;
 
@@ -9,6 +10,7 @@ import com.smart.lib.spring.ioc.bean.context.event.ContextClosedEvent;
  * @description
  * @date 2022/8/23 14:10
  */
+@Component
 public class ContextClosedEventListener implements ApplicationListener<ContextClosedEvent> {
 
     @Override

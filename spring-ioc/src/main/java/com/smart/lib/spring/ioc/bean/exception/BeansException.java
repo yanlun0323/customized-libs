@@ -10,7 +10,11 @@ public class BeansException extends RuntimeException {
 
     private static final long serialVersionUID = -6937938663825994296L;
 
-    public BeansException(String errorMsg) {
-        super(errorMsg);
+    public BeansException(String message) {
+        super(message);
+    }
+
+    public BeansException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

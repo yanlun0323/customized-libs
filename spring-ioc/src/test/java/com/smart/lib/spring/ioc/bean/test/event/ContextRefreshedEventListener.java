@@ -1,6 +1,7 @@
 package com.smart.lib.spring.ioc.bean.test.event;
 
 import com.alibaba.fastjson.JSON;
+import com.smart.lib.spring.ioc.bean.annotations.Component;
 import com.smart.lib.spring.ioc.bean.context.ApplicationListener;
 import com.smart.lib.spring.ioc.bean.context.event.ContextRefreshedEvent;
 
@@ -10,6 +11,7 @@ import com.smart.lib.spring.ioc.bean.context.event.ContextRefreshedEvent;
  * @description
  * @date 2022/8/23 14:10
  */
+@Component
 public class ContextRefreshedEventListener implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override

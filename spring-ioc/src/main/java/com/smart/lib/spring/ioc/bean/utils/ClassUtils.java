@@ -1,12 +1,14 @@
 package com.smart.lib.spring.ioc.bean.utils;
 
+import cn.hutool.core.util.ClassUtil;
+
 /**
  * @author yan
  * @version 1.0
  * @description Class工具
  * @date 2022/8/16 09:41
  */
-public abstract class ClassUtils {
+public abstract class ClassUtils extends ClassUtil {
 
     /**
      * The CGLIB class separator: {@code "$$"}.

@@ -14,7 +14,8 @@ import java.util.Map;
 public class UserServiceImplClassPathXmlApplicationContextTest {
 
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-beans.xml");
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext(
+                new String[]{"classpath:spring-beans.xml", "classpath:spring-scan.xml"});
         UserServiceImpl service = applicationContext.getBean(UserServiceImpl.class);
         service.hello();
         System.out.println(service.getCompany());
@@ -23,6 +24,7 @@ public class UserServiceImplClassPathXmlApplicationContextTest {
         System.out.println("All users ==> " + allUser);
 
 
+        System.out.println("user.name ==> " + service.getUser());
         CustomEvent event = new CustomEvent(UserServiceImplClassPathXmlApplicationContextTest.class, 1L, "Hello");
         applicationContext.publishEvent(event);
     }
