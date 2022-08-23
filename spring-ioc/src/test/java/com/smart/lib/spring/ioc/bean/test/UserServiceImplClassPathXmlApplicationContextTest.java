@@ -1,6 +1,7 @@
 package com.smart.lib.spring.ioc.bean.test;
 
 import com.smart.lib.spring.ioc.bean.context.support.ClassPathXmlApplicationContext;
+import com.smart.lib.spring.ioc.bean.test.event.CustomEvent;
 
 import java.util.Map;
 
@@ -20,5 +21,9 @@ public class UserServiceImplClassPathXmlApplicationContextTest {
         System.out.println(service.getName());
         Map<String, Object> allUser = service.getAllUser();
         System.out.println("All users ==> " + allUser);
+
+
+        CustomEvent event = new CustomEvent(UserServiceImplClassPathXmlApplicationContextTest.class, 1L, "Hello");
+        applicationContext.publishEvent(event);
     }
 }

@@ -14,6 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
 
+    protected final Object NULL_OBJECT = null;
+
     private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>();
 
     /**
@@ -24,6 +26,11 @@ public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
     @Override
     public Object getSingleton(String beanName) {
         return singletonObjects.get(beanName);
+    }
+
+    @Override
+    public void registerSingleton(String beanName, Object singletonObject) {
+        this.addSingleton(beanName, singletonObject);
     }
 
     /**
@@ -77,6 +84,8 @@ public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
     }
 
     protected void addSingleton(String beanName, Object singletonObject) {
-        singletonObjects.put(beanName, singletonObject);
+        synchronized (this.singletonObjects) {
+            singletonObjects.put(beanName, singletonObject);
+        }
     }
 }

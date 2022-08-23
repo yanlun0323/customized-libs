@@ -23,7 +23,7 @@ public class UserServiceImpl implements DisposableBean, InitializingBean, Applic
 
     private String company;
 
-    private UserDaoImpl userDao;
+    private UserDao userDao;
 
     public UserServiceImpl() {
 
@@ -38,9 +38,12 @@ public class UserServiceImpl implements DisposableBean, InitializingBean, Applic
     }
 
     public Map<String, Object> getAllUser() {
-        UserDaoImpl bean = (UserDaoImpl) this.applicationContext.getBean(UserDaoImpl.class);
-        System.out.println("applicationContext get bean ==> " + bean.getAllUser());
-        return this.userDao.getAllUser();
+        UserDao bean = this.applicationContext.getBean(UserDao.class);
+        System.out.println("applicationContext get bean ==> " + bean.getAllUsers());
+
+        String s = bean.queryUserName("001");
+        System.out.println(s);
+        return this.userDao.getAllUsers();
     }
 
     public void hello() {
@@ -55,11 +58,11 @@ public class UserServiceImpl implements DisposableBean, InitializingBean, Applic
         this.name = name;
     }
 
-    public UserDaoImpl getUserDao() {
+    public UserDao getUserDao() {
         return userDao;
     }
 
-    public void setUserDao(UserDaoImpl userDao) {
+    public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 

@@ -2,6 +2,7 @@ package com.smart.lib.spring.ioc.bean.test;
 
 import com.smart.lib.spring.ioc.bean.beans.PropertyValue;
 import com.smart.lib.spring.ioc.bean.beans.PropertyValues;
+import com.smart.lib.spring.ioc.bean.context.support.ApplicationContextAwareProcessor;
 import com.smart.lib.spring.ioc.bean.factory.DefaultListableBeanFactory;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanDefinition;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanReference;
@@ -20,14 +21,16 @@ public class UserServiceImplTest {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         // 注册UserDao
-        beanFactory.registerBeanDefinition("userDao", new BeanDefinition(UserDaoImpl.class));
+        beanFactory.registerBeanDefinition("userDao", new BeanDefinition(UserDaoProxy.class));
 
         // 注册UserService
         PropertyValues propertyValues = new PropertyValues();
         propertyValues.addPropertyValue(new PropertyValue("userDao", (BeanReference) () -> "userDao"));
         propertyValues.addPropertyValue(new PropertyValue("name", "CODER"));
         BeanDefinition beanDefinition = new BeanDefinition(UserServiceImpl.class, propertyValues);
-        beanFactory.registerBeanDefinition("UserServiceImpl", beanDefinition);
+        beanFactory.registerBeanDefinition("userServiceImpl", beanDefinition);
+
+        // beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor());
 
         // getBean
         UserServiceImpl service = beanFactory.getBean(UserServiceImpl.class);

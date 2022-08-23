@@ -9,5 +9,5 @@ import com.smart.lib.spring.ioc.bean.factory.ListableBeanFactory;
  * @description
  * @date 2022/8/17 09:22
  */
-public interface ApplicationContext extends ListableBeanFactory, HierarchicalBeanFactory {
+public interface ApplicationContext extends ListableBeanFactory, HierarchicalBeanFactory, ApplicationEventPublisher {
 }

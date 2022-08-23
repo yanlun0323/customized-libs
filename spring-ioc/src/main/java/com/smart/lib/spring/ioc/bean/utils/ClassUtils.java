@@ -6,7 +6,12 @@ package com.smart.lib.spring.ioc.bean.utils;
  * @description Class工具
  * @date 2022/8/16 09:41
  */
-public class ClassUtils {
+public abstract class ClassUtils {
+
+    /**
+     * The CGLIB class separator: {@code "$$"}.
+     */
+    public static final String CGLIB_CLASS_SEPARATOR = "$$";
 
     /**
      * Return the default ClassLoader to use: typically the thread context
@@ -43,5 +48,35 @@ public class ClassUtils {
             }
         }
         return cl;
+    }
+
+    /**
+     * Check whether the given object is a CGLIB proxy.
+     *
+     * @param object the object to check
+     * @see #isCglibProxyClass(Class)
+     * @see org.springframework.aop.support.AopUtils#isCglibProxy(Object)
+     */
+    public static boolean isCglibProxy(Object object) {
+        return isCglibProxyClass(object.getClass());
+    }
+
+    /**
+     * Check whether the specified class is a CGLIB-generated class.
+     *
+     * @param clazz the class to check
+     * @see #isCglibProxyClassName(String)
+     */
+    public static boolean isCglibProxyClass(Class<?> clazz) {
+        return (clazz != null && isCglibProxyClassName(clazz.getName()));
+    }
+
+    /**
+     * Check whether the specified class name is a CGLIB-generated class.
+     *
+     * @param className the class name to check
+     */
+    public static boolean isCglibProxyClassName(String className) {
+        return (className != null && className.contains(CGLIB_CLASS_SEPARATOR));
     }
 }
