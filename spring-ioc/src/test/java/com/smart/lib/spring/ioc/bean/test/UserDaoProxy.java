@@ -1,6 +1,7 @@
 package com.smart.lib.spring.ioc.bean.test;
 
 import com.smart.lib.spring.ioc.bean.factory.FactoryBean;
+import com.smart.lib.spring.ioc.bean.stereotype.Component;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -14,6 +15,7 @@ import java.util.Map;
  * @description DAO模拟
  * @date 2022/8/15 15:32
  */
+@Component("userDao")
 public class UserDaoProxy implements FactoryBean<UserDao> {
 
     private final Map<String, Object> users = new HashMap<>();

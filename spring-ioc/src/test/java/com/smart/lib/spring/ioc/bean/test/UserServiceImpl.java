@@ -1,5 +1,7 @@
 package com.smart.lib.spring.ioc.bean.test;
 
+import com.smart.lib.spring.ioc.bean.factory.annotation.Autowired;
+import com.smart.lib.spring.ioc.bean.factory.annotation.Qualifier;
 import com.smart.lib.spring.ioc.bean.stereotype.Component;
 import com.smart.lib.spring.ioc.bean.context.ApplicationContext;
 import com.smart.lib.spring.ioc.bean.context.ApplicationContextAware;
@@ -27,6 +29,8 @@ public class UserServiceImpl implements DisposableBean, InitializingBean, Applic
 
     private String company;
 
+    @Autowired
+    @Qualifier("userDao")
     private UserDao userDao;
 
     public UserServiceImpl() {
