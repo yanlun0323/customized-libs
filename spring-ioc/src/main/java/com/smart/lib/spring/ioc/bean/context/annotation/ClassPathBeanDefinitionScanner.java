@@ -1,7 +1,8 @@
 package com.smart.lib.spring.ioc.bean.context.annotation;
 
 import cn.hutool.core.util.StrUtil;
-import com.smart.lib.spring.ioc.bean.annotations.Component;
+import com.smart.lib.spring.ioc.bean.factory.config.Scope;
+import com.smart.lib.spring.ioc.bean.stereotype.Component;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanDefinition;
 import com.smart.lib.spring.ioc.bean.factory.support.BeanDefinitionRegistry;
 

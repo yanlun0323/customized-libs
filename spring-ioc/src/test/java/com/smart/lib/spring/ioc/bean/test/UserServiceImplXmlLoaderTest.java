@@ -1,7 +1,7 @@
 package com.smart.lib.spring.ioc.bean.test;
 
 import com.alibaba.fastjson.JSON;
-import com.smart.lib.spring.ioc.bean.annotations.Component;
+import com.smart.lib.spring.ioc.bean.stereotype.Component;
 import com.smart.lib.spring.ioc.bean.factory.DefaultListableBeanFactory;
 import com.smart.lib.spring.ioc.bean.factory.support.XmlBeanDefinitionReader;
 

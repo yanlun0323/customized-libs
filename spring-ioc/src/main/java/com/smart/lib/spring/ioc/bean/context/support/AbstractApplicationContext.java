@@ -8,6 +8,7 @@ import com.smart.lib.spring.ioc.bean.context.event.ContextClosedEvent;
 import com.smart.lib.spring.ioc.bean.context.event.ContextRefreshedEvent;
 import com.smart.lib.spring.ioc.bean.context.event.SimpleApplicationEventMulticaster;
 import com.smart.lib.spring.ioc.bean.exception.BeansException;
+import com.smart.lib.spring.ioc.bean.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanFactoryPostProcessor;
 import com.smart.lib.spring.ioc.bean.factory.config.BeanPostProcessor;
 import com.smart.lib.spring.ioc.bean.factory.config.ConfigurableListableBeanFactory;
@@ -48,6 +49,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
 
         // 3. 添加 ApplicationContextAwareProcessor，让继承自 ApplicationContextAware 的 Bean 对象都能感知所属的 ApplicationContext
         beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
+        beanFactory.addBeanPostProcessor(new AutowiredAnnotationBeanPostProcessor(beanFactory));
+
         // 4. 在 Bean 实例化之前，执行 BeanFactoryPostProcessor (Invoke factory processors registered as beans in the context.)
         invokeBeanFactoryPostProcessors(beanFactory);
         // 5. BeanPostProcessor 需要提前于其他 Bean 对象实例化之前执行注册操作

@@ -1,6 +1,6 @@
 package com.smart.lib.spring.ioc.bean.test.event;
 
-import com.smart.lib.spring.ioc.bean.annotations.Component;
+import com.smart.lib.spring.ioc.bean.stereotype.Component;
 import com.smart.lib.spring.ioc.bean.context.ApplicationListener;
 
 import java.util.Date;

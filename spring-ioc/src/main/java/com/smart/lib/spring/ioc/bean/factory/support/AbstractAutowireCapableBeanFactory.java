@@ -5,10 +5,7 @@ import com.smart.lib.spring.ioc.bean.beans.PropertyValue;
 import com.smart.lib.spring.ioc.bean.beans.PropertyValues;
 import com.smart.lib.spring.ioc.bean.exception.BeansException;
 import com.smart.lib.spring.ioc.bean.factory.*;
-import com.smart.lib.spring.ioc.bean.factory.config.AutowireCapableBeanFactory;
-import com.smart.lib.spring.ioc.bean.factory.config.BeanDefinition;
-import com.smart.lib.spring.ioc.bean.factory.config.BeanPostProcessor;
-import com.smart.lib.spring.ioc.bean.factory.config.BeanReference;
+import com.smart.lib.spring.ioc.bean.factory.config.*;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.Constructor;
@@ -32,12 +29,14 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         Object bean;
         try {
             bean = doCreateBeanInstance(beanName, beanDefinition, args);
+            // 在设置 Bean 属性之前，允许 BeanPostProcessor 修改属性值
+            applyBeanPostProcessorsBeforeApplyingPropertyValues(beanName, bean, beanDefinition);
             // 给 Bean 填充属性
             applyPropertyValues(beanName, bean, beanDefinition);
             // 执行 Bean 的初始化方法和 BeanPostProcessor 的前置和后置处理方法
             bean = initializeBean(beanName, bean, beanDefinition);
         } catch (Exception e) {
-            throw new BeansException("Instantiation of bean failed");
+            throw new BeansException("Instantiation of bean failed", e);
         }
         // 注册实现了 DisposableBean 接口的 Bean 对象
         this.registerDisposableBeanIfNecessary(beanName, bean, beanDefinition);
@@ -47,6 +46,27 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             addSingleton(beanName, bean);
         }
         return bean;
+    }
+
+    /**
+     * 在设置 Bean 属性之前，允许 BeanPostProcessor 修改属性值
+     *
+     * @param beanName
+     * @param bean
+     * @param beanDefinition
+     */
+    protected void applyBeanPostProcessorsBeforeApplyingPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
+        for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {
+            if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
+                PropertyValues pvs = ((InstantiationAwareBeanPostProcessor) beanPostProcessor)
+                        .postProcessProperties(beanDefinition.getPropertyValues(), bean, beanName);
+                if (null != pvs) {
+                    for (PropertyValue propertyValue : pvs.getPropertyValues()) {
+                        beanDefinition.getPropertyValues().addPropertyValue(propertyValue);
+                    }
+                }
+            }
+        }
     }
 
     public void registerDisposableBeanIfNecessary(String beanName, Object bean, BeanDefinition beanDefinition) {

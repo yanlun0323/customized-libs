@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.smart.lib.spring.ioc.bean.context.annotation;
+package com.smart.lib.spring.ioc.bean.factory.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

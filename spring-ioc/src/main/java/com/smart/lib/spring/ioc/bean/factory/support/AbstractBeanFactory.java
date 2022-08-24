@@ -7,8 +7,10 @@ import com.smart.lib.spring.ioc.bean.factory.config.BeanPostProcessor;
 import com.smart.lib.spring.ioc.bean.factory.config.ConfigurableBeanFactory;
 import com.smart.lib.spring.ioc.bean.utils.BeanNameUtils;
 import com.smart.lib.spring.ioc.bean.utils.ClassUtils;
+import com.smart.lib.spring.ioc.bean.utils.StringValueResolver;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author yan
@@ -19,6 +21,11 @@ import java.util.List;
 public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport implements ConfigurableBeanFactory {
 
     private ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
+
+    /**
+     * String resolvers to apply e.g. to annotation attribute values.
+     */
+    private final List<StringValueResolver> embeddedValueResolvers = new CopyOnWriteArrayList<>();
 
     @Override
     public void setBeanClassLoader(ClassLoader beanClassLoader) {
@@ -65,6 +72,26 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
             object = getObjectFromFactoryBean(factoryBean, beanName);
         }
         return object;
+    }
+
+    @Override
+    public void addEmbeddedValueResolver(StringValueResolver valueResolver) {
+        this.embeddedValueResolvers.add(valueResolver);
+    }
+
+    @Override
+    public String resolveEmbeddedValue(String value) {
+        if (value == null) {
+            return null;
+        }
+        String result = value;
+        for (StringValueResolver embeddedValueResolver : this.embeddedValueResolvers) {
+            result = embeddedValueResolver.resolveStringValue(result);
+            if (result == null) {
+                return null;
+            }
+        }
+        return result;
     }
 
     protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeansException;

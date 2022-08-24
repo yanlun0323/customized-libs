@@ -1,6 +1,6 @@
 package com.smart.lib.spring.ioc.bean.test.bean.support;
 
-import com.smart.lib.spring.ioc.bean.annotations.Component;
+import com.smart.lib.spring.ioc.bean.stereotype.Component;
 import com.smart.lib.spring.ioc.bean.beans.PropertyValue;
 import com.smart.lib.spring.ioc.bean.beans.PropertyValues;
 import com.smart.lib.spring.ioc.bean.exception.BeansException;

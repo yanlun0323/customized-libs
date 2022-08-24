@@ -1,9 +1,9 @@
 package com.smart.lib.spring.ioc.bean.test;
 
-import com.smart.lib.spring.ioc.bean.annotations.Component;
+import com.smart.lib.spring.ioc.bean.stereotype.Component;
 import com.smart.lib.spring.ioc.bean.context.ApplicationContext;
 import com.smart.lib.spring.ioc.bean.context.ApplicationContextAware;
-import com.smart.lib.spring.ioc.bean.context.annotation.Value;
+import com.smart.lib.spring.ioc.bean.factory.annotation.Value;
 import com.smart.lib.spring.ioc.bean.factory.DisposableBean;
 import com.smart.lib.spring.ioc.bean.factory.InitializingBean;
 
