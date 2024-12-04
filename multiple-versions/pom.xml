@@ -21,7 +21,7 @@
     <properties>
         <servlet.api.version>2.5</servlet.api.version>
         <apache.commons.version>3.8.1</apache.commons.version>
-        <spring.webmvc.version>5.1.14.RELEASE</spring.webmvc.version>
+        <spring.webmvc.version>5.2.21.RELEASE</spring.webmvc.version>
         <google.aviator.version>4.2.0</google.aviator.version>
         <spring.boot.dependencies.version>2.1.6.RELEASE</spring.boot.dependencies.version>
     </properties>
